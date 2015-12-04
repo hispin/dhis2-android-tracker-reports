@@ -1,0 +1,1 @@
+include ':app', ':models', ':ui', ':core', ':persistence', ':network', ':core-java', ':core-android'
