@@ -86,18 +86,18 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="jackson-core-2.5.3" level="project" />
     <orderEntry type="library" exported="" name="commons-digester-1.8" level="project" />
+    <orderEntry type="library" exported="" name="jackson-core-2.5.3" level="project" />
     <orderEntry type="library" exported="" name="converter-jackson-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-urlconnection-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="commons-beanutils-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="jackson-datatype-joda-2.5.3" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="joda-convert-1.7" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.5.3" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="DBFlow-Core-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
     <orderEntry type="library" exported="" name="jep-2.24" level="project" />

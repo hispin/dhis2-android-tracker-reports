@@ -117,12 +117,12 @@ public class LoginActivity extends Activity implements OnClickListener {
         }
 
         if (server == null) {
-            server = "https://play.dhis2.org/demo";
+            server = "https://bid.dhis2.org/epireg";
         }
 
         if (username == null) {
-            username = "adndroid";
-            password = "Android123";
+            username = "";
+            password = "";
         }
 
         serverEditText.setText(server);
