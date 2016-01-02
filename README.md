@@ -1,6 +1,7 @@
 # dhis2-android-tracker-reports
-Test project for BID.
-
-Blank screen appears on succesful Login.
-
-Error will be displayed on unsuccesful attempt.
+SKELETON APP 
+Use  url: https://bid.dhis2.org/epireg
+     username:
+     password:
+    
+     
