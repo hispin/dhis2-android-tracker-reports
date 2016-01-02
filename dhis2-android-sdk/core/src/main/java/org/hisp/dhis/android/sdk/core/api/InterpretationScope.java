@@ -30,11 +30,11 @@ package org.hisp.dhis.android.sdk.core.api;
 
 import org.hisp.dhis.android.sdk.core.controllers.common.IDataController;
 import org.hisp.dhis.android.sdk.core.network.APIException;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationCommentService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationElementService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationService;
 import org.hisp.dhis.android.sdk.models.dashboard.DashboardElement;
 import org.hisp.dhis.android.sdk.models.dashboard.DashboardItem;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationCommentService;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationElementService;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationService;
 import org.hisp.dhis.android.sdk.models.interpretation.Interpretation;
 import org.hisp.dhis.android.sdk.models.interpretation.InterpretationComment;
 import org.hisp.dhis.android.sdk.models.interpretation.InterpretationElement;
@@ -65,19 +65,19 @@ public final class InterpretationScope implements IDataController<Interpretation
     }
 
     @Override
-    public void deleteComment(InterpretationComment comment) {
-        interpretationCommentService.deleteComment(comment);
+    public void remove(InterpretationComment comment) {
+        interpretationCommentService.remove(comment);
     }
 
     @Override
-    public void updateCommentText(InterpretationComment comment, String text) {
-        interpretationCommentService.updateCommentText(comment, text);
+    public void update(InterpretationComment comment, String text) {
+        interpretationCommentService.update(comment, text);
     }
 
     @Override
-    public InterpretationElement createInterpretationElement(Interpretation interpretation,
-                                                             DashboardElement dashboardElement, String mimeType) {
-        return interpretationElementService.createInterpretationElement(interpretation, dashboardElement, mimeType);
+    public InterpretationElement add(Interpretation interpretation,
+                                     DashboardElement dashboardElement, String mimeType) {
+        return interpretationElementService.add(interpretation, dashboardElement, mimeType);
     }
 
     @Override
@@ -86,18 +86,18 @@ public final class InterpretationScope implements IDataController<Interpretation
     }
 
     @Override
-    public Interpretation createInterpretation(DashboardItem item, User user, String text) {
-        return interpretationService.createInterpretation(item, user, text);
+    public Interpretation add(DashboardItem item, User user, String text) {
+        return interpretationService.add(item, user, text);
     }
 
     @Override
-    public void updateInterpretationText(Interpretation interpretation, String text) {
-        interpretationService.updateInterpretationText(interpretation, text);
+    public void update(Interpretation interpretation, String text) {
+        interpretationService.update(interpretation, text);
     }
 
     @Override
-    public void deleteInterpretation(Interpretation interpretation) {
-        interpretationService.deleteInterpretation(interpretation);
+    public void remove(Interpretation interpretation) {
+        interpretationService.remove(interpretation);
     }
 
     @Override

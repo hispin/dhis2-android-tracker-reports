@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.ui.adapters.rows.dataentry;
@@ -37,28 +36,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.hisp.dhis.android.sdk.R;
+import org.hisp.dhis.android.sdk.persistence.models.DataValue;
+import org.hisp.dhis.android.sdk.ui.adapters.rows.events.OnDetailedInfoButtonClick;
 import org.hisp.dhis.android.sdk.ui.fragments.dataentry.RowValueChangedEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.persistence.models.BaseValue;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-public class DatePickerRow implements DataEntryRow {
+public class DatePickerRow extends Row {
     private static final String EMPTY_FIELD = "";
 
-    private final String mLabel;
-    private final BaseValue mValue;
-
-    private boolean hidden = false;
-    private boolean editable = true;
 
     public DatePickerRow(String label, BaseValue value) {
         mLabel = label;
         mValue = value;
+
+        checkNeedsForDescriptionButton();
     }
 
     @Override
@@ -73,7 +72,8 @@ public class DatePickerRow implements DataEntryRow {
         } else {
             View root = inflater.inflate(
                     R.layout.listview_row_datepicker, container, false);
-            holder = new DatePickerRowHolder(root, inflater.getContext());
+            detailedInfoButton = root.findViewById(R.id.detailed_info_button_layout);
+            holder = new DatePickerRowHolder(root, inflater.getContext(), detailedInfoButton);
 
             root.setTag(holder);
             view = root;
@@ -89,8 +89,12 @@ public class DatePickerRow implements DataEntryRow {
             holder.clearButton.setEnabled(true);
             holder.pickerInvoker.setEnabled(true);
         }
-
+        holder.detailedInfoButton.setOnClickListener(new OnDetailedInfoButtonClick(this));
         holder.updateViews(mLabel, mValue);
+
+        if(isDetailedInfoButtonHidden())
+            holder.detailedInfoButton.setVisibility(View.INVISIBLE);
+
         return view;
     }
 
@@ -99,23 +103,21 @@ public class DatePickerRow implements DataEntryRow {
         return DataEntryRowTypes.DATE.ordinal();
     }
 
-    @Override
-    public BaseValue getBaseValue() {
-        return mValue;
-    }
 
     private class DatePickerRowHolder {
         final TextView textLabel;
         final TextView pickerInvoker;
         final ImageButton clearButton;
+        final View detailedInfoButton;
         final DateSetListener dateSetListener;
         final OnEditTextClickListener invokerListener;
         final ClearButtonListener clearButtonListener;
 
-        public DatePickerRowHolder(View root, Context context) {
+        public DatePickerRowHolder(View root, Context context, View detailedInfoButton) {
             textLabel = (TextView) root.findViewById(R.id.text_label);
             pickerInvoker = (TextView) root.findViewById(R.id.date_picker_text_view);
             clearButton = (ImageButton) root.findViewById(R.id.clear_text_view);
+            this.detailedInfoButton = detailedInfoButton;
 
             dateSetListener = new DateSetListener(pickerInvoker);
             invokerListener = new OnEditTextClickListener(context, dateSetListener);
@@ -171,7 +173,7 @@ public class DatePickerRow implements DataEntryRow {
             textView.setText(EMPTY_FIELD);
             value.setValue(EMPTY_FIELD);
             Dhis2Application.getEventBus()
-                    .post(new RowValueChangedEvent(value));
+                    .post(new RowValueChangedEvent(value, DataEntryRowTypes.DATE.toString()));
         }
     }
 
@@ -196,27 +198,7 @@ public class DatePickerRow implements DataEntryRow {
             textView.setText(newValue);
             value.setValue(newValue);
             Dhis2Application.getEventBus()
-                    .post(new RowValueChangedEvent(value));
+                    .post(new RowValueChangedEvent(value, DataEntryRowTypes.DATE.toString()));
         }
-    }
-
-    @Override
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    @Override
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return editable;
-    }
-
-    @Override
-    public void setEditable(boolean editable) {
-        this.editable = editable;
     }
 }

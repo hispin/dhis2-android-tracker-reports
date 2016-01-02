@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.controllers.tracker;
@@ -112,7 +111,7 @@ final class TrackerDataSender {
             return;
         }
 
-        if(Utils.isLocal(event.getEvent())) {
+        if(event.getCreated() == null) {
             postEvent(event, dhisApi);
         } else {
             putEvent(event, dhisApi);
@@ -120,8 +119,6 @@ final class TrackerDataSender {
     }
 
     private static void postEvent(Event event, DhisApi dhisApi) throws APIException {
-        //setting event to null to avoid sending temporary local reference
-        event.setEvent(null);
         try {
             Response response = dhisApi.postEvent(event);
             if(response.getStatus() == 200) {
@@ -132,15 +129,10 @@ final class TrackerDataSender {
                     // also, we will need to find UUID of newly created event,
                     // which is contained inside of HTTP Location header
                     Header header = NetworkUtils.findLocationHeader(response.getHeaders());
-                    // parse the value of header as URI and extract the id
-                    String eventUid = Uri.parse(header.getValue()).getLastPathSegment();
-                    // set UUID, change state and save event
-                    event.setEvent(eventUid);
-                    //event.setState(State.SYNCED);
+                    // change state and save event
                     event.setFromServer(true);
                     event.save();
                     clearFailedItem(FailedItem.EVENT, event.getLocalId());
-                    updateEventReferences(event.getLocalId(), eventUid);
                     UpdateEventTimestamp(event, dhisApi);
                 }
             }
@@ -158,11 +150,9 @@ final class TrackerDataSender {
                 if(ImportSummary.SUCCESS.equals(importSummary.getStatus()) ||
                         ImportSummary.OK.equals(importSummary.getStatus())) {
 
-                    //event.setState(State.SYNCED);
                     event.setFromServer(true);
                     event.save();
                     clearFailedItem(FailedItem.EVENT, event.getLocalId());
-                    Log.d(CLASS_TAG, "event saved!");
                     UpdateEventTimestamp(event, dhisApi);
                 }
             }
@@ -232,14 +222,18 @@ final class TrackerDataSender {
             return;
         }
 
-        if(Utils.isLocal(enrollment.getEnrollment())) {
+        if(enrollment.getCreated() == null) {
             postEnrollment(enrollment, dhisApi);
+            if( sendEvents ) {
+                List<Event> events = TrackerController.getEventsByEnrollment(enrollment.getLocalId());
+                sendEventChanges(dhisApi, events);
+            }
         } else {
+            if( sendEvents ) {
+                List<Event> events = TrackerController.getEventsByEnrollment(enrollment.getLocalId());
+                sendEventChanges(dhisApi, events);
+            }
             putEnrollment(enrollment, dhisApi);
-        }
-        if( sendEvents ) {
-            List<Event> events = TrackerController.getEventsByEnrollment(enrollment.getLocalId());
-            sendEventChanges(dhisApi, events);
         }
     }
 
@@ -252,18 +246,12 @@ final class TrackerDataSender {
 
                 if(ImportSummary.SUCCESS.equals(importSummary.getStatus()) ||
                         ImportSummary.OK.equals(importSummary.getStatus())) {
-                    // also, we will need to find UUID of newly created enrollment,
-                    // which is contained inside of HTTP Location header
-                    Header header = NetworkUtils.findLocationHeader(response.getHeaders());
-                    // parse the value of header as URI and extract the id
-                    String enrollmentUid = Uri.parse(header.getValue()).getLastPathSegment();
-                    // set UUID, change state and save enrollment
-                    enrollment.setEnrollment(enrollmentUid);
+                    // change state and save enrollment
+
                     //enrollment.setState(State.SYNCED);
                     enrollment.setFromServer(true);
                     enrollment.save();
                     clearFailedItem(FailedItem.ENROLLMENT, enrollment.getLocalId());
-                    updateEnrollmentReferences(enrollment.getLocalId(), enrollmentUid);
                     UpdateEnrollmentTimestamp(enrollment, dhisApi);
                 }
             }
@@ -345,7 +333,7 @@ final class TrackerDataSender {
         if (trackedEntityInstance == null) {
             return;
         }
-        if(Utils.isLocal(trackedEntityInstance.getTrackedEntityInstance())) {
+        if(trackedEntityInstance.getCreated() == null) {
             postTrackedEntityInstance(trackedEntityInstance, dhisApi);
         } else {
             putTrackedEntityInstance(trackedEntityInstance, dhisApi);
@@ -365,18 +353,12 @@ final class TrackerDataSender {
                 if(ImportSummary.SUCCESS.equals(importSummary.getStatus()) ||
                         ImportSummary.OK.equals(importSummary.getStatus())) {
 
-                    // also, we will need to find UUID of newly created trackedentityinstance,
-                    // which is contained inside of HTTP Location header
-                    Header header = NetworkUtils.findLocationHeader(response.getHeaders());
-                    // parse the value of header as URI and extract the id
-                    String trackedEntityInstanceUid = Uri.parse(header.getValue()).getLastPathSegment();
-                    // set UUID, change state and save trackedentityinstance
-                    String oldUid = trackedEntityInstance.getUid();
-                    trackedEntityInstance.setTrackedEntityInstance(trackedEntityInstanceUid);
+                    // change state and save trackedentityinstance
+
                     //trackedEntityInstance.setState(State.SYNCED);
                     trackedEntityInstance.setFromServer(true);
                     trackedEntityInstance.save();
-                    updateTrackedEntityInstanceReferences(trackedEntityInstance.getLocalId(), trackedEntityInstanceUid, oldUid);
+
                     clearFailedItem(FailedItem.TRACKEDENTITYINSTANCE, trackedEntityInstance.getLocalId());
                     UpdateTrackedEntityInstanceTimestamp(trackedEntityInstance, dhisApi);
                 }
@@ -487,6 +469,7 @@ final class TrackerDataSender {
             item.async().delete();
         }
     }
+
     private static void handleImportSummary(ImportSummary importSummary, String type, long id) {
         if ( ImportSummary.ERROR.equals(importSummary.getStatus()) ){
             Log.d(CLASS_TAG, "failed.. ");

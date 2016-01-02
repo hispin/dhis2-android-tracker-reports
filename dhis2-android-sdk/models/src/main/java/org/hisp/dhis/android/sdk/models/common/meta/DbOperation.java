@@ -28,8 +28,8 @@
 
 package org.hisp.dhis.android.sdk.models.common.meta;
 
-import org.hisp.dhis.android.sdk.models.common.IStore;
-import org.hisp.dhis.android.sdk.models.common.IdentifiableObject;
+import org.hisp.dhis.android.sdk.models.common.base.IModel;
+import org.hisp.dhis.android.sdk.models.common.base.IStore;
 
 import static org.hisp.dhis.android.sdk.models.utils.Preconditions.isNull;
 
@@ -37,7 +37,7 @@ import static org.hisp.dhis.android.sdk.models.utils.Preconditions.isNull;
  * This class is intended to implement partial
  * functionality of ContentProviderOperation for DbFlow.
  */
-public final class DbOperation<T extends IdentifiableObject> {
+public final class DbOperation<T extends IModel> implements IDbOperation<T> {
     private final DbAction mDbAction;
     private final T mModel;
     private final IStore<T> mModelStore;
@@ -48,22 +48,21 @@ public final class DbOperation<T extends IdentifiableObject> {
         mModelStore = isNull(store, "IStore object must not be null");
     }
 
-    public static <T extends IdentifiableObject> DbOperationBuilder<T> with(IStore<T> store) {
+    public static <T extends IModel> DbOperationBuilder<T> with(IStore<T> store) {
         return new DbOperationBuilder<>(store);
     }
 
+    @Override
     public T getModel() {
         return mModel;
     }
 
+    @Override
     public DbAction getAction() {
         return mDbAction;
     }
 
-    public IStore<T> getStore() {
-        return mModelStore;
-    }
-
+    @Override
     public void execute() {
         switch (mDbAction) {
             case INSERT: {
@@ -85,7 +84,11 @@ public final class DbOperation<T extends IdentifiableObject> {
         }
     }
 
-    public static class DbOperationBuilder<T extends IdentifiableObject> {
+    public IStore<T> getStore() {
+        return mModelStore;
+    }
+
+    public static class DbOperationBuilder<T extends IModel> {
         private final IStore<T> mStore;
 
         DbOperationBuilder(IStore<T> store) {

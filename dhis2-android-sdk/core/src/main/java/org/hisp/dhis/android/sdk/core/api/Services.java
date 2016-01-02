@@ -30,18 +30,23 @@ package org.hisp.dhis.android.sdk.core.api;
 
 import android.content.Context;
 
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardElementService;
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardItemService;
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardService;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardElementService;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardItemService;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardService;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationCommentService;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationElementService;
-import org.hisp.dhis.android.sdk.models.interpretation.IInterpretationService;
-import org.hisp.dhis.android.sdk.models.interpretation.InterpretationCommentService;
-import org.hisp.dhis.android.sdk.models.interpretation.InterpretationElementService;
-import org.hisp.dhis.android.sdk.models.interpretation.InterpretationService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.DashboardContentService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.DashboardElementService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.DashboardItemService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.DashboardService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.IDashboardElementService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.IDashboardItemContentService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.IDashboardItemService;
+import org.hisp.dhis.android.sdk.corejava.dashboard.IDashboardService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationCommentService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationElementService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.IInterpretationService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.InterpretationCommentService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.InterpretationElementService;
+import org.hisp.dhis.android.sdk.corejava.interpretation.InterpretationService;
+import org.hisp.dhis.android.sdk.persistence.common.Models;
+import org.hisp.dhis.android.sdk.persistence.models.common.state.StateStore;
+import org.hisp.dhis.android.sdk.models.common.state.IStateStore;
 import org.hisp.dhis.android.sdk.models.user.IUserAccountService;
 import org.hisp.dhis.android.sdk.models.user.UserAccountService;
 
@@ -51,23 +56,28 @@ final class Services {
     private final IDashboardService dashboardService;
     private final IDashboardItemService dashboardItemService;
     private final IDashboardElementService dashboardElementService;
+    private final IDashboardItemContentService dashboardItemContentService;
 
     private final IInterpretationService interpretationsService;
     private final IInterpretationElementService interpretationElementService;
     private final IInterpretationCommentService interpretationCommentService;
 
     private final IUserAccountService userAccountService;
+    private final IStateStore stateStore;
 
     private Services(Context context) {
         Models.init(context);
 
-        dashboardItemService = new DashboardItemService(Models.dashboardItems(), Models.dashboardElements());
-        dashboardElementService = new DashboardElementService(Models.dashboardElements(), dashboardItemService);
+        stateStore = new StateStore(null, null, null, null);
+
+        dashboardItemService = new DashboardItemService(Models.dashboardItems(), Models.dashboardElements(), stateStore);
+        dashboardElementService = new DashboardElementService(Models.dashboardElements(), dashboardItemService, stateStore);
         dashboardService = new DashboardService(Models.dashboards(), Models.dashboardItems(),
-                Models.dashboardElements(), dashboardItemService, dashboardElementService);
+                Models.dashboardElements(), dashboardItemService, dashboardElementService, stateStore);
+        dashboardItemContentService = new DashboardContentService(Models.dashboardItemContent());
 
         interpretationElementService = new InterpretationElementService();
-        interpretationCommentService = new InterpretationCommentService(Models.interpretationComments());
+        interpretationCommentService = new InterpretationCommentService(Models.interpretationComments(), stateStore);
         interpretationsService = new InterpretationService(Models.interpretations(), interpretationElementService);
 
         userAccountService = new UserAccountService(Models.userAccount(), Models.modelsStore());
@@ -97,6 +107,10 @@ final class Services {
 
     public static IDashboardElementService dashboardElements() {
         return getInstance().dashboardElementService;
+    }
+
+    public static IDashboardItemContentService dashboardItemContents() {
+        return getInstance().dashboardItemContentService;
     }
 
     public static IInterpretationService interpretations() {

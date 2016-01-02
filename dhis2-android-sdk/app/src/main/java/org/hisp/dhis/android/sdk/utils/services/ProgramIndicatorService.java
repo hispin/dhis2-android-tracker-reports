@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.utils.services;
@@ -47,17 +46,18 @@ import org.hisp.dhis.android.sdk.utils.support.ExpressionUtils;
 import org.hisp.dhis.android.sdk.utils.support.MathUtils;
 import org.hisp.dhis.android.sdk.utils.support.TextUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 
 /**
  * @author Chau Thu Tran
- * @author Simen Skogly Russnes
  */
 
 /**
@@ -66,8 +66,7 @@ import java.util.regex.Matcher;
  */
 public class ProgramIndicatorService {
     public static final String CLASS_TAG = ProgramIndicatorService.class.getSimpleName();
-    public static final String ZERO = "0";
-
+    private static final String NULL_REPLACEMENT = "null";
     /**
      * Calculate an program indicator value based on program instance and an
      * indicator defined for a TrackedEntityInstance
@@ -77,26 +76,15 @@ public class ProgramIndicatorService {
      * @return Indicator value
      */
     public static String getProgramIndicatorValue(Enrollment programInstance, ProgramIndicator programIndicator) {
+        if(programIndicator == null) {
+            return null;
+        }
+        
         Double value = getValue(programInstance, null, programIndicator);
 
         if (value != null && !Double.isNaN(value)) {
             value = MathUtils.getRounded(value, 2);
-
-            if (programIndicator.getValueType().equals(ProgramIndicator.VALUE_TYPE_DATE)) {
-                Date baseDate = new Date();
-
-                if (ProgramIndicator.INCIDENT_DATE.equals(programIndicator.getRootDate())) {
-                    baseDate = DateUtils.getMediumDate(programInstance.getDateOfIncident());
-                } else if (ProgramIndicator.ENROLLMENT_DATE.equals(programIndicator.getRootDate())) {
-                    baseDate = DateUtils.getMediumDate(programInstance.getDateOfEnrollment());
-                }
-
-                Date date = DateUtils.getDateAfterAddition(baseDate, value.intValue());
-
-                return DateUtils.getMediumDateString(date);
-            }
-
-            return String.valueOf(Math.floor(value));
+            return String.valueOf(value);
         }
 
         return null;
@@ -110,24 +98,14 @@ public class ProgramIndicatorService {
      * @return Indicator value
      */
     public static String getProgramIndicatorValue(Event event, ProgramIndicator programIndicator) {
+        if(programIndicator == null) {
+            return null;
+        }
+        
         Double value = getValue(null, event, programIndicator);
 
         if (value != null && !Double.isNaN(value)) {
             value = MathUtils.getRounded(value, 2);
-
-            if (programIndicator.getValueType().equals(ProgramIndicator.VALUE_TYPE_DATE)) {
-                Date baseDate = new Date();
-
-                if (ProgramIndicator.INCIDENT_DATE.equals(programIndicator.getRootDate())) { //todo: ignoring in case of single event event without registration
-                    //baseDate = DateUtils.getMediumDate(programInstance.dateOfIncident);
-                } else if (ProgramIndicator.ENROLLMENT_DATE.equals(programIndicator.getRootDate())) {
-                    //baseDate = DateUtils.getMediumDate(programInstance.dateOfEnrollment);
-                }
-
-                Date date = DateUtils.getDateAfterAddition(baseDate, value.intValue());
-
-                return DateUtils.getMediumDateString(date);
-            }
             return String.valueOf(value);
         }
 
@@ -150,7 +128,7 @@ public class ProgramIndicatorService {
 
             if (value != null) {
                 result.put(programIndicator.getDisplayName(),
-                        getProgramIndicatorValue(programInstance, programIndicator));
+                    getProgramIndicatorValue(programInstance, programIndicator));
             }
         }
 
@@ -198,13 +176,13 @@ public class ProgramIndicatorService {
                     matcher.appendReplacement(description, constant.getDisplayName());
                 }
             } else if (ProgramIndicator.KEY_PROGRAM_VARIABLE.equals(key)) {
-                if (uid.equals(ProgramIndicator.CURRENT_DATE)) {
+                if (ProgramIndicator.CURRENT_DATE.equals(uid)) {
                     matcher.appendReplacement(description, "Current date");
-                } else if (uid.equals(ProgramIndicator.ENROLLMENT_DATE)) {
+                } else if (ProgramIndicator.ENROLLMENT_DATE.equals(uid)) {
                     matcher.appendReplacement(description, "Enrollment date");
-                } else if (uid.equals(ProgramIndicator.INCIDENT_DATE)) {
+                } else if (ProgramIndicator.INCIDENT_DATE.equals(uid)) {
                     matcher.appendReplacement(description, "Incident date");
-                } else if (uid.equals(ProgramIndicator.VALUE_COUNT)) {
+                } else if (ProgramIndicator.VALUE_COUNT.equals(uid)) {
                     matcher.appendReplacement(description, "Value count");
                 }
             }
@@ -303,6 +281,20 @@ public class ProgramIndicatorService {
         return elements;
     }
 
+    public static List<String> getDataElementsInExpression(ProgramIndicator indicator) {
+        List<String> elements = new ArrayList<>();
+
+        Matcher matcher = ProgramIndicator.DATAELEMENT_PATTERN.matcher(indicator.getExpression());
+
+        while (matcher.find()) {
+            String ps = matcher.group(1);
+            String de = matcher.group(2);
+            elements.add(de);
+        }
+
+        return elements;
+    }
+
     /**
      * Get all {@link org.hisp.dhis.android.sdk.persistence.models.TrackedEntityAttribute} part of the expression of the
      * given indicator.
@@ -347,6 +339,8 @@ public class ProgramIndicatorService {
 
         int valueCount = 0;
         int zeroPosValueCount = 0;
+        Event programStageInstance = null;
+        Map<String, DataValue> dataElementToDataValues = new HashMap<>();
 
         while (matcher.find()) {
             String key = matcher.group(1);
@@ -354,37 +348,44 @@ public class ProgramIndicatorService {
 
             if (ProgramIndicator.KEY_DATAELEMENT.equals(key)) {
                 String de = matcher.group(3);
-                ProgramStage programStage = MetaDataController.getProgramStage(uid);
-                DataElement dataElement = MetaDataController.getDataElement(de);
+                String programStageUid = uid;
 
-                if (programStage != null && dataElement != null) {
-                    Event programStageInstance;
+                if (programStageUid != null && de != null) {
                     if (programInstance == null) { //in case single event without reg
-                        programStageInstance = event;
+                        if(programStageInstance == null) {
+                            programStageInstance = event;
+                            if (programStageInstance.getDataValues() != null) {
+                                for (DataValue dataValue : programStageInstance.getDataValues()) {
+                                    dataElementToDataValues.put(dataValue.getDataElement(), dataValue);
+                                }
+                            }
+                        }
                     } else {
-                        programStageInstance = TrackerController.getEvent(programInstance.getLocalId(), programStage.getUid());
+                        if (programStageInstance == null || !programStageInstance.getUid().equals(programStageUid)) {
+                            programStageInstance = TrackerController.getEvent(programInstance.getLocalId(), programStageUid);
+                            dataElementToDataValues.clear();
+                            if (programStageInstance.getDataValues() != null) {
+                                for(DataValue dataValue: programStageInstance.getDataValues()) {
+                                    dataElementToDataValues.put(dataValue.getDataElement(), dataValue);
+                                }
+                            }
+                        }
                     }
 
-                    DataValue dataValue = null;
+                    DataValue dataValue;
                     if (programStageInstance.getDataValues() == null) {
                         continue;
                     }
-                    for (DataValue value : programStageInstance.getDataValues()) {
-                        if (value.getDataElement().equals(dataElement.getUid())) dataValue = value;
-                    }
+                    dataValue = dataElementToDataValues.get(de);
 
                     String value;
                     if (dataValue == null || dataValue.getValue() == null || dataValue.getValue().isEmpty()) {
-                        value = ZERO;
+                        value = NULL_REPLACEMENT;
                     } else {
                         value = dataValue.getValue();
 
                         valueCount++;
                         zeroPosValueCount = isZeroOrPositive(value) ? (zeroPosValueCount + 1) : zeroPosValueCount;
-                    }
-
-                    if (dataElement.getType().equals(DataElement.VALUE_TYPE_DATE)) {
-                        value = DateUtils.daysBetween(new Date(), DateUtils.getDefaultDate(value)) + " ";
                     }
 
                     matcher.appendReplacement(buffer, value);
@@ -393,23 +394,18 @@ public class ProgramIndicatorService {
                 }
             } else if (ProgramIndicator.KEY_ATTRIBUTE.equals(key)) {
                 if (programInstance != null) { //in case single event without reg
-                    TrackedEntityAttribute attribute = MetaDataController.getTrackedEntityAttribute(uid);
 
-                    if (attribute != null) {
+                    if (uid != null) {
                         TrackedEntityAttributeValue attributeValue = TrackerController.getTrackedEntityAttributeValue(
-                                attribute.getUid(), programInstance.getLocalTrackedEntityInstanceId());
+                                uid, programInstance.getLocalTrackedEntityInstanceId());
                         String value;
                         if (attributeValue == null || attributeValue.getValue() == null || attributeValue.getValue().isEmpty()) {
-                            value = ZERO;
+                            value = NULL_REPLACEMENT;
                         } else {
                             value = attributeValue.getValue();
 
                             valueCount++;
                             zeroPosValueCount = isZeroOrPositive(value) ? (zeroPosValueCount + 1) : zeroPosValueCount;
-                        }
-
-                        if (attribute.getValueType().equals(TrackedEntityAttribute.TYPE_DATE)) {
-                            value = DateUtils.daysBetween(new Date(), DateUtils.getDefaultDate(value)) + " ";
                         }
                         matcher.appendReplacement(buffer, value);
                     } else {
@@ -429,11 +425,11 @@ public class ProgramIndicatorService {
                     Date currentDate = new Date();
                     Date date = null;
 
-                    if (uid.equals(ProgramIndicator.ENROLLMENT_DATE)) {
-                        date = DateUtils.getMediumDate(programInstance.getDateOfEnrollment());
-                    } else if (uid.equals(ProgramIndicator.INCIDENT_DATE)) {
-                        date = DateUtils.getMediumDate(programInstance.getDateOfIncident());
-                    } else if (uid.equals(ProgramIndicator.CURRENT_DATE)) {
+                    if (ProgramIndicator.ENROLLMENT_DATE.equals(uid)) {
+                        date = DateUtils.getMediumDate(programInstance.getEnrollmentDate());
+                    } else if (ProgramIndicator.INCIDENT_DATE.equals(uid)) {
+                        date = DateUtils.getMediumDate(programInstance.getIncidentDate());
+                    } else if (ProgramIndicator.CURRENT_DATE.equals(uid)) {
                         date = currentDate;
                     }
 
@@ -442,7 +438,11 @@ public class ProgramIndicatorService {
                     }
                 }
             }
-
+        }
+        
+        if(valueCount <= 0) {
+            //returning null in case there are now values in the expression.
+            return null;
         }
 
         expression = TextUtils.appendTail(matcher, buffer);
@@ -450,6 +450,7 @@ public class ProgramIndicatorService {
         // ---------------------------------------------------------------------
         // Value count variable
         // ---------------------------------------------------------------------
+        
         buffer = new StringBuffer();
         matcher = ProgramIndicator.VALUECOUNT_PATTERN.matcher(expression);
 

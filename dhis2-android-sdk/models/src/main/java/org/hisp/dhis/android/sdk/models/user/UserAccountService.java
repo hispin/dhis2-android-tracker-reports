@@ -32,6 +32,8 @@ import org.hisp.dhis.android.sdk.models.common.IModelsStore;
 
 import java.util.List;
 
+import static org.hisp.dhis.android.sdk.models.utils.Preconditions.isNull;
+
 public class UserAccountService implements IUserAccountService {
     private final IUserAccountStore userAccountStore;
     private final IModelsStore modelsStore;
@@ -43,16 +45,18 @@ public class UserAccountService implements IUserAccountService {
 
     @Override
     public UserAccount getCurrentUserAccount() {
-        List<UserAccount> userAccounts = userAccountStore.query();
+        List<UserAccount> userAccounts = userAccountStore.queryAll();
         return userAccounts != null && !userAccounts.isEmpty() ? userAccounts.get(0) : null;
     }
 
     @Override
     public User toUser(UserAccount userAccount) {
+        isNull(userAccount, "userAccount must not be null");
+
         User user = new User();
         user.setUId(userAccount.getUId());
         user.setAccess(userAccount.getAccess());
-        user.setCreated(user.getCreated());
+        user.setCreated(userAccount.getCreated());
         user.setLastUpdated(userAccount.getLastUpdated());
         user.setName(userAccount.getName());
         user.setDisplayName(userAccount.getDisplayName());
@@ -61,7 +65,6 @@ public class UserAccountService implements IUserAccountService {
 
     @Override
     public void logOut() {
-
         // removing all existing data
         modelsStore.deleteAllTables();
     }

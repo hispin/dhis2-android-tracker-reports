@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.ui.dialogs;
@@ -77,7 +76,7 @@ import org.hisp.dhis.android.sdk.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemStatusDialogFragment extends DialogFragment
+public abstract class ItemStatusDialogFragment extends DialogFragment
         implements View.OnClickListener, LoaderManager.LoaderCallbacks<ItemStatusDialogFragmentForm> {
     private static final String TAG = ItemStatusDialogFragment.class.getSimpleName();
 
@@ -90,27 +89,12 @@ public class ItemStatusDialogFragment extends DialogFragment
     private FontTextView mStatus;
     private int mDialogId;
 
-    private static final String EXTRA_ID = "extra:id";
-    private static final String EXTRA_TYPE = "extra:type";
-    private static final String EXTRA_ARGUMENTS = "extra:Arguments";
-    private static final String EXTRA_SAVED_INSTANCE_STATE = "extra:savedInstanceState";
+    public static final String EXTRA_ID = "extra:id";
+    public static final String EXTRA_TYPE = "extra:type";
+    public static final String EXTRA_ARGUMENTS = "extra:Arguments";
+    public static final String EXTRA_SAVED_INSTANCE_STATE = "extra:savedInstanceState";
 
-    public static ItemStatusDialogFragment newInstance(BaseSerializableModel item) {
-        ItemStatusDialogFragment dialogFragment = new ItemStatusDialogFragment();
-        Bundle args = new Bundle();
-
-        args.putLong(EXTRA_ID, item.getLocalId());
-        if(item instanceof TrackedEntityInstance) {
-            args.putString(EXTRA_TYPE, FailedItem.TRACKEDENTITYINSTANCE);
-        } else if (item instanceof Enrollment) {
-            args.putString(EXTRA_TYPE, FailedItem.ENROLLMENT);
-        } else if (item instanceof Event) {
-            args.putString(EXTRA_TYPE, FailedItem.EVENT);
-        }
-
-        dialogFragment.setArguments(args);
-        return dialogFragment;
-    }
+//    public abstract ItemStatusDialogFragment newInstance(BaseSerializableModel item);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -196,9 +180,13 @@ public class ItemStatusDialogFragment extends DialogFragment
                     mStatus.setText(getString(R.string.status_sent_description));
                     break;
                 case ERROR: {
-                    mItemStatusImage.setImageResource(R.drawable.ic_event_error);
-                    mStatus.setText(getString(R.string.status_error_description));
                     FailedItem failedItem = TrackerController.getFailedItem(data.getType(), data.getItem().getLocalId());
+                    if(failedItem.getHttpStatusCode()==-1) {
+                        mItemStatusImage.setImageResource(R.drawable.ic_offline);
+                    } else {
+                        mItemStatusImage.setImageResource(R.drawable.ic_event_error);
+                    }
+                    mStatus.setText(getString(R.string.status_error_description));
                     if(failedItem!= null) {
                         String details = "";
                         if( failedItem.getErrorMessage() != null) {
@@ -318,19 +306,9 @@ public class ItemStatusDialogFragment extends DialogFragment
         }
     }
 
-    public static void sendToServer(final BaseSerializableModel item, ItemStatusDialogFragment fragment) {
-        if(item instanceof TrackedEntityInstance) {
-            TrackedEntityInstance trackedEntityInstance = (TrackedEntityInstance) item;
-            sendTrackedEntityInstance(trackedEntityInstance);
-        } else if(item instanceof Enrollment) {
-            Enrollment enrollment = (Enrollment) item;
-            sendEnrollment(enrollment);
-        } else if(item instanceof Event) {
-            Event event = (Event) item;
-            sendEvent(event);
-        }
+    public abstract void sendToServer(final BaseSerializableModel item, ItemStatusDialogFragment fragment);
 
-    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
@@ -377,16 +355,7 @@ public class ItemStatusDialogFragment extends DialogFragment
         return super.onContextItemSelected(item);
     }
 
-    public static void sendTrackedEntityInstance(final TrackedEntityInstance trackedEntityInstance) {
-        JobExecutor.enqueueJob(new NetworkJob<Object>(0,
-                ResourceType.TRACKEDENTITYINSTANCE) {
-            @Override
-            public Object execute() throws APIException {
-                TrackerController.sendTrackedEntityInstanceChanges(DhisController.getInstance().getDhisApi(), trackedEntityInstance, true);
-                return new Object();
-            }
-        });
-    }
+
 
         private class MediaScanner implements MediaScannerConnection.MediaScannerConnectionClient
         {
@@ -414,17 +383,7 @@ public class ItemStatusDialogFragment extends DialogFragment
                 mediaScannerConnection.disconnect();
             }
         }
-    public static void sendEnrollment(final Enrollment enrollment) {
-        JobExecutor.enqueueJob(new NetworkJob<Object>(0,
-                ResourceType.ENROLLMENT) {
 
-            @Override
-            public Object execute() throws APIException {
-                TrackerController.sendEnrollmentChanges(DhisController.getInstance().getDhisApi(), enrollment, true);
-                return new Object();
-            }
-        });
-    }
 
     public static void sendEvent(final Event event) {
         JobExecutor.enqueueJob(new NetworkJob<Object>(0,

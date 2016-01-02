@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.ui.adapters.rows.dataentry;
@@ -36,10 +35,12 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.hisp.dhis.android.sdk.R;
+import org.hisp.dhis.android.sdk.ui.adapters.rows.events.OnDetailedInfoButtonClick;
 import org.hisp.dhis.android.sdk.ui.fragments.dataentry.RowValueChangedEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.persistence.models.BaseValue;
@@ -58,18 +59,12 @@ import java.util.Map;
 
 import static android.text.TextUtils.isEmpty;
 
-public final class AutoCompleteRow implements DataEntryRow {
+public final class AutoCompleteRow extends Row {
     private static final String EMPTY_FIELD = "";
-
-    private final String mLabel;
-    private final BaseValue mValue;
 
     private final Map<String, String> mCodeToNameMap;
     private final Map<String, String> mNameToCodeMap;
     private final ArrayList<String> mOptions;
-
-    private boolean hidden = false;
-    private boolean editable = true;
 
     public AutoCompleteRow(String label, BaseValue value,
                            OptionSet optionSet) {
@@ -87,6 +82,8 @@ public final class AutoCompleteRow implements DataEntryRow {
         }
 
         mOptions = new ArrayList<>(mNameToCodeMap.keySet());
+
+        checkNeedsForDescriptionButton();
     }
 
     @Override
@@ -100,12 +97,13 @@ public final class AutoCompleteRow implements DataEntryRow {
             holder = (ViewHolder) view.getTag();
         } else {
             view = inflater.inflate(R.layout.listview_row_autocomplete, container, false);
-            holder = new ViewHolder(view);
+            detailedInfoButton =  view.findViewById(R.id.detailed_info_button_layout);
+            holder = new ViewHolder(view, detailedInfoButton);
             view.setTag(holder);
         }
 
         holder.textView.setText(mLabel);
-
+        holder.detailedInfoButton.setOnClickListener(new OnDetailedInfoButtonClick(this));
         holder.onTextChangedListener.setBaseValue(mValue);
         holder.onTextChangedListener.setOptions(mNameToCodeMap);
 
@@ -135,6 +133,8 @@ public final class AutoCompleteRow implements DataEntryRow {
             holder.clearButton.setEnabled(true);
 
         }
+        if(isDetailedInfoButtonHidden())
+            holder.detailedInfoButton.setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -144,43 +144,21 @@ public final class AutoCompleteRow implements DataEntryRow {
         return DataEntryRowTypes.AUTO_COMPLETE.ordinal();
     }
 
-    @Override
-    public BaseValue getBaseValue() {
-        return mValue;
-    }
-
-    @Override
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    @Override
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return editable;
-    }
-
-    @Override
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
 
     private static class ViewHolder {
         public final TextView textView;
         public final TextView valueTextView;
         public final ImageButton clearButton;
+        public final View detailedInfoButton;
         public final OnClearButtonListener onClearButtonListener;
         public final OnTextChangedListener onTextChangedListener;
         public final DropDownButtonListener onDropDownButtonListener;
 
-        private ViewHolder(View view) {
+        private ViewHolder(View view, View detailedInfoButton) {
             textView = (TextView) view.findViewById(R.id.text_label);
             valueTextView = (TextView) view.findViewById(R.id.choose_option);
             clearButton = (ImageButton) view.findViewById(R.id.clear_option_value);
+            this.detailedInfoButton = detailedInfoButton;
 
             OnOptionSelectedListener onOptionListener
                     = new OnOptionItemSelectedListener(valueTextView);
@@ -269,7 +247,7 @@ public final class AutoCompleteRow implements DataEntryRow {
             if (!newValue.equals(value.getValue())) {
                 value.setValue(newValue);
                 Dhis2Application.getEventBus()
-                        .post(new RowValueChangedEvent(value));
+                        .post(new RowValueChangedEvent(value, DataEntryRowTypes.AUTO_COMPLETE.toString()));
             }
         }
     }

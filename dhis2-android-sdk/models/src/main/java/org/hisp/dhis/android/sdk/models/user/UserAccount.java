@@ -33,12 +33,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hisp.dhis.android.sdk.models.common.Access;
-import org.hisp.dhis.android.sdk.models.common.IdentifiableObject;
-import org.hisp.dhis.android.sdk.models.common.meta.State;
+import org.hisp.dhis.android.sdk.models.common.base.IdentifiableObject;
+import org.hisp.dhis.android.sdk.models.common.state.Action;
 import org.joda.time.DateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class UserAccount implements IdentifiableObject {
+public class UserAccount implements IdentifiableObject {
 
     // As we have only one user account, the id will be constant
     private static final int LOCAL_ID = 1;
@@ -65,7 +65,7 @@ public final class UserAccount implements IdentifiableObject {
     Access access;
 
     @JsonIgnore
-    State state;
+    Action action;
 
     @JsonProperty("firstName")
     String firstName;
@@ -104,7 +104,7 @@ public final class UserAccount implements IdentifiableObject {
     String phoneNumber;
 
     public UserAccount() {
-        state = State.SYNCED;
+        action = Action.SYNCED;
     }
 
     @Override
@@ -177,12 +177,12 @@ public final class UserAccount implements IdentifiableObject {
         this.access = access;
     }
 
-    public State getState() {
-        return state;
+    public Action getAction() {
+        return action;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     public String getFirstName() {

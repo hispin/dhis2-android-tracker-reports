@@ -28,8 +28,8 @@
 
 package org.hisp.dhis.android.sdk.models.user;
 
-import org.hisp.dhis.android.sdk.models.common.IStore;
+import org.hisp.dhis.android.sdk.models.common.base.IIdentifiableObjectStore;
 
-public interface IUserStore extends IStore<User> {
-    User query(String uid);
+public interface IUserStore extends IIdentifiableObjectStore<User> {
+    User queryByUid(String uid);
 }

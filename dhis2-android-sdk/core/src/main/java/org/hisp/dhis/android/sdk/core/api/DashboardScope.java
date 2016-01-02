@@ -30,54 +30,61 @@ package org.hisp.dhis.android.sdk.core.api;
 
 import org.hisp.dhis.android.sdk.core.controllers.common.IDataController;
 import org.hisp.dhis.android.sdk.core.network.APIException;
+import org.hisp.dhis.android.sdk.corejava.dashboard.IDashboardService;
 import org.hisp.dhis.android.sdk.models.dashboard.Dashboard;
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardElement;
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardItem;
-import org.hisp.dhis.android.sdk.models.dashboard.DashboardItemContent;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardElementService;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardItemService;
-import org.hisp.dhis.android.sdk.models.dashboard.IDashboardService;
+import org.hisp.dhis.android.sdk.models.dashboard.DashboardContent;
 
-public final class DashboardScope implements IDataController<Dashboard>, IDashboardService, IDashboardItemService, IDashboardElementService {
+import java.util.List;
+
+public final class DashboardScope implements IDataController<Dashboard>, IDashboardService {
     private final IDataController<Dashboard> dataController;
     private final IDashboardService dashboardService;
-    private final IDashboardItemService dashboardItemService;
-    private final IDashboardElementService dashboardElementService;
 
     public DashboardScope(IDataController<Dashboard> dataController,
-                          IDashboardService dashboardService,
-                          IDashboardItemService dashboardItemService,
-                          IDashboardElementService dashboardElementService) {
+                          IDashboardService dashboardService) {
         this.dataController = dataController;
         this.dashboardService = dashboardService;
-        this.dashboardItemService = dashboardItemService;
-        this.dashboardElementService = dashboardElementService;
     }
 
     @Override
-    public Dashboard createDashboard(String name) {
-        return dashboardService.createDashboard(name);
+    public boolean add(Dashboard dashboard) {
+        return dashboardService.add(dashboard);
     }
 
     @Override
-    public void updateDashboardName(Dashboard dashboard, String name) {
-        dashboardService.updateDashboardName(dashboard, name);
+    public boolean save(Dashboard object) {
+        return dashboardService.save(object);
     }
 
     @Override
-    public void deleteDashboard(Dashboard dashboard) {
-        dashboardService.deleteDashboard(dashboard);
+    public boolean update(Dashboard dashboard) {
+        return dashboardService.update(dashboard);
     }
 
     @Override
-    public boolean addDashboardContent(Dashboard dashboard, DashboardItemContent content) {
-        return dashboardService.addDashboardContent(dashboard, content);
+    public boolean remove(Dashboard dashboard) {
+        return dashboardService.remove(dashboard);
     }
 
     @Override
+    public Dashboard get(long id) {
+        return dashboardService.get(id);
+    }
+
+    @Override
+    public List<Dashboard> list() {
+        return dashboardService.list();
+    }
+
+    @Override
+    public boolean addContent(Dashboard dashboard, DashboardContent content) {
+        return dashboardService.addContent(dashboard, content);
+    }
+
+    /* @Override
     public DashboardItem getAvailableItemByType(Dashboard dashboard, String type) {
         return dashboardService.getAvailableItemByType(dashboard, type);
-    }
+    } */
 
     @Override
     public void sync() throws APIException {
@@ -85,27 +92,7 @@ public final class DashboardScope implements IDataController<Dashboard>, IDashbo
     }
 
     @Override
-    public DashboardItem createDashboardItem(Dashboard dashboard, DashboardItemContent content) {
-        return dashboardItemService.createDashboardItem(dashboard, content);
-    }
-
-    @Override
-    public void deleteDashboardItem(DashboardItem dashboardItem) {
-        dashboardItemService.deleteDashboardItem(dashboardItem);
-    }
-
-    @Override
-    public int getContentCount(DashboardItem dashboardItem) {
-        return dashboardItemService.getContentCount(dashboardItem);
-    }
-
-    @Override
-    public DashboardElement createDashboardElement(DashboardItem item, DashboardItemContent content) {
-        return dashboardElementService.createDashboardElement(item, content);
-    }
-
-    @Override
-    public void deleteDashboardElement(DashboardItem dashboardItem, DashboardElement dashboardElement) {
-        dashboardElementService.deleteDashboardElement(dashboardItem, dashboardElement);
+    public Dashboard get(String uid) {
+        return null;
     }
 }

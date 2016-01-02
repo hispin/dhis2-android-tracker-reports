@@ -28,18 +28,16 @@
 
 package org.hisp.dhis.android.sdk.models.interpretation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.hisp.dhis.android.sdk.models.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.sdk.models.common.meta.State;
+import org.hisp.dhis.android.sdk.models.common.base.BaseIdentifiableObject;
 import org.hisp.dhis.android.sdk.models.user.User;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Interpretation extends BaseIdentifiableObject {
+public class Interpretation extends BaseIdentifiableObject {
     public static final String TYPE_CHART = "chart";
     public static final String TYPE_MAP = "map";
     public static final String TYPE_REPORT_TABLE = "reportTable";
@@ -50,9 +48,6 @@ public final class Interpretation extends BaseIdentifiableObject {
 
     @JsonProperty("type")
     private String type;
-
-    @JsonIgnore
-    private State state;
 
     @JsonProperty("user")
     private User user;
@@ -79,7 +74,6 @@ public final class Interpretation extends BaseIdentifiableObject {
     private List<InterpretationComment> comments;
 
     public Interpretation() {
-        state = State.SYNCED;
     }
 
     public String getText() {
@@ -96,14 +90,6 @@ public final class Interpretation extends BaseIdentifiableObject {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public User getUser() {

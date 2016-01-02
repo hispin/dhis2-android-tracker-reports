@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.persistence.models;
@@ -39,15 +38,14 @@ import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Update;
 
-import org.hisp.dhis.android.sdk.controllers.DhisController;
-import org.hisp.dhis.android.sdk.controllers.tracker.TrackerController;
 import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
+import org.hisp.dhis.android.sdk.controllers.tracker.TrackerController;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Database;
+import org.hisp.dhis.android.sdk.utils.api.CodeGenerator;
 import org.hisp.dhis.android.sdk.utils.support.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Simen Skogly Russnes on 04.03.15.
@@ -77,13 +75,13 @@ public class Enrollment extends BaseSerializableModel {
     @Column(name = "program")
     String program;
 
-    @JsonProperty("dateOfEnrollment")
-    @Column(name = "dateOfEnrollment")
-    String dateOfEnrollment;
+    @JsonProperty("enrollmentDate")
+    @Column(name = "enrollmentDate")
+    String enrollmentDate;
 
-    @JsonProperty("dateOfIncident")
-    @Column(name = "dateOfIncident")
-    String dateOfIncident;
+    @JsonProperty("incidentDate")
+    @Column(name = "incidentDate")
+    String incidentDate;
 
     @JsonProperty("followup")
     @Column(name = "followup")
@@ -105,26 +103,26 @@ public class Enrollment extends BaseSerializableModel {
     List<Event> events;
 
     public Enrollment() {
-        enrollment = DhisController.QUEUED + UUID.randomUUID().toString();
+        enrollment = CodeGenerator.generateCode();
     }
 
     public Enrollment(String organisationUnit, String trackedEntityInstance, Program program) {
         orgUnit = organisationUnit;
         status = Enrollment.ACTIVE;
-        enrollment = DhisController.QUEUED + UUID.randomUUID().toString();
+        enrollment = CodeGenerator.generateCode();
         followup = false;
         fromServer = false;
         this.program = program.getUid();
         this.trackedEntityInstance = trackedEntityInstance;
-        this.dateOfEnrollment = DateUtils.getMediumDateString();
-        this.dateOfIncident = DateUtils.getMediumDateString();
+        this.enrollmentDate = DateUtils.getMediumDateString();
+        this.incidentDate = DateUtils.getMediumDateString();
         List<Event> events = new ArrayList<>();
         for (ProgramStage programStage : program.getProgramStages()) {
             if (programStage.getAutoGenerateEvent()) {
                 String status = Event.STATUS_FUTURE_VISIT;
                 Event event = new Event(organisationUnit, status,
                         program.id, programStage,
-                        trackedEntityInstance, enrollment, dateOfEnrollment);
+                        trackedEntityInstance, enrollment, enrollmentDate);
                 events.add(event);
             }
         }
@@ -279,20 +277,20 @@ public class Enrollment extends BaseSerializableModel {
         this.localTrackedEntityInstanceId = localTrackedEntityInstanceId;
     }
 
-    public String getDateOfEnrollment() {
-        return dateOfEnrollment;
+    public String getEnrollmentDate() {
+        return enrollmentDate;
     }
 
-    public void setDateOfEnrollment(String dateOfEnrollment) {
-        this.dateOfEnrollment = dateOfEnrollment;
+    public void setEnrollmentDate(String enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
-    public String getDateOfIncident() {
-        return dateOfIncident;
+    public String getIncidentDate() {
+        return incidentDate;
     }
 
-    public void setDateOfIncident(String dateOfIncident) {
-        this.dateOfIncident = dateOfIncident;
+    public void setIncidentDate(String incidentDate) {
+        this.incidentDate = incidentDate;
     }
 
     public boolean getFollowup() {

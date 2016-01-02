@@ -31,29 +31,15 @@ package org.hisp.dhis.android.sdk.models.dashboard;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.hisp.dhis.android.sdk.models.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.sdk.models.common.meta.State;
+import org.hisp.dhis.android.sdk.models.common.base.BaseIdentifiableObject;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class DashboardElement extends BaseIdentifiableObject {
-    static final String DASHBOARD_ITEM_KEY = "dashboardItem";
-
-    @JsonIgnore
-    State state;
+public class DashboardElement extends BaseIdentifiableObject {
 
     @JsonIgnore
     DashboardItem dashboardItem;
 
     public DashboardElement() {
-        state = State.SYNCED;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public DashboardItem getDashboardItem() {

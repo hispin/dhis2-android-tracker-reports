@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.ui.adapters.rows.dataentry;
@@ -35,14 +34,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.hisp.dhis.android.sdk.R;
+import org.hisp.dhis.android.sdk.ui.adapters.rows.events.OnDetailedInfoButtonClick;
 import org.hisp.dhis.android.sdk.ui.fragments.dataentry.RowValueChangedEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.persistence.models.BaseValue;
 
-public class RadioButtonsRow implements DataEntryRow {
+public class RadioButtonsRow extends Row {
     private static final String EMPTY_FIELD = "";
     private static final String TRUE = "true";
     private static final String FALSE = "false";
@@ -51,12 +53,8 @@ public class RadioButtonsRow implements DataEntryRow {
     public static final String MALE = "gender_male";
     public static final String OTHER = "gender_other";
 
-    private final String mLabel;
-    private final BaseValue mValue;
-    private final DataEntryRowTypes mType;
 
-    private boolean hidden = false;
-    private boolean editable = true;
+
 
     public RadioButtonsRow(String label, BaseValue baseValue, DataEntryRowTypes type) {
         if (!DataEntryRowTypes.GENDER.equals(type) && !DataEntryRowTypes.BOOLEAN.equals(type)) {
@@ -65,7 +63,9 @@ public class RadioButtonsRow implements DataEntryRow {
 
         mLabel = label;
         mValue = baseValue;
-        mType = type;
+        mRowType = type;
+
+        checkNeedsForDescriptionButton();
     }
 
     @Override
@@ -88,20 +88,23 @@ public class RadioButtonsRow implements DataEntryRow {
                     root.findViewById(R.id.second_radio_button);
             CompoundButton thirdButton = (CompoundButton)
                     root.findViewById(R.id.third_radio_button);
+            detailedInfoButton =
+                    root.findViewById(R.id.detailed_info_button_layout);
 
-            if (DataEntryRowTypes.BOOLEAN.equals(mType)) {
+
+            if (DataEntryRowTypes.BOOLEAN.equals(mRowType)) {
                 firstButton.setText(R.string.yes);
                 secondButton.setText(R.string.no);
                 thirdButton.setText(R.string.none);
-            } else if (DataEntryRowTypes.GENDER.equals(mType)) {
+            } else if (DataEntryRowTypes.GENDER.equals(mRowType)) {
                 firstButton.setText(R.string.gender_male);
                 secondButton.setText(R.string.gender_female);
                 thirdButton.setText(R.string.gender_other);
             }
 
             CheckedChangeListener listener = new CheckedChangeListener();
-            holder = new BooleanRowHolder(mType, label, firstButton,
-                    secondButton, thirdButton, listener);
+            holder = new BooleanRowHolder(mRowType, label, firstButton,
+                    secondButton, thirdButton, detailedInfoButton, listener);
 
             holder.firstButton.setOnCheckedChangeListener(listener);
             holder.secondButton.setOnCheckedChangeListener(listener);
@@ -124,57 +127,39 @@ public class RadioButtonsRow implements DataEntryRow {
             root.setTag(holder);
             view = root;
         }
-
+        holder.detailedInfoButton.setOnClickListener(new OnDetailedInfoButtonClick(this));
         holder.updateViews(mLabel, mValue);
+
+        if(isDetailedInfoButtonHidden())
+            holder.detailedInfoButton.setVisibility(View.INVISIBLE);
+
         return view;
     }
 
     @Override
     public int getViewType() {
-        return mType.ordinal();
+        return mRowType.ordinal();
     }
 
-    @Override
-    public BaseValue getBaseValue() {
-        return mValue;
-    }
-
-    @Override
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    @Override
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return editable;
-    }
-
-    @Override
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
 
     private static class BooleanRowHolder {
         final TextView textLabel;
         final CompoundButton firstButton;
         final CompoundButton secondButton;
         final CompoundButton thirdButton;
+        final View detailedInfoButton;
         final CheckedChangeListener listener;
         final DataEntryRowTypes type;
 
         public BooleanRowHolder(DataEntryRowTypes type, TextView textLabel, CompoundButton firstButton,
                                 CompoundButton secondButton, CompoundButton thirdButton,
-                                CheckedChangeListener listener) {
+                                View detailedInfoButton, CheckedChangeListener listener) {
             this.type = type;
             this.textLabel = textLabel;
             this.firstButton = firstButton;
             this.secondButton = secondButton;
             this.thirdButton = thirdButton;
+            this.detailedInfoButton = detailedInfoButton;
             this.listener = listener;
         }
 
@@ -247,7 +232,7 @@ public class RadioButtonsRow implements DataEntryRow {
             if(!newValue.toString().equals(value.getValue()))
             {
                 value.setValue(newValue);
-                Dhis2Application.getEventBus().post(new RowValueChangedEvent(value));
+                Dhis2Application.getEventBus().post(new RowValueChangedEvent(value, type.toString()));
             }
 
             if (DataEntryRowTypes.BOOLEAN.equals(type)) {

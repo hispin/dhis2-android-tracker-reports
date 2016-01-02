@@ -1,30 +1,29 @@
 /*
- *  Copyright (c) 2015, University of Oslo
- *  * All rights reserved.
- *  *
- *  * Redistribution and use in source and binary forms, with or without
- *  * modification, are permitted provided that the following conditions are met:
- *  * Redistributions of source code must retain the above copyright notice, this
- *  * list of conditions and the following disclaimer.
- *  *
- *  * Redistributions in binary form must reproduce the above copyright notice,
- *  * this list of conditions and the following disclaimer in the documentation
- *  * and/or other materials provided with the distribution.
- *  * Neither the name of the HISP project nor the names of its contributors may
- *  * be used to endorse or promote products derived from this software without
- *  * specific prior written permission.
- *  *
- *  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- *  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- *  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- *  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- *  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2015, University of Oslo
  *
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ * Neither the name of the HISP project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.hisp.dhis.android.sdk.ui.activities;
@@ -34,6 +33,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -117,7 +117,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         }
 
         if (server == null) {
-            server = "https://bid.dhis2.org/epireg";
+            server = "https://";
         }
 
         if (username == null) {
@@ -140,6 +140,21 @@ public class LoginActivity extends Activity implements OnClickListener {
         String password = passwordEditText.getText().toString();
         String serverURL = serverEditText.getText().toString();
 
+        if(username.isEmpty()) {
+            showLoginFailedDialog(getString(R.string.enter_username));
+            return;
+        }
+
+        if(password.isEmpty()) {
+            showLoginFailedDialog(getString(R.string.enter_password));
+            return;
+        }
+
+        if(serverURL.isEmpty()) {
+            showLoginFailedDialog(getString(R.string.enter_serverurl));
+            return;
+        }
+
         //remove whitespace as last character for username
         if (username.charAt(username.length() - 1) == ' ') {
             username = username.substring(0, username.length() - 1);
@@ -150,12 +165,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     public void login(String serverUrl, String username, String password) {
         showProgress();
-        //NetworkManager.getInstance().setServerUrl(serverUrl);
-        //NetworkManager.getInstance().setCredentials(NetworkManager.getInstance().getBase64Manager()
-        //        .toBase64(username, password));
-        //Dhis2.getInstance().saveCredentials(this, serverUrl, username, password);
-        //Dhis2.getInstance().login(onLoginCallback, username, password);
         HttpUrl serverUri = HttpUrl.parse(serverUrl);
+        if(serverUri == null) {
+            showLoginFailedDialog(getString(R.string.invalid_server_url));
+            return;
+        }
         DhisService.logInUser(
                 serverUri, new Credentials(username, password)
         );
@@ -163,7 +177,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     @Subscribe
     public void onLoginFinished(NetworkJob.NetworkJobResult<ResourceType> result) {
-        if(result!=null && result.getResourceType().equals(ResourceType.USERS)) {
+        if(result!=null && ResourceType.USERS.equals(result.getResourceType())) {
             if(result.getResponseHolder().getApiException() == null) {
                 launchMainActivity();
             } else {
@@ -179,29 +193,30 @@ public class LoginActivity extends Activity implements OnClickListener {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void onLoginFail(APIException e) {
+    private void showLoginFailedDialog(String error) {
         Dialog.OnClickListener listener = new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showLoginDialog();
             }
         };
+        UiUtils.showErrorDialog(this, getString(R.string.error_message), error, listener);
+    }
 
+    public void onLoginFail(APIException e) {
         if (e.getResponse() == null) {
             String type = "error";
             //if (e.isHttpError()) type = "HttpError";
             //else if (e.isUnknownError()) type = "UnknownError";
             //else if (e.isNetworkError()) type = "NetworkError";
             //else if (e.isConversionError()) type = "ConversionError";
-            UiUtils.showErrorDialog(this, getString(R.string.error_message), type + ": "
-                    + e.getMessage(), listener);
+            showLoginFailedDialog(type + ": "
+                    + e.getMessage());
         } else {
             if (e.getResponse().getStatus() == 401) {
-                UiUtils.showErrorDialog(this, getString(R.string.error_message),
-                        getString(R.string.invalid_username_or_password), listener);
+                showLoginFailedDialog(getString(R.string.invalid_username_or_password));
             } else {
-                UiUtils.showErrorDialog(this, getString(R.string.error_message),
-                        getString(R.string.unable_to_login) + " " + e.getMessage(), listener);
+                showLoginFailedDialog(getString(R.string.unable_to_login) + " " + e.getMessage());
             }
         }
     }
@@ -221,7 +236,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     public void launchMainActivity() {
         startActivity(new Intent(LoginActivity.this,
-                ((Dhis2Application) getApplication()).getMainActivity()));
+                ((Dhis2Application) getApplication()).getMainscreen()));
         finish();
     }
 

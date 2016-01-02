@@ -32,8 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.hisp.dhis.android.sdk.models.common.BaseIdentifiableObject;
-import org.hisp.dhis.android.sdk.models.common.meta.State;
+import org.hisp.dhis.android.sdk.models.common.base.BaseIdentifiableObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +40,12 @@ import java.util.List;
 import static org.hisp.dhis.android.sdk.models.utils.StringUtils.isEmpty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class DashboardItem extends BaseIdentifiableObject {
+public class DashboardItem extends BaseIdentifiableObject {
     public static final int MAX_CONTENT = 8;
 
     public static final String SHAPE_NORMAL = "normal";
     public static final String SHAPE_DOUBLE_WIDTH = "double_width";
     public static final String SHAPE_FULL_WIDTH = "full_width";
-
-
-    @JsonIgnore
-    State state;
 
     @JsonProperty("type")
     String type;
@@ -90,16 +85,7 @@ public final class DashboardItem extends BaseIdentifiableObject {
     boolean messages;
 
     public DashboardItem() {
-        state = State.SYNCED;
         shape = SHAPE_NORMAL;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public String getType() {
@@ -208,35 +194,35 @@ public final class DashboardItem extends BaseIdentifiableObject {
         }
 
         switch (getType()) {
-            case DashboardItemContent.TYPE_CHART: {
+            case DashboardContent.TYPE_CHART: {
                 setChart(dashboardElements.get(0));
                 break;
             }
-            case DashboardItemContent.TYPE_EVENT_CHART: {
+            case DashboardContent.TYPE_EVENT_CHART: {
                 setEventChart(dashboardElements.get(0));
                 break;
             }
-            case DashboardItemContent.TYPE_MAP: {
+            case DashboardContent.TYPE_MAP: {
                 setMap(dashboardElements.get(0));
                 break;
             }
-            case DashboardItemContent.TYPE_REPORT_TABLE: {
+            case DashboardContent.TYPE_REPORT_TABLE: {
                 setReportTable(dashboardElements.get(0));
                 break;
             }
-            case DashboardItemContent.TYPE_EVENT_REPORT: {
+            case DashboardContent.TYPE_EVENT_REPORT: {
                 setEventReport(dashboardElements.get(0));
                 break;
             }
-            case DashboardItemContent.TYPE_USERS: {
+            case DashboardContent.TYPE_USERS: {
                 setUsers(dashboardElements);
                 break;
             }
-            case DashboardItemContent.TYPE_REPORTS: {
+            case DashboardContent.TYPE_REPORTS: {
                 setReports(dashboardElements);
                 break;
             }
-            case DashboardItemContent.TYPE_RESOURCES: {
+            case DashboardContent.TYPE_RESOURCES: {
                 setResources(dashboardElements);
                 break;
             }
@@ -251,35 +237,35 @@ public final class DashboardItem extends BaseIdentifiableObject {
         }
 
         switch (getType()) {
-            case DashboardItemContent.TYPE_CHART: {
+            case DashboardContent.TYPE_CHART: {
                 elements.add(getChart());
                 break;
             }
-            case DashboardItemContent.TYPE_EVENT_CHART: {
+            case DashboardContent.TYPE_EVENT_CHART: {
                 elements.add(getEventChart());
                 break;
             }
-            case DashboardItemContent.TYPE_MAP: {
+            case DashboardContent.TYPE_MAP: {
                 elements.add(getMap());
                 break;
             }
-            case DashboardItemContent.TYPE_REPORT_TABLE: {
+            case DashboardContent.TYPE_REPORT_TABLE: {
                 elements.add(getReportTable());
                 break;
             }
-            case DashboardItemContent.TYPE_EVENT_REPORT: {
+            case DashboardContent.TYPE_EVENT_REPORT: {
                 elements.add(getEventReport());
                 break;
             }
-            case DashboardItemContent.TYPE_USERS: {
+            case DashboardContent.TYPE_USERS: {
                 elements.addAll(getUsers());
                 break;
             }
-            case DashboardItemContent.TYPE_REPORTS: {
+            case DashboardContent.TYPE_REPORTS: {
                 elements.addAll(getReports());
                 break;
             }
-            case DashboardItemContent.TYPE_RESOURCES: {
+            case DashboardContent.TYPE_RESOURCES: {
                 elements.addAll(getResources());
                 break;
             }
