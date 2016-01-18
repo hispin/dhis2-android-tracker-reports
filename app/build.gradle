@@ -99,7 +99,10 @@ dependencies {
     compile dependency.butterknife
     compile dependency.rxAndroid
     compile dependency.rxJava
-
+//    compile dependency.retrofit
+//    compile dependency.retrofitConverterGson
+//    compile dependency.retrofitAdapterRxjava
+//    compile dependency.gson
     testCompile dependency.jUnit
 
 }
