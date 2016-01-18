@@ -6,18 +6,92 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+
+    // App config version ------------
+    // Android support version
+    androidPluginVersion = '1.3.0'
+    androidAptVersion = '1.4'
+    androidSupportVersion = '23.1.1'
+
+    //Dependency support version
+    retroLambdaVersion = '3.2.2'
+    daggerVersion = '2.0'
+    butterKnifeVerion = '7.0.1'
+    picassoVersion = '2.5.2'
+    gsonVersion = '2.3.1'
+    retrofitVersion = '2.0.0-beta1'
+    urlconnectionVersion = '2.5.0'
+    okhttpVersion = '2.5.0'
+    rxAndroidVersion = '1.1.0'
+    rxJavaVersion = '1.1.0'
+    ottoVersion = '1.3.8'
+    generatedAnnotationVersion = '10.0-b28'
+    junitVersion = '4.12'
+
+    //Core support version
+    dhis2SdkVersion = '8a5659327d'
+    androidcrVersion = 'core_1.2brief_version'
+
+    // Configuration.
+    config = [
+            minSdkVersion    : 15,
+            compileSdkVersion: 23,
+            buildToolsVersion: '23.0.2',
+            targetSdkVersion : 23
+    ]
+
+    plugin = [
+            androidPlugin: "com.android.tools.build:gradle:${androidPluginVersion}",
+            retroLambda  : "me.tatarka:gradle-retrolambda:${retroLambdaVersion}",
+            androidApt   : "com.neenbedankt.gradle.plugins:android-apt:${androidAptVersion}"
+    ]
+
+    dependency = [
+            // Android Support Libraries
+            appcompatv7          : "com.android.support:appcompat-v7:${androidSupportVersion}",
+            supportDesign        : "com.android.support:design:${androidSupportVersion}",
+            gridlayoutv7         : "com.android.support:gridlayout-v7:${androidSupportVersion}",
+            recyclerviewv7       : "com.android.support:recyclerview-v7:${androidSupportVersion}",
+
+            // Dependencies Injection.
+            dagger               : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler       : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            generatedAnnotation  : "org.glassfish:javax.annotation:${generatedAnnotationVersion}",
+
+            // View injection.
+            butterknife          : "com.jakewharton:butterknife:${butterKnifeVerion}",
+
+            // REST client
+            gson                 : "com.google.code.gson:gson:${gsonVersion}",
+            retrofit             : "com.squareup.retrofit:retrofit:${retrofitVersion}",
+            retrofitConverterGson: "com.squareup.retrofit:converter-gson:${retrofitVersion}",
+            retrofitAdapterRxjava: "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
+            urlconnection        : "com.squareup.okhttp:okhttp-urlconnection:${urlconnectionVersion}",
+            okhttp               : "com.squareup.okhttp:okhttp:${okhttpVersion}",
+            otto                 : "com.squareup:otto:${ottoVersion}",
+            rxAndroid            : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxJava               : "io.reactivex:rxjava:${rxJavaVersion}",
+
+            //Testing
+            jUnit                : "junit:junit:${junitVersion}",
+
+            //Core
+            dhis2Sdk             : "com.github.dhis2:dhis2-android-sdk:${dhis2SdkVersion}",
+            androidCore          : "com.github.cvnhan:androidcr:${androidcrVersion}"
+    ]
 }

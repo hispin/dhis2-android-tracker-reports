@@ -1,27 +1,105 @@
-apply plugin: 'com.android.application'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath rootProject.ext.plugin.androidPlugin
+        classpath rootProject.ext.plugin.retroLambda
+        classpath rootProject.ext.plugin.androidApt
+    }
+}
 
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+repositories {
+}
+
+
+Integer VERSION_CODE = 2016011900 //yyyymmddhh
+String VERSION_NAME = "1.0.0"
+String APK_NAME = "BID"
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.config.compileSdkVersion
+    buildToolsVersion rootProject.ext.config.buildToolsVersion
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace(output.outputFile.name, VERSION_CODE + "-" + VERSION_NAME + "-" + APK_NAME + ".apk"))
+        }
+    }
 
     defaultConfig {
         applicationId "org.hispindia.bidtrackerreports"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.config.minSdkVersion
+        targetSdkVersion rootProject.ext.config.compileSdkVersion
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
     }
+
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        release {
+            debuggable true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        dev {
+            buildConfigField 'String', 'HOST', '"https://bid.dhis2.org/epireg"'
+        }
+
+        staging {
+            buildConfigField 'String', 'HOST', '"https://bid.dhis2.org/epireg"'
+        }
+    }
+    // Configure for RetroLambda
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'LICENSE'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+    configurations {
+        all*.exclude module: 'commons-logging'
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    def dependency = rootProject.ext.dependency
+    compile dependency.dhis2Sdk
+    compile dependency.androidCore
+
+    compile dependency.appcompatv7
+    compile dependency.supportDesign
+    compile dependency.recyclerviewv7
+    compile dependency.dagger
+    apt dependency.daggerCompiler
+    provided dependency.generatedAnnotation;
+    compile dependency.butterknife
+    compile dependency.rxAndroid
+    compile dependency.rxJava
+
+    testCompile dependency.jUnit
+
 }
