@@ -4,6 +4,8 @@ import com.cvnhan.core.dagger.NCMCIPerActivity;
 import com.cvnhan.core.dagger.module.NCMCModuleActivity;
 
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
+import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentBIDReport;
+import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentSelectProgram;
 
 import dagger.Component;
 
@@ -18,5 +20,8 @@ public interface HIIComponentUi {
     void inject(HIActivityMain activityMain);
 
     //inject fragment
+    void inject(HIFragmentSelectProgram fragmentSelectProgram);
+    void inject(HIFragmentBIDReport fragmentBIDReport);
+
 
 }

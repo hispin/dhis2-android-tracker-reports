@@ -86,8 +86,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':..:dhis2-android-sdk:app')
     def dependency = rootProject.ext.dependency
-    compile dependency.dhis2Sdk
+//    compile dependency.dhis2Sdk
     compile dependency.androidCore
 
     compile dependency.appcompatv7
@@ -99,10 +100,14 @@ dependencies {
     compile dependency.butterknife
     compile dependency.rxAndroid
     compile dependency.rxJava
-//    compile dependency.retrofit
-//    compile dependency.retrofitConverterGson
-//    compile dependency.retrofitAdapterRxjava
-//    compile dependency.gson
+    compile dependency.retrofit
+    compile dependency.retrofitConverterGson
+    compile dependency.retrofitAdapterRxjava
+    compile dependency.gson
+    compile dependency.realm
+    compile dependency.jodaTime
+    compile dependency.jodaTimeConvert
+
     testCompile dependency.jUnit
 
 }
