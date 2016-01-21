@@ -20,6 +20,7 @@ public interface HIIComponentUi {
 
     //inject fragment
     void inject(HIFragmentSelectProgram fragmentSelectProgram);
+
     void inject(HIFragmentBIDReport fragmentBIDReport);
 
 

@@ -11,15 +11,15 @@ public class HIApiEnvConfig {
     public static void configEnv(APIURL hostEnv) {
         switch (hostEnv) {
             case BID:
-                hostUrl="https://bid.dhis2.org/epireg";
+                hostUrl = "https://bid.dhis2.org/epireg";
                 needVerifyHost = true;
                 break;
             case LOCAL:
-                hostUrl="http://192.168.0.230/dhis";
+                hostUrl = "http://192.168.0.230/dhis";
                 needVerifyHost = false;
                 break;
             default:
-                hostUrl="https://bid.dhis2.org/epireg";
+                hostUrl = "https://bid.dhis2.org/epireg";
                 needVerifyHost = true;
                 break;
         }
@@ -29,7 +29,9 @@ public class HIApiEnvConfig {
         return needVerifyHost;
     }
 
-    public static String getHostUrl() { return hostUrl; }
+    public static String getHostUrl() {
+        return hostUrl;
+    }
 
     public enum APIURL {
         BID,

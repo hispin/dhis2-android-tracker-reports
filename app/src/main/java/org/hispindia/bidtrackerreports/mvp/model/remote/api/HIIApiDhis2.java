@@ -13,6 +13,4 @@ public interface HIIApiDhis2 {
     SystemInfo getSystemInfo();
 
 
-
-
 }

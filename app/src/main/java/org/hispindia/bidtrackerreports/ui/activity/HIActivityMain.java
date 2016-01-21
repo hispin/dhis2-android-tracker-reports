@@ -1,6 +1,8 @@
 package org.hispindia.bidtrackerreports.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,19 +13,22 @@ import org.hisp.dhis.android.sdk.controllers.LoadingController;
 import org.hisp.dhis.android.sdk.controllers.PeriodicSynchronizerController;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.persistence.preferences.ResourceType;
+import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
+import org.hisp.dhis.android.sdk.ui.activities.OnBackPressedListener;
 import org.hisp.dhis.android.sdk.utils.UiUtils;
 import org.hispindia.android.core.dagger.module.HICModuleActivity;
-import org.hispindia.android.core.ui.fragment.HICFragmentNavigator;
 import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
-import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.SelectProgramFragment;
 
-public class HIActivityMain extends AppCompatActivity {
+public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 
-    private HICFragmentNavigator fragmentNavigator;
+    private OnBackPressedListener mBackPressedListener;
+    //    private HICFragmentNavigator fragmentNavigator;
     private HIIComponentUi uiComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +37,9 @@ public class HIActivityMain extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (savedInstanceState == null) {
-            fragmentNavigator.showScreen(new HIFragmentSelectProgram(), false);
-        }
+//        if (savedInstanceState == null) {
+//            fragmentNavigator.showScreen(new SelectProgramFragment(), false);
+//        }
 
         LoadingController.enableLoading(this, ResourceType.ASSIGNEDPROGRAMS);
         LoadingController.enableLoading(this, ResourceType.OPTIONSETS);
@@ -46,6 +51,7 @@ public class HIActivityMain extends AppCompatActivity {
         LoadingController.enableLoading(this, ResourceType.RELATIONSHIPTYPES);
         LoadingController.enableLoading(this, ResourceType.EVENTS);
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
+        showSelectProgramFragment();
 
     }
 
@@ -81,15 +87,47 @@ public class HIActivityMain extends AppCompatActivity {
     }
 
     @Override
+    public void switchFragment(Fragment fragment, String fragmentTag, boolean addToBackStack) {
+        if (fragment != null) {
+            FragmentTransaction transaction =
+                    getSupportFragmentManager().beginTransaction();
+
+            transaction
+                    .setCustomAnimations(R.anim.open_enter, R.anim.open_exit)
+                    .replace(R.id.fragment_container, fragment, fragmentTag);
+            transaction = transaction
+                    .addToBackStack(fragmentTag);
+            if (!addToBackStack) {
+                getSupportFragmentManager().popBackStack();
+            }
+            transaction.commitAllowingStateLoss();
+        }
+    }
+
+    @Override
+    public void setBackPressedListener(OnBackPressedListener backPressedListener) {
+        mBackPressedListener = backPressedListener;
+    }
+
+    @Override
     public void onBackPressed() {
-        if(!fragmentNavigator.navigateBack())
+        if (mBackPressedListener != null) {
+            if (!mBackPressedListener.doBack()) {
+                return;
+            }
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
+        } else {
+            finish();
+        }
     }
 
     //Implement method
 
     private void injectDependencies() {
-        fragmentNavigator = HICFragmentNavigator.create(this, R.id.container);
+//        fragmentNavigator = HICFragmentNavigator.create(this, R.id.container);
         uiComponent = DaggerHIIComponentUi.builder()
                 .hIIComponentSingleton(((HIApplication) getApplication()).getComponent())
                 .hICModuleActivity(new HICModuleActivity(this))
@@ -105,5 +143,15 @@ public class HIActivityMain extends AppCompatActivity {
         String message = getString(org.hisp.dhis.android.sdk.R.string.finishing_up);
         UiUtils.postProgressMessage(message);
         DhisService.loadInitialData(HIActivityMain.this);
+    }
+
+    public void showSelectProgramFragment() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setTitle("Tracker Capture");
+            }
+        });
+        switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
     }
 }
