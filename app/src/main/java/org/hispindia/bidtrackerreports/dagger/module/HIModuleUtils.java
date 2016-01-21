@@ -1,11 +1,6 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
-import com.squareup.otto.Bus;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by nhancao on 1/18/16.
@@ -13,9 +8,9 @@ import dagger.Provides;
 @Module
 public class HIModuleUtils {
 
-    @Singleton
-    @Provides
-    public Bus provideBus() {
-        return new Bus();
-    }
+//    @Singleton
+//    @Provides
+//    public Bus provideBus() {
+//        return new Bus();
+//    }
 }

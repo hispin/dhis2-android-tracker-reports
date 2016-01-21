@@ -21,8 +21,8 @@ Integer VERSION_CODE = 2016011900 //yyyymmddhh
 String VERSION_NAME = "1.0.0"
 String APK_NAME = "BID"
 android {
-    compileSdkVersion rootProject.ext.config.compileSdkVersion
-    buildToolsVersion rootProject.ext.config.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             output.outputFile = new File(
@@ -33,8 +33,8 @@ android {
 
     defaultConfig {
         applicationId "org.hispindia.bidtrackerreports"
-        minSdkVersion rootProject.ext.config.minSdkVersion
-        targetSdkVersion rootProject.ext.config.compileSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }
@@ -83,31 +83,32 @@ android {
         all*.exclude module: 'commons-logging'
     }
 }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':..:dhis2-android-sdk:app')
+
     def dependency = rootProject.ext.dependency
-//    compile dependency.dhis2Sdk
-    compile dependency.androidCore
+    compile project(':..:dhis2-android-sdk:app')
+    compile project(':android-core')
 
     compile dependency.appcompatv7
     compile dependency.supportDesign
     compile dependency.recyclerviewv7
+
     compile dependency.dagger
     apt dependency.daggerCompiler
     provided dependency.generatedAnnotation;
-    compile dependency.butterknife
-    compile dependency.rxAndroid
-    compile dependency.rxJava
-    compile dependency.retrofit
-    compile dependency.retrofitConverterGson
-    compile dependency.retrofitAdapterRxjava
     compile dependency.gson
     compile dependency.realm
-    compile dependency.jodaTime
-    compile dependency.jodaTimeConvert
+//    compile dependency.butterknife
+//    compile dependency.rxAndroid
+//    compile dependency.rxJava
+//    compile dependency.retrofit
+//    compile dependency.retrofitConverterGson
+//    compile dependency.retrofitAdapterRxjava
+//    compile dependency.jodaTime
+//    compile dependency.jodaTimeConvert
 
     testCompile dependency.jUnit
 
 }
+

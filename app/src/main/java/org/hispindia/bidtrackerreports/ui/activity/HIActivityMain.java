@@ -6,23 +6,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.cvnhan.core.dagger.module.NCMCModuleActivity;
-import com.cvnhan.core.ui.fragment.NCMCFragmentNavigator;
-import com.squareup.otto.Bus;
-
+import org.hisp.dhis.android.sdk.controllers.DhisService;
+import org.hisp.dhis.android.sdk.controllers.LoadingController;
+import org.hisp.dhis.android.sdk.controllers.PeriodicSynchronizerController;
+import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
+import org.hisp.dhis.android.sdk.persistence.preferences.ResourceType;
+import org.hisp.dhis.android.sdk.utils.UiUtils;
+import org.hispindia.android.core.dagger.module.HICModuleActivity;
+import org.hispindia.android.core.ui.fragment.HICFragmentNavigator;
 import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentSelectProgram;
 
-import javax.inject.Inject;
-
 public class HIActivityMain extends AppCompatActivity {
 
-    @Inject
-    Bus bus;
-    private NCMCFragmentNavigator fragmentNavigator;
+    private HICFragmentNavigator fragmentNavigator;
     private HIIComponentUi uiComponent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +36,31 @@ public class HIActivityMain extends AppCompatActivity {
             fragmentNavigator.showScreen(new HIFragmentSelectProgram(), false);
         }
 
-
+        LoadingController.enableLoading(this, ResourceType.ASSIGNEDPROGRAMS);
+        LoadingController.enableLoading(this, ResourceType.OPTIONSETS);
+        LoadingController.enableLoading(this, ResourceType.PROGRAMS);
+        LoadingController.enableLoading(this, ResourceType.CONSTANTS);
+        LoadingController.enableLoading(this, ResourceType.PROGRAMRULES);
+        LoadingController.enableLoading(this, ResourceType.PROGRAMRULEVARIABLES);
+        LoadingController.enableLoading(this, ResourceType.PROGRAMRULEACTIONS);
+        LoadingController.enableLoading(this, ResourceType.RELATIONSHIPTYPES);
+        LoadingController.enableLoading(this, ResourceType.EVENTS);
+        PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        bus.register(this);
+        Dhis2Application.getEventBus().register(this);
         loadInitialData();
     }
 
     @Override
     protected void onPause() {
-        bus.unregister(this);
         super.onPause();
+        Dhis2Application.getEventBus().unregister(this);
+
     }
 
     @Override
@@ -79,10 +89,10 @@ public class HIActivityMain extends AppCompatActivity {
     //Implement method
 
     private void injectDependencies() {
-        fragmentNavigator = NCMCFragmentNavigator.create(this, R.id.container);
+        fragmentNavigator = HICFragmentNavigator.create(this, R.id.container);
         uiComponent = DaggerHIIComponentUi.builder()
                 .hIIComponentSingleton(((HIApplication) getApplication()).getComponent())
-                .nCMCModuleActivity(new NCMCModuleActivity(this))
+                .hICModuleActivity(new HICModuleActivity(this))
                 .build();
         uiComponent.inject(this);
     }
@@ -92,7 +102,8 @@ public class HIActivityMain extends AppCompatActivity {
     }
 
     public void loadInitialData() {
-
-
+        String message = getString(org.hisp.dhis.android.sdk.R.string.finishing_up);
+        UiUtils.postProgressMessage(message);
+        DhisService.loadInitialData(HIActivityMain.this);
     }
 }

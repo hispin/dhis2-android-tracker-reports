@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cvnhan.core.ui.fragment.NCMCFragmentBase;
-
+import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
@@ -15,7 +14,7 @@ import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentBIDReport extends NCMCFragmentBase{
+public class HIFragmentBIDReport extends HICFragmentBase {
 
     @Nullable
     @Override

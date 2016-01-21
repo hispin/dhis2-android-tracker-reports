@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':android-core'
 include ':app', '..:dhis2-android-sdk:app'

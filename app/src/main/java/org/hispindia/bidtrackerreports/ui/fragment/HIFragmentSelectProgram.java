@@ -6,22 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cvnhan.core.ui.fragment.NCMCFragmentBase;
-import com.squareup.otto.Bus;
-
+import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 
-import javax.inject.Inject;
-
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentSelectProgram extends NCMCFragmentBase {
-
-    @Inject
-    Bus bus;
+public class HIFragmentSelectProgram extends HICFragmentBase {
 
     @Nullable
     @Override
