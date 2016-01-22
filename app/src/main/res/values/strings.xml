@@ -39,5 +39,15 @@
     <string name="http_error_503">Service unavailable</string>
     <string name="http_error_504">Gateway timed out</string>
 
+    <string name="dialog_organisation_units_mode">Organisation units mode</string>
+    <string name="dialog_programs_stage">Programs Stage</string>
+    <string name="choose_organisation_unit_mode">Choose organisation mode</string>
+    <string name="choose_program_stage">Choose program stage</string>
+    <string-array name="organisation_mode">
+        <item>SELECTED</item>
+        <item>CHILDREN</item>
+        <item>DESCENDANTS</item>
+    </string-array>
+    <string name="generate_report">Generate report</string>
 
 </resources>

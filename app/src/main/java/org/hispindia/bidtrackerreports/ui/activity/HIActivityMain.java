@@ -19,7 +19,7 @@ import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
-import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.SelectProgramFragment;
+import org.hispindia.bidtrackerreports.ui.fragment.bidselectprogram.HIFragmentSelectProgram;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 
@@ -49,7 +49,7 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         LoadingController.enableLoading(this, ResourceType.RELATIONSHIPTYPES);
         LoadingController.enableLoading(this, ResourceType.EVENTS);
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
-        showSelectProgramFragment();
+        showMainFragment();
 
     }
 
@@ -126,13 +126,14 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         DhisService.loadInitialData(HIActivityMain.this);
     }
 
-    public void showSelectProgramFragment() {
+    public void showMainFragment() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setTitle("Tracker Capture");
+                setTitle("BID Tracker Report");
             }
         });
-        switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
+        switchFragment(new HIFragmentSelectProgram(), HIFragmentSelectProgram.TAG, true);
+//        switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
     }
 }

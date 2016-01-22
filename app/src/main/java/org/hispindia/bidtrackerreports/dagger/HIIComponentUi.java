@@ -4,7 +4,7 @@ import org.hispindia.android.core.dagger.HICIPerActivity;
 import org.hispindia.android.core.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentBIDReport;
-import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.bidselectprogram.HIFragmentSelectProgram;
 
 import dagger.Component;
 

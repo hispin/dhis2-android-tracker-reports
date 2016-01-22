@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 
 import java.text.Normalizer;
 
@@ -73,5 +74,21 @@ public class HICUtils {
             }
         }
         return false;
+    }
+
+    public static void setEnabledViews(boolean enabled, View... views) {
+        for (View v : views) {
+            v.setEnabled(enabled);
+        }
+    }
+
+    public static void setShowViews(boolean show, View... views) {
+        for (View v : views) {
+            if (show) {
+                v.setVisibility(View.VISIBLE);
+            } else {
+                v.setVisibility(View.GONE);
+            }
+        }
     }
 }
