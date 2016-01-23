@@ -25,7 +25,7 @@ public class HIDialogOrgUnitMode extends AutoCompleteDialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setDialogLabel(org.hisp.dhis.android.sdk.R.string.dialog_organisation_units_mode);
+        setDialogLabel(R.string.dialog_organisation_units_mode);
         setDialogId(ID);
 
         String[] orgUnitMode = getResources().getStringArray(R.array.organisation_mode);

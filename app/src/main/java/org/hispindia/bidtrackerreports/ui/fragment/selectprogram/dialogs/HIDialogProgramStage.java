@@ -15,6 +15,7 @@ import org.hisp.dhis.android.sdk.persistence.models.Program;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramStage;
 import org.hisp.dhis.android.sdk.ui.dialogs.AutoCompleteDialogAdapter;
 import org.hisp.dhis.android.sdk.ui.dialogs.AutoCompleteDialogFragment;
+import org.hispindia.bidtrackerreports.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +42,7 @@ public class HIDialogProgramStage extends AutoCompleteDialogFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setDialogLabel(org.hisp.dhis.android.sdk.R.string.dialog_programs_stage);
+        setDialogLabel(R.string.dialog_programs_stage);
         setDialogId(ID);
         mProgressBar.setVisibility(View.VISIBLE);
     }

@@ -47,17 +47,17 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         LoadingController.enableLoading(this, ResourceType.PROGRAMRULEVARIABLES);
         LoadingController.enableLoading(this, ResourceType.PROGRAMRULEACTIONS);
         LoadingController.enableLoading(this, ResourceType.RELATIONSHIPTYPES);
-        LoadingController.enableLoading(this, ResourceType.EVENTS);
+        LoadingController.enableLoading(this, ResourceType.TRACKEDENTITYINSTANCE);
+        LoadingController.enableLoading(this, ResourceType.TRACKEDENTITYATTRIBUTES);
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
         showMainFragment();
-
+        loadInitialData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Dhis2Application.getEventBus().register(this);
-        loadInitialData();
     }
 
     @Override

@@ -31,6 +31,7 @@ import org.hisp.dhis.android.sdk.ui.views.CardTextViewButton;
 import org.hisp.dhis.android.sdk.utils.api.ProgramType;
 import org.hispindia.android.core.utils.HICUtils;
 import org.hispindia.bidtrackerreports.R;
+import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.dialogs.HIDialogOrgUnitMode;
 import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.dialogs.HIDialogProgramStage;
 
@@ -220,8 +221,9 @@ public class HIFragmentSelectProgram extends Fragment
                 fragmentProStage.show(getChildFragmentManager());
                 break;
             case R.id.btnGenerateReport:
-
-
+                btnGenerateReport.setEnabled(false);
+                HIBIDModel.getAllBIDEvent(mState.getOrgUnitId(), mState.getOrgUnitModeId(), mState.getProgramId(), mState.getProgramStageId());
+                btnGenerateReport.setEnabled(true);
                 break;
         }
     }
