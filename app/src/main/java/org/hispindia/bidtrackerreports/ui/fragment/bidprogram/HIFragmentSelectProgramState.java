@@ -1,4 +1,4 @@
-package org.hispindia.bidtrackerreports.ui.fragment.bidselectprogram;
+package org.hispindia.bidtrackerreports.ui.fragment.bidprogram;
 
 import android.os.Parcel;
 import android.os.Parcelable;

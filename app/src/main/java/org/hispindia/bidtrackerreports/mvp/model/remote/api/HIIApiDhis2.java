@@ -8,6 +8,7 @@ import org.hispindia.bidtrackerreports.mvp.model.remote.response.BIDEvents;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import rx.Observable;
 
 /**
  * Created by nhancao on 1/20/16.
@@ -15,7 +16,7 @@ import retrofit.http.Query;
 public interface HIIApiDhis2 {
 
     @GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true")
-    BIDEvents getEvents(@Query("orgUnit") String orgUnitUid, @Query("ouMode") String ouModeUid, @Query("programStage") String programStageUid);
+    Observable<BIDEvents> getEvents(@Query("orgUnit") String orgUnitUid, @Query("ouMode") String ouModeUid, @Query("programStage") String programStageUid);
 
     @GET("/" + ApiEndpointContainer.TRACKED_ENTITY_INSTANCES + "/{trackedEntityInstanceUid}")
     TrackedEntityInstance getTrackedEntityInstancebyUid(@Path("trackedEntityInstanceUid") String trackedEntityInstanceUid);

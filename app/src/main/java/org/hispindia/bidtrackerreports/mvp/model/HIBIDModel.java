@@ -1,15 +1,9 @@
 package org.hispindia.bidtrackerreports.mvp.model;
 
-import android.os.AsyncTask;
+import android.app.Application;
 import android.util.Log;
 
-import com.squareup.okhttp.HttpUrl;
-
-import org.hisp.dhis.android.sdk.controllers.DhisController;
 import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
-import org.hisp.dhis.android.sdk.network.APIException;
-import org.hisp.dhis.android.sdk.network.Credentials;
-import org.hisp.dhis.android.sdk.network.RepoManager;
 import org.hisp.dhis.android.sdk.persistence.models.DataValue;
 import org.hisp.dhis.android.sdk.persistence.models.Enrollment;
 import org.hisp.dhis.android.sdk.persistence.models.Event;
@@ -17,33 +11,32 @@ import org.hisp.dhis.android.sdk.persistence.models.Program;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramIndicator;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramRule;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramRuleAction;
+import org.hisp.dhis.android.sdk.persistence.models.ProgramRuleVariable;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramStage;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramStageDataElement;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramTrackedEntityAttribute;
 import org.hisp.dhis.android.sdk.persistence.models.TrackedEntityAttributeValue;
 import org.hisp.dhis.android.sdk.persistence.models.TrackedEntityInstance;
-import org.hisp.dhis.android.sdk.utils.StringConverter;
+import org.hisp.dhis.android.sdk.utils.comparators.ProgramRulePriorityComparator;
 import org.hisp.dhis.android.sdk.utils.services.ProgramIndicatorService;
 import org.hisp.dhis.android.sdk.utils.services.ProgramRuleService;
 import org.hisp.dhis.android.sdk.utils.services.VariableService;
+import org.hispindia.bidtrackerreports.event.HIEvent;
+import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.BIDEvents;
-import org.hispindia.bidtrackerreports.mvp.presenter.HIProgramRule;
-import org.hispindia.bidtrackerreports.mvp.presenter.HIRulesHelper;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.ErrorHandler;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.converter.ConversionException;
-import retrofit.converter.Converter;
-import retrofit.converter.JacksonConverter;
+import rx.Observable;
+import rx.Subscriber;
+
+import static org.hispindia.android.core.utils.HICUtilRxHelper.onNext;
 
 /**
  * Created by nhancao on 1/22/16.
@@ -51,167 +44,65 @@ import retrofit.converter.JacksonConverter;
 public class HIBIDModel {
     public final static String TAG = HIBIDModel.class.getSimpleName();
 
-    private static String provideServerUrl(HttpUrl httpUrl) {
-        return httpUrl.newBuilder()
-                .addPathSegment("api")
-                .build().toString();
-    }
+    private final Application application;
+    private final HIIApiDhis2 apiModel;
 
-    private static Converter provideJacksonConverter() {
-        return new JacksonConverter(DhisController.getInstance().getObjectMapper());
-    }
+    private HIBIDRow headerRow;
+    private Program program;
+    private Event event;
+    private Enrollment enrollment;
+    private ProgramStage programStage;
 
-    private static OkClient provideOkClient(Credentials credentials) {
-        return new OkClient(RepoManager.provideOkHttpClient(credentials));
-    }
-
-    private static HIIApiDhis2 createService(HttpUrl serverUrl, Credentials credentials) {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(provideServerUrl(serverUrl))
-                .setConverter(provideJacksonConverter())
-                .setClient(provideOkClient(credentials))
-                .setErrorHandler(new RetrofitErrorHandler())
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
-                .build();
-        return restAdapter.create(HIIApiDhis2.class);
-    }
-
-    public static HIIApiDhis2 getHIIApiDhis2() {
-        return createService(DhisController.getInstance().getSession().getServerUrl(), DhisController.getInstance().getSession().getCredentials());
-    }
-
-    public static void getAllBIDEvent(String orgUnitUid, String ouModeUid, String programId, String programStageUid) {
-
-        new HIApplyRule(orgUnitUid, ouModeUid, programId, programStageUid).execute();
-
-    }
-
-    private static class RetrofitErrorHandler implements ErrorHandler {
-
-        @Override
-        public Throwable handleError(RetrofitError cause) {
-            Log.d("RepoManager", "there was an error.." + cause.getKind().name());
-            try {
-                String body = new StringConverter().fromBody(cause.getResponse().getBody(), String.class);
-                Log.e("RepoManager", body);
-            } catch (ConversionException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-            return APIException.fromRetrofitError(cause);
-        }
-    }
-}
-
-class HIApplyRule extends AsyncTask<Void, Void, Void> implements HIRulesHelper.HIIProgramRuleHelper {
-    public final static String TAG = HIApplyRule.class.getSimpleName();
-    HIProgramRule programRule;
-    Program program;
-    Event event;
-    Enrollment enrollment;
-    ProgramStage programStage;
-    Map<String, DataValue> dataValues;
-    Map<String, TrackedEntityAttributeValue> trackedEntityAttributeValues;
-    String orgUnitUid;
-    String ouModeUid;
-    String programId;
-    String programStageUid;
     private Map<String, List<ProgramRule>> programRulesForDataElements;
     private Map<String, List<ProgramIndicator>> programIndicatorsForDataElements;
+    private List<String> affectedFieldsWithValue;
 
-    public HIApplyRule(String orgUnitUid, String ouModeUid, String programId, String programStageUid) {
-        this.orgUnitUid = orgUnitUid;
-        this.ouModeUid = ouModeUid;
-        this.programId = programId;
-        this.programStageUid = programStageUid;
-        programStage = MetaDataController.getProgramStage(programStageUid);
-        program = MetaDataController.getProgram(programId);
-        programRule = new HIProgramRule();
-        programRule.setProgramRuleHelper(this);
+    public HIBIDModel(Application application, HIIApiDhis2 apiModel) {
+        this.application = application;
+        this.apiModel = apiModel;
     }
 
-    void initial(Event event, Enrollment enrollment) {
+    /**
+     * Initial db for report
+     *
+     * @param programId
+     * @param programStageUid
+     * @return bid header row report
+     */
+    public HIBIDRow initialDBReport(String programId, String programStageUid) {
+        this.program = MetaDataController.getProgram(programId);
+        this.programStage = MetaDataController.getProgramStage(programStageUid);
+        headerRow = new HIBIDRow();
+        headerRow.setTEAKeyList(MetaDataController.getProgramTrackedEntityAttributes(programId));
+        headerRow.setDEKeyList(MetaDataController.getProgramStageDataElements(MetaDataController.getProgramStage(programStageUid)));
+        return headerRow;
+    }
+
+    public void initial(Event event, Enrollment enrollment) {
         this.event = event;
         this.enrollment = enrollment;
+        VariableService.reset();
     }
 
-    public Map<String, List<ProgramRule>> getProgramRulesForDataElements() {
-        return programRulesForDataElements;
-    }
-
-    public void setProgramRulesForDataElements(Map<String, List<ProgramRule>> programRulesForDataElements) {
-        this.programRulesForDataElements = programRulesForDataElements;
-    }
-
-    public Map<String, List<ProgramIndicator>> getProgramIndicatorsForDataElements() {
-        return programIndicatorsForDataElements;
-    }
-
-    public void setProgramIndicatorsForDataElements(Map<String, List<ProgramIndicator>> programIndicatorsForDataElements) {
-        this.programIndicatorsForDataElements = programIndicatorsForDataElements;
-    }
-
-    @Override
-    protected Void doInBackground(Void... params) {
-        //due day, is overdue?, Tracked Entity Attribute, Data element
-        List<ProgramTrackedEntityAttribute> programTrackedEntityAttributes = MetaDataController.getProgramTrackedEntityAttributes(programId);
-        List<ProgramStageDataElement> programStageDataElements = MetaDataController.getProgramStageDataElements(programStage);
-        Log.e(TAG, "doInBackground: att size = " + programTrackedEntityAttributes.size() + "; dataE size = " + programStageDataElements.size());
-
-        BIDEvents bidEvents = HIBIDModel.getHIIApiDhis2().getEvents(orgUnitUid, ouModeUid, programStageUid);
-        List<Event> eventBIDList = bidEvents.getEventList();
-        int count = 0;
-        for (Event eventItem : eventBIDList) {
-            if (eventItem.getStatus().equals("SCHEDULE")) {
-                TrackedEntityInstance trackedEntityInstance = HIBIDModel.getHIIApiDhis2().getTrackedEntityInstancebyUid(eventItem.getTrackedEntityInstance());
-                Enrollment enrollment = HIBIDModel.getHIIApiDhis2().getEnrollmentbyUid(eventItem.getEnrollment());
-                BIDEvents eventTrackedEntityInstance = HIBIDModel.getHIIApiDhis2().getEvents(eventItem.getTrackedEntityInstance());
-                enrollment.setEvents(eventTrackedEntityInstance.getEventList());
-                Log.e(TAG, "getAllBIDEvent: " + (++count));
-
-                Log.e(TAG, "getAllBIDEvent: due day=" + eventItem.getDueDate());
-                for (ProgramTrackedEntityAttribute attRoot : programTrackedEntityAttributes) {
-                    for (TrackedEntityAttributeValue att : trackedEntityInstance.getAttributes()) {
-                        if (att.getTrackedEntityAttributeId().equals(attRoot.getTrackedEntityAttributeId())) {
-                            Log.e(TAG, "getAllBIDEvent: " + attRoot.getTrackedEntityAttribute().getDisplayName() + " = " + att.getValue());
-                        }
-                    }
+    public void evaluateAndApplyProgramRules() {
+        VariableService.initialize(enrollment, event);
+        mapFieldsToRulesAndIndicators();
+        affectedFieldsWithValue = new ArrayList<>();
+        List<ProgramRule> programRules = program.getProgramRules();
+        Collections.sort(programRules, new ProgramRulePriorityComparator());
+        for (ProgramRule programRule : programRules) {
+            boolean evaluatedTrue = ProgramRuleService.evaluate(programRule.getCondition());
+            for (ProgramRuleAction action : programRule.getProgramRuleActions()) {
+                if (evaluatedTrue) {
+                    applyProgramRuleAction(action, affectedFieldsWithValue);
                 }
-                Log.e(TAG, "getAllBIDEvent: ");
-                for (int i = eventTrackedEntityInstance.getEventList().size() - 1; i >= 0; i--) {
-                    List<DataValue> dataValues = eventTrackedEntityInstance.getEventList().get(i).getDataValues();
-                    if (dataValues != null) {
-                        for (int j = 0; j < dataValues.size(); j++) {
-                            String dataElementId = dataValues.get(j).getDataElement();
-                            for (ProgramStageDataElement deRoot : programStageDataElements) {
-                                if (dataElementId.equals(deRoot.getDataelement())) {
-                                    Log.e(TAG, "getAllBIDEvent: " + deRoot.getDataElement().getDisplayName() + " = " + dataValues.get(j).getValue());
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (eventItem.getEventDate() == null) {
-                    eventItem.setEventDate(DateTime.now().toString());
-                }
-                VariableService.reset();
-                initial(eventItem, enrollment);
-                programRule.evaluateAndApplyProgramRules();
-                if (count == 5)
-                    break;
             }
         }
-
-        return null;
     }
 
-    @Override
     public void mapFieldsToRulesAndIndicators() {
-        setProgramRulesForDataElements(new HashMap<String, List<ProgramRule>>());
-        setProgramIndicatorsForDataElements(new HashMap<String, List<ProgramIndicator>>());
+        setProgramRulesForDataElements(new HashMap<>());
+        setProgramIndicatorsForDataElements(new HashMap<>());
         for (ProgramRule programRule : program.getProgramRules()) {
             for (String dataElement : ProgramRuleService.getDataElementsInRule(programRule)) {
                 List<ProgramRule> rulesForDataElement = getProgramRulesForDataElements().get(dataElement);
@@ -238,27 +129,111 @@ class HIApplyRule extends AsyncTask<Void, Void, Void> implements HIRulesHelper.H
         }
     }
 
-    @Override
-    public List<ProgramRule> getProgramRules() {
-        return program.getProgramRules();
-    }
+    protected void applyProgramRuleAction(ProgramRuleAction programRuleAction, List<String> affectedFieldsWithValue) {
 
-    @Override
-    public Enrollment getEnrollment() {
-        return enrollment;
-    }
-
-    @Override
-    public Event getEvent() {
-        return event;
-    }
-
-    @Override
-    public void applyHideFieldRuleAction(ProgramRuleAction programRuleAction, List<String> affectedFieldsWithValue) {
-        if (programRuleAction.getDataElement() != null) {
-            Log.e(TAG, "applyHideFieldRuleAction: " + MetaDataController.getDataElement(programRuleAction.getDataElement()).getName());
+        switch (programRuleAction.getProgramRuleActionType()) {
+            case HIDEFIELD: {
+                if (programRuleAction.getDataElement() != null) {
+                    affectedFieldsWithValue.add(programRuleAction.getDataElement());
+                    Log.e(TAG, "applyHideFieldRuleAction: " + MetaDataController.getDataElement(programRuleAction.getDataElement()).getName());
+                }
+                break;
+            }
+            case ASSIGN: {
+                applyAssignRuleAction(programRuleAction);
+                break;
+            }
         }
-
     }
 
+    protected void applyAssignRuleAction(ProgramRuleAction programRuleAction) {
+        String stringResult = ProgramRuleService.getCalculatedConditionValue(programRuleAction.getData());
+        String programRuleVariableName = programRuleAction.getContent();
+        ProgramRuleVariable programRuleVariable;
+        if (programRuleVariableName != null) {
+            programRuleVariableName = programRuleVariableName.substring(2, programRuleVariableName.length() - 1);
+            programRuleVariable = VariableService.getInstance().getProgramRuleVariableMap().get(programRuleVariableName);
+            programRuleVariable.setVariableValue(stringResult);
+            programRuleVariable.setHasValue(true);
+        }
+    }
+
+    public void getEventBIDRow(Subscriber<? super Object> subscriber, List<Event> eventBIDList) {
+        int count = 0;
+        for (Event eventItem : eventBIDList) {
+            if (eventItem.getStatus().equals("SCHEDULE")) {
+                TrackedEntityInstance trackedEntityInstance = getTrackedEntityInstancebyUid(eventItem.getTrackedEntityInstance());
+                Enrollment enrollment = getEnrollmentbyUid(eventItem.getEnrollment());
+                BIDEvents eventTrackedEntityInstance = getEvents(eventItem.getTrackedEntityInstance());
+                enrollment.setEvents(eventTrackedEntityInstance.getEventList());
+                Log.e(TAG, "getAllBIDEvent: " + (++count));
+
+                Log.e(TAG, "getAllBIDEvent: due day=" + eventItem.getDueDate());
+                for (ProgramTrackedEntityAttribute attRoot : headerRow.getTEAKeyList()) {
+                    for (TrackedEntityAttributeValue att : trackedEntityInstance.getAttributes()) {
+                        if (att.getTrackedEntityAttributeId().equals(attRoot.getTrackedEntityAttributeId())) {
+                            Log.e(TAG, "getAllBIDEvent: " + attRoot.getTrackedEntityAttribute().getDisplayName() + " = " + att.getValue());
+                        }
+                    }
+                }
+                Log.e(TAG, "getAllBIDEvent: ");
+                for (int i = eventTrackedEntityInstance.getEventList().size() - 1; i >= 0; i--) {
+                    List<DataValue> dataValues = eventTrackedEntityInstance.getEventList().get(i).getDataValues();
+                    if (dataValues != null) {
+                        for (int j = 0; j < dataValues.size(); j++) {
+                            String dataElementId = dataValues.get(j).getDataElement();
+                            for (ProgramStageDataElement deRoot : headerRow.getDEKeyList()) {
+                                if (dataElementId.equals(deRoot.getDataelement())) {
+                                    Log.e(TAG, "getAllBIDEvent: " + deRoot.getDataElement().getDisplayName() + " = " + dataValues.get(j).getValue());
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (eventItem.getEventDate() == null) {
+                    eventItem.setEventDate(DateTime.now().toString());
+                }
+
+                initial(eventItem, enrollment);
+                evaluateAndApplyProgramRules();
+                onNext(subscriber, new HIBIDRow());
+
+                if (count == 5)
+                    break;
+            }
+        }
+    }
+
+    public Observable<BIDEvents> getEvents(String orgUnitUid, String ouModeUid, String programStageUid) {
+        return Observable.defer(() -> apiModel.getEvents(orgUnitUid, ouModeUid, programStageUid));
+    }
+
+    public TrackedEntityInstance getTrackedEntityInstancebyUid(String trackedEntityInstanceUid) {
+        return apiModel.getTrackedEntityInstancebyUid(trackedEntityInstanceUid);
+    }
+
+    public Enrollment getEnrollmentbyUid(String enrollmentUid) {
+        return apiModel.getEnrollmentbyUid(enrollmentUid);
+    }
+
+    public BIDEvents getEvents(String trackedEntityInstanceUid) {
+        return apiModel.getEvents(trackedEntityInstanceUid);
+    }
+
+    public Map<String, List<ProgramRule>> getProgramRulesForDataElements() {
+        return programRulesForDataElements;
+    }
+
+    public void setProgramRulesForDataElements(Map<String, List<ProgramRule>> programRulesForDataElements) {
+        this.programRulesForDataElements = programRulesForDataElements;
+    }
+
+    public Map<String, List<ProgramIndicator>> getProgramIndicatorsForDataElements() {
+        return programIndicatorsForDataElements;
+    }
+
+    public void setProgramIndicatorsForDataElements(Map<String, List<ProgramIndicator>> programIndicatorsForDataElements) {
+        this.programIndicatorsForDataElements = programIndicatorsForDataElements;
+    }
 }

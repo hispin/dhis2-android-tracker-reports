@@ -8,9 +8,4 @@ import dagger.Module;
 @Module
 public class HIModuleUtils {
 
-//    @Singleton
-//    @Provides
-//    public Bus provideBus() {
-//        return new Bus();
-//    }
 }

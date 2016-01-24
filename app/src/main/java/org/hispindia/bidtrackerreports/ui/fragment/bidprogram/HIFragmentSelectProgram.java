@@ -1,10 +1,9 @@
-package org.hispindia.bidtrackerreports.ui.fragment.bidselectprogram;
+package org.hispindia.bidtrackerreports.ui.fragment.bidprogram;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
@@ -29,9 +28,11 @@ import org.hisp.dhis.android.sdk.ui.dialogs.ProgramDialogFragment;
 import org.hisp.dhis.android.sdk.ui.fragments.settings.SettingsFragment;
 import org.hisp.dhis.android.sdk.ui.views.CardTextViewButton;
 import org.hisp.dhis.android.sdk.utils.api.ProgramType;
+import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.android.core.utils.HICUtils;
 import org.hispindia.bidtrackerreports.R;
-import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
+import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
+import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.dialogs.HIDialogOrgUnitMode;
 import org.hispindia.bidtrackerreports.ui.fragment.selectprogram.dialogs.HIDialogProgramStage;
 
@@ -41,7 +42,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentSelectProgram extends Fragment
+public class HIFragmentSelectProgram extends HICFragmentBase
         implements View.OnClickListener, AutoCompleteDialogFragment.OnOptionSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
         MenuItemCompat.OnActionExpandListener {
@@ -78,6 +79,14 @@ public class HIFragmentSelectProgram extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    protected void injectDependencies() {
+        HIIComponentUi uiComponent = ((HIActivityMain) getActivity()).getUiComponent();
+        if (uiComponent != null) {
+            uiComponent.inject(this);
+        }
     }
 
     @Override
@@ -221,7 +230,7 @@ public class HIFragmentSelectProgram extends Fragment
                 fragmentProStage.show(getChildFragmentManager());
                 break;
             case R.id.btnGenerateReport:
-                HIBIDModel.getAllBIDEvent(mState.getOrgUnitId(), mState.getOrgUnitModeId(), mState.getProgramId(), mState.getProgramStageId());
+                mNavigationHandler.switchFragment(HIFragmentBIDReport.newInstance(mState.getOrgUnitId(), mState.getOrgUnitModeId(), mState.getProgramId(), mState.getProgramStageId()), HIFragmentBIDReport.TAG, true);
                 break;
         }
     }

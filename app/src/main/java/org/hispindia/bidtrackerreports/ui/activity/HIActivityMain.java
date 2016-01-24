@@ -19,7 +19,7 @@ import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
-import org.hispindia.bidtrackerreports.ui.fragment.bidselectprogram.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentSelectProgram;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 

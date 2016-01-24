@@ -1,103 +1,76 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
+import android.app.Application;
+import android.util.Log;
+
+import com.squareup.okhttp.HttpUrl;
+
+import org.hisp.dhis.android.sdk.controllers.DhisController;
+import org.hisp.dhis.android.sdk.network.APIException;
+import org.hisp.dhis.android.sdk.network.Credentials;
+import org.hisp.dhis.android.sdk.network.RepoManager;
+import org.hisp.dhis.android.sdk.utils.StringConverter;
+import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
+import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
+import retrofit.ErrorHandler;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
+import retrofit.converter.ConversionException;
+import retrofit.converter.JacksonConverter;
 
 /**
  * Created by nhancao on 1/18/16.
  */
 @Module
 public class HIModuleModel {
-//    private static OkHttpClient getUnsafeOkHttpClient() {
-//        try {
-//            // Create a trust manager that does not validate certificate chains
-//            final TrustManager[] trustAllCerts = new TrustManager[]{
-//                    new X509TrustManager() {
-//                        @Override
-//                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-//                        }
-//
-//                        @Override
-//                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-//                        }
-//
-//                        @Override
-//                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//                            return null;
-//                        }
-//                    }
-//            };
-//
-//            // Install the all-trusting trust manager
-//            final SSLContext sslContext = SSLContext.getInstance("SSL");
-//            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-//
-//            // Create an ssl socket factory with our all-trusting manager
-//            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-//
-//            OkHttpClient okHttpClient = new OkHttpClient();
-//            okHttpClient.newBuilder().sslSocketFactory(sslSocketFactory);
-//            okHttpClient.interceptors().add(new Interceptor() {
-//                @Override
-//                public Response intercept(Chain chain) {
-//                    try {
-//                        Request request = chain.request();
-//                        Buffer buffer = new Buffer();
-//                        if (request.body() != null)
-//                            request.body().writeTo(buffer);
-//                        if (buffer.size() == 0) buffer.writeUtf8("nothing in body");
-//                        Log.e("Retrofit", String.format("Method: %s - Request to %s with->\nBODY: %s", request.method(), request.url(), buffer.readUtf8()));
-//                        long t1 = System.nanoTime();
-//                        Response response = chain.proceed(request);
-//                        long t2 = System.nanoTime();
-//                        String msg = response.body().string();
-//                        Log.e("Retrofit", String.format("Response from %s in %.1fms%n",
-//                                response.request().url(), (t2 - t1) / 1e6d));
-//                        Log.e("Retrofit", "response: " + msg);
-//                        return response
-//                                .newBuilder()
-//                                .body(ResponseBody.create(response.body().contentType(), msg))
-//                                .build();
-//
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                        return null;
-//                    }
-//                }
-//            });
-//            if (HIApiEnvConfig.isNeedVerifyHost()) {
-//                okHttpClient.newBuilder().hostnameVerifier((hostname, session) -> hostname.contains(HIApiEnvConfig.getHostUrl()));
-//
-//            }
-//            return okHttpClient;
-//        } catch (Exception e) {
-//            Log.e("Retrofit", "getUnsafeOkHttpClient: " + e.toString());
-////            throw new RuntimeException(e);
-//            return new OkHttpClient();
-//        }
-//    }
-//
-//
-//    private Retrofit getRestAdapter(String BASE_URL) {
-//        Retrofit restAdapter = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-//                        .setExclusionStrategies(new ExclusionStrategy() {
-//                            @Override
-//                            public boolean shouldSkipField(FieldAttributes f) {
-//                                return f.getDeclaringClass().equals(RealmObject.class);
-//                            }
-//
-//                            @Override
-//                            public boolean shouldSkipClass(Class<?> clazz) {
-//                                return false;
-//                            }
-//                        })
-//                        .create()))
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//                .client(getUnsafeOkHttpClient())
-//                .build();
-//        return restAdapter;
-//    }
+
+    @Provides
+    @Singleton
+    public HIIApiDhis2 provideHIIApiDhis2() {
+        return getRestAdapter(DhisController.getInstance().getSession().getServerUrl(), DhisController.getInstance().getSession().getCredentials()).create(HIIApiDhis2.class);
+    }
+
+    @Provides
+    @Singleton
+    public HIBIDModel provideHIBIDModel(Application application) {
+        return new HIBIDModel(application, provideHIIApiDhis2());
+    }
+
+
+    private RestAdapter getRestAdapter(HttpUrl serverUrl, Credentials credentials) {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(serverUrl.newBuilder().addPathSegment("api").build().toString())
+                .setConverter(new JacksonConverter(DhisController.getInstance().getObjectMapper()))
+                .setClient(new OkClient(RepoManager.provideOkHttpClient(credentials)))
+                .setErrorHandler(new RetrofitErrorHandler())
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .build();
+        return restAdapter;
+    }
+
+    private static class RetrofitErrorHandler implements ErrorHandler {
+
+        @Override
+        public Throwable handleError(RetrofitError cause) {
+            Log.d("RepoManager", "there was an error.." + cause.getKind().name());
+            try {
+                String body = new StringConverter().fromBody(cause.getResponse().getBody(), String.class);
+                Log.e("RepoManager", body);
+            } catch (ConversionException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            return APIException.fromRetrofitError(cause);
+        }
+    }
+
 
 }
