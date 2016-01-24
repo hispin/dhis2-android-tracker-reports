@@ -221,9 +221,7 @@ public class HIFragmentSelectProgram extends Fragment
                 fragmentProStage.show(getChildFragmentManager());
                 break;
             case R.id.btnGenerateReport:
-                btnGenerateReport.setEnabled(false);
                 HIBIDModel.getAllBIDEvent(mState.getOrgUnitId(), mState.getOrgUnitModeId(), mState.getProgramId(), mState.getProgramStageId());
-                btnGenerateReport.setEnabled(true);
                 break;
         }
     }
