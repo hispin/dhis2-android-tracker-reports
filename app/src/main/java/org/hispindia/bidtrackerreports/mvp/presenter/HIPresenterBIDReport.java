@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.mvp.presenter;
 
 import org.hispindia.android.core.utils.HICUtilRxHelper;
-import org.hispindia.bidtrackerreports.event.HIEvent;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewBIDReport;
@@ -38,7 +37,7 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
                             Observable.create(subscriber -> {
                                 model.getEventBIDRow(subscriber, bidEvents.getEventList());
                             }).compose(HICUtilRxHelper.applySchedulers()).subscribe(hidRow -> {
-                                HIEvent.post(new HIBIDRow());
+                                view.updateRow((HIBIDRow) hidRow);
                             });
                         },
                         e -> {

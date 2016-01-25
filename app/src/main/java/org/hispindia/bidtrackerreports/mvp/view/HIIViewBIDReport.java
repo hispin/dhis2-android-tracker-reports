@@ -7,4 +7,6 @@ import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
  */
 public interface HIIViewBIDReport {
     void updateHeaderRow(HIBIDRow headerRow);
+
+    void updateRow(HIBIDRow row);
 }

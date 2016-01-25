@@ -7,6 +7,7 @@ import org.hispindia.bidtrackerreports.dagger.module.HIModuleModel;
 import org.hispindia.bidtrackerreports.dagger.module.HIModulePresenter;
 import org.hispindia.bidtrackerreports.dagger.module.HIModuleUtils;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
 
 import javax.inject.Singleton;
 
@@ -20,7 +21,8 @@ import dagger.Component;
 public interface HIIComponentSingleton {
     Application application();
 
-    //Declare presenter
     HIPresenterBIDReport hiPresenterBIDReport();
+
+    HIAdapterBIDReport hiAdapterBIDReport();
 
 }

@@ -3,19 +3,35 @@ package org.hispindia.bidtrackerreports.mvp.model.local;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramStageDataElement;
 import org.hisp.dhis.android.sdk.persistence.models.ProgramTrackedEntityAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by nhancao on 1/24/16.
  */
 public class HIBIDRow {
+    private int order;
+    private String eventId;
     private String dueDate;
     private boolean isOverDue;
-    private List<ProgramTrackedEntityAttribute> TEAKeyList; //tracked entity attribute list for order
-    private Map<String, String> trackedEntityAttributeList;
-    private List<ProgramStageDataElement> DEKeyList; //data element list for order
-    private Map<String, String> dataElementList;
+    private List<HIBIDRowItem> trackedEntityAttributeList;
+    private List<HIBIDRowItem> dataElementList;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 
     public String getDueDate() {
         return dueDate;
@@ -33,35 +49,33 @@ public class HIBIDRow {
         this.isOverDue = isOverDue;
     }
 
-    public Map<String, String> getTrackedEntityAttributeList() {
+    public List<HIBIDRowItem> getTrackedEntityAttributeList() {
         return trackedEntityAttributeList;
     }
 
-    public void setTrackedEntityAttributeList(Map<String, String> trackedEntityAttributeList) {
+    public void setTrackedEntityAttributeList(List<HIBIDRowItem> trackedEntityAttributeList) {
         this.trackedEntityAttributeList = trackedEntityAttributeList;
     }
 
-    public Map<String, String> getDataElementList() {
+    public List<HIBIDRowItem> getDataElementList() {
         return dataElementList;
     }
 
-    public void setDataElementList(Map<String, String> dataElementList) {
+    public void setDataElementList(List<HIBIDRowItem> dataElementList) {
         this.dataElementList = dataElementList;
     }
 
-    public List<ProgramTrackedEntityAttribute> getTEAKeyList() {
-        return TEAKeyList;
+    public void setTrackedEntityAttributeListMapping(List<ProgramTrackedEntityAttribute> trackedEntityAttributeList) {
+        setTrackedEntityAttributeList(new ArrayList<>());
+        for (ProgramTrackedEntityAttribute item : trackedEntityAttributeList) {
+            getTrackedEntityAttributeList().add(new HIBIDRowItem(item.getTrackedEntityAttributeId(), item.getTrackedEntityAttribute().getDisplayName(), null));
+        }
     }
 
-    public void setTEAKeyList(List<ProgramTrackedEntityAttribute> TEAKeyList) {
-        this.TEAKeyList = TEAKeyList;
-    }
-
-    public List<ProgramStageDataElement> getDEKeyList() {
-        return DEKeyList;
-    }
-
-    public void setDEKeyList(List<ProgramStageDataElement> DEKeyList) {
-        this.DEKeyList = DEKeyList;
+    public void setDataElementListMapping(List<ProgramStageDataElement> dataElementList) {
+        setDataElementList(new ArrayList<>());
+        for (ProgramStageDataElement item : dataElementList) {
+            getDataElementList().add(new HIBIDRowItem(item.getDataelement(), item.getDataElement().getDisplayName(), null));
+        }
     }
 }

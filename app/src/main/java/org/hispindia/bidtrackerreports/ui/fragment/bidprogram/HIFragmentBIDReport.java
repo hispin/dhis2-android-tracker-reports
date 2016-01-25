@@ -2,12 +2,13 @@ package org.hispindia.bidtrackerreports.ui.fragment.bidprogram;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.squareup.otto.Subscribe;
+import android.widget.ProgressBar;
 
 import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.R;
@@ -17,8 +18,12 @@ import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewBIDReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
+import org.hispindia.bidtrackerreports.utils.HIUtils;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
 
 /**
  * Created by nhancao on 1/20/16.
@@ -30,8 +35,19 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
     private static final String ORG_UNIT_MODE = "extra:orgUnitMode";
     private static final String PROGRAM_ID = "extra:programId";
     private static final String PROGRAM_STAGE_ID = "extra:programStageId";
+
+    @Bind(R.id.vMainView)
+    View vMainView;
+    @Bind(R.id.vReport)
+    RecyclerView vReport;
+    @Bind(R.id.vProgressBar)
+    ProgressBar vProgressBar;
+
     @Inject
     HIPresenterBIDReport flow;
+    @Inject
+    HIAdapterBIDReport adapter;
+
     private String orgUnitId;
     private String orgUnitMode;
     private String programId;
@@ -87,7 +103,14 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
 
     @Override
     protected void onInjected() {
-        super.onInjected();
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        vReport.setHasFixedSize(true);
+        vReport.setLayoutManager(llm);
+        vReport.setAdapter(adapter);
+        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+        vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             flow.getBIDEventReport(this, orgUnitId, orgUnitMode, programId, programStageId);
         }
@@ -95,12 +118,28 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
 
     @Override
     public void updateHeaderRow(HIBIDRow headerRow) {
-        Log.e(TAG, "updateHeaderRow: " + headerRow.getTEAKeyList().size() + " _ " + headerRow.getDEKeyList().size());
-    }
 
-    @Subscribe
-    public void updateEventRow(HIBIDRow row) {
-        Log.e(TAG, "updateEventRow: ok");
 
     }
+
+    @Override
+    public void updateRow(HIBIDRow row) {
+        if (row == null) {
+            adapter.setLoadDone(true);
+        } else {
+            adapter.updateRow(row);
+        }
+    }
+
+    public void setShowLoading(boolean status) {
+        HIUtils.setViewAndChildrenEnabled(vMainView, !status);
+        if (status) {
+            vProgressBar.setVisibility(View.VISIBLE);
+            vMainView.animate().alpha(0.2f).start();
+        } else {
+            vProgressBar.setVisibility(View.GONE);
+            vMainView.animate().alpha(1f).start();
+        }
+    }
+
 }
