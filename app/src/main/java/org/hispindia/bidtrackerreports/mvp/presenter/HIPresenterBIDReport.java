@@ -1,5 +1,7 @@
 package org.hispindia.bidtrackerreports.mvp.presenter;
 
+import android.util.Log;
+
 import org.hispindia.android.core.utils.HICUtilRxHelper;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
@@ -41,6 +43,7 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
                             });
                         },
                         e -> {
+                            Log.e(TAG, "getBIDEventReport: " + e.toString());
                             e.printStackTrace();
                         }
                 );

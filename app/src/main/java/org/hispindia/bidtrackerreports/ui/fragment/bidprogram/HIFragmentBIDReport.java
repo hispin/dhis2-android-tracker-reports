@@ -19,7 +19,8 @@ import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewBIDReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
-import org.hispindia.bidtrackerreports.utils.HIUtils;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -112,6 +113,8 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
         vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
+            adapter.setHibidRowList(new ArrayList<>());
+            adapter.setLoadDone(false);
             flow.getBIDEventReport(this, orgUnitId, orgUnitMode, programId, programStageId);
         }
     }
@@ -128,17 +131,6 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
             adapter.setLoadDone(true);
         } else {
             adapter.updateRow(row);
-        }
-    }
-
-    public void setShowLoading(boolean status) {
-        HIUtils.setViewAndChildrenEnabled(vMainView, !status);
-        if (status) {
-            vProgressBar.setVisibility(View.VISIBLE);
-            vMainView.animate().alpha(0.2f).start();
-        } else {
-            vProgressBar.setVisibility(View.GONE);
-            vMainView.animate().alpha(1f).start();
         }
     }
 

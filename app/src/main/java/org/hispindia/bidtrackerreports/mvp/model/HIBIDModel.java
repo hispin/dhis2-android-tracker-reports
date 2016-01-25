@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.mvp.model;
 
 import android.app.Application;
-import android.util.Log;
 
 import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
 import org.hisp.dhis.android.sdk.persistence.models.DataValue;
@@ -24,6 +23,7 @@ import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRowItem;
 import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.BIDEvents;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -167,18 +167,14 @@ public class HIBIDModel {
                 Enrollment enrollment = getEnrollmentbyUid(eventItem.getEnrollment());
                 BIDEvents eventTrackedEntityInstance = getEvents(eventItem.getTrackedEntityInstance());
                 enrollment.setEvents(eventTrackedEntityInstance.getEventList());
-                Log.e(TAG, "getAllBIDEvent: " + (order));
 
-                Log.e(TAG, "getAllBIDEvent: due day=" + eventItem.getDueDate());
                 for (HIBIDRowItem attRoot : trackedEntityAttributeList) {
                     for (TrackedEntityAttributeValue att : trackedEntityInstance.getAttributes()) {
                         if (att.getTrackedEntityAttributeId().equals(attRoot.getId())) {
                             attRoot.setValue(att.getValue());
-                            Log.e(TAG, "getAllBIDEvent: " + attRoot.getName() + " = " + attRoot.getValue());
                         }
                     }
                 }
-                Log.e(TAG, "getAllBIDEvent: ");
                 for (int i = eventTrackedEntityInstance.getEventList().size() - 1; i >= 0; i--) {
                     List<DataValue> dataValues = eventTrackedEntityInstance.getEventList().get(i).getDataValues();
                     if (dataValues != null) {
@@ -187,7 +183,6 @@ public class HIBIDModel {
                             for (HIBIDRowItem deRoot : dataElementList) {
                                 if (dataElementId.equals(deRoot.getId())) {
                                     deRoot.setValue(dataValues.get(j).getValue());
-                                    Log.e(TAG, "getAllBIDEvent: " + deRoot.getName() + " = " + deRoot.getValue());
                                 }
                             }
                         }
@@ -200,28 +195,23 @@ public class HIBIDModel {
 
                 initial(eventItem, enrollment);
                 evaluateAndApplyProgramRules();
-                for (String item : affectedFieldsWithValue) {
-                    for (HIBIDRowItem de : dataElementList) {
-                        if (de.getValue() != null) break;
-                        if (item.equals(de.getId())) {
+                for (HIBIDRowItem de : dataElementList) {
+                    for (String item : getAffectedFieldsWithValue()) {
+                        if (item.equals(de.getId()) && de.getValue() == null) {
                             de.setValue("-*#hidefield#*-");
-                            Log.e(TAG, "getEventBIDRow: " + de.getName() + " - " + de.getValue());
+                            break;
                         }
                     }
                 }
-
                 HIBIDRow row = new HIBIDRow();
                 row.setOrder(++order);
                 row.setEventId((order) + "*" + eventItem.getEvent());
-                row.setDueDate(eventItem.getDueDate());
-                row.setIsOverDue(DateTime.parse(eventItem.getDueDate()).isBeforeNow());
+                DateTime dueDate = DateTime.parse(eventItem.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+                row.setDueDate(dueDate.toString("yyyy-MM-dd"));
+                row.setIsOverDue(dueDate.isBeforeNow());
                 row.setTrackedEntityAttributeList(trackedEntityAttributeList);
                 row.setDataElementList(dataElementList);
-
                 onNext(subscriber, row);
-
-                if (order == 5)
-                    break;
             }
             if (count == eventBIDList.size() - 1) {
                 onNext(subscriber, null);

@@ -111,6 +111,10 @@ public class HIAdapterBIDReport extends RecyclerView.Adapter<RecyclerView.ViewHo
                 viewHolder.tvOrder.setTextColor(Color.RED);
                 viewHolder.tvDueDate.setTextColor(Color.RED);
                 viewHolder.tvOverDue.setBackgroundResource(R.drawable.ic_checkmark_holo_light);
+            } else {
+                viewHolder.tvOrder.setTextColor(Color.WHITE);
+                viewHolder.tvDueDate.setTextColor(Color.WHITE);
+                viewHolder.tvOverDue.setBackgroundResource(0);
             }
             generaterRow(viewHolder.context, viewHolder.vAttribute, viewHolder.vDataElement, currentItem);
         }
