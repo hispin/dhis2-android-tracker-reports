@@ -212,6 +212,10 @@ public class HIBIDModel {
                 row.setTrackedEntityAttributeList(trackedEntityAttributeList);
                 row.setDataElementList(dataElementList);
                 onNext(subscriber, row);
+
+            }
+            if (subscriber != null && subscriber.isUnsubscribed()) {
+                break;
             }
             if (count == eventBIDList.size() - 1) {
                 onNext(subscriber, null);

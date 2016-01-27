@@ -36,8 +36,8 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
                 .compose(HICUtilRxHelper.applySchedulers())
                 .subscribe(
                         bidEvents -> {
-                            Observable.create(subscriber -> {
-                                model.getEventBIDRow(subscriber, bidEvents.getEventList());
+                            subscription = Observable.create(subscription -> {
+                                model.getEventBIDRow(subscription, bidEvents.getEventList());
                             }).compose(HICUtilRxHelper.applySchedulers()).subscribe(hidRow -> {
                                 view.updateRow((HIBIDRow) hidRow);
                             });

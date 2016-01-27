@@ -19,12 +19,11 @@ import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
-import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentMain;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 
     private OnBackPressedListener mBackPressedListener;
-    //    private HICFragmentNavigator fragmentNavigator;
     private HIIComponentUi uiComponent;
 
     @Override
@@ -34,10 +33,6 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         setContentView(R.layout.hiactivity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        if (savedInstanceState == null) {
-//            fragmentNavigator.showScreen(new SelectProgramFragment(), false);
-//        }
 
         LoadingController.enableLoading(this, ResourceType.ASSIGNEDPROGRAMS);
         LoadingController.enableLoading(this, ResourceType.OPTIONSETS);
@@ -108,7 +103,6 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
     //Implement method
 
     private void injectDependencies() {
-//        fragmentNavigator = HICFragmentNavigator.create(this, R.id.container);
         uiComponent = DaggerHIIComponentUi.builder()
                 .hIIComponentSingleton(((HIApplication) getApplication()).getComponent())
                 .hICModuleActivity(new HICModuleActivity(this))
@@ -133,7 +127,6 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
                 setTitle("BID Tracker Report");
             }
         });
-        switchFragment(new HIFragmentSelectProgram(), HIFragmentSelectProgram.TAG, true);
-//        switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
+        switchFragment(new HIFragmentMain(), HIFragmentMain.TAG, true);
     }
 }

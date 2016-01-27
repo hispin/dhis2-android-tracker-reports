@@ -4,6 +4,7 @@ import org.hispindia.android.core.dagger.HICIPerActivity;
 import org.hispindia.android.core.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentBIDReport;
+import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentMain;
 import org.hispindia.bidtrackerreports.ui.fragment.bidprogram.HIFragmentSelectProgram;
 
 import dagger.Component;
@@ -23,5 +24,5 @@ public interface HIIComponentUi {
 
     void inject(HIFragmentBIDReport fragmentBIDReport);
 
-
+    void inject(HIFragmentMain fragmentMain);
 }
