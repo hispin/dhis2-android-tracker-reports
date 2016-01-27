@@ -371,11 +371,11 @@
                 android:orientation="vertical"
                 android:padding="6dp"></LinearLayout>
 
-            <org.hispindia.bidtrackerreports.ui.fragment.programoverview.FlowLayout
+            <org.hispindia.bidtrackerreports.ui.fragment.global.programoverview.FlowLayout
                 android:id="@+id/keyvaluelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="6dp"></org.hispindia.bidtrackerreports.ui.fragment.programoverview.FlowLayout>
+                android:padding="6dp"></org.hispindia.bidtrackerreports.ui.fragment.global.programoverview.FlowLayout>
 
             <LinearLayout
                 android:id="@+id/textlayout"
