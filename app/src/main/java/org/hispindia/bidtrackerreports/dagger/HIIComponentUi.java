@@ -7,6 +7,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDRepo
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 
 import dagger.Component;
 
@@ -26,6 +27,8 @@ public interface HIIComponentUi {
     void inject(HIFragmentBIDReport fragmentBIDReport);
 
     void inject(HIFragmentMain fragmentMain);
+
+    void inject(HIFragmentStockSelectProgram fragmentStockSelectProgram);
 
     void inject(HIFragmentStockReport fragmentStockReport);
 }

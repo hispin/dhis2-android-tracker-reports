@@ -48,6 +48,21 @@
         <item>CHILDREN</item>
         <item>DESCENDANTS</item>
     </string-array>
+    <string-array name="organisation_mode_id">
+        <item>Y52YnK869WO</item>
+        <item>lTqNF1rWha3</item>
+        <item>CraSsUTG2aw</item>
+    </string-array>
     <string name="generate_report">Generate report</string>
+
+    <!-- DHIS2 -->
+    <string name="btn_tracker_report">Tracker report</string>
+    <string name="btn_bid_report">BID report</string>
+    <string name="btn_stock_report">Stock report</string>
+
+    <string name="hi_stock_report_no">S No</string>
+    <string name="hi_stock_report_name">Name</string>
+    <string name="hi_stock_report_value">Value</string>
+
 
 </resources>

@@ -1,5 +1,7 @@
 package org.hispindia.bidtrackerreports.mvp.model.remote.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import org.hisp.dhis.android.sdk.controllers.ApiEndpointContainer;
 import org.hisp.dhis.android.sdk.persistence.models.Enrollment;
 import org.hisp.dhis.android.sdk.persistence.models.TrackedEntityInstance;
@@ -26,5 +28,8 @@ public interface HIIApiDhis2 {
 
     @GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true")
     BIDEvents getEvents(@Query("trackedEntityInstance") String trackedEntityInstanceUid);
+
+    @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockReport(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitLevel, @Query("var") String orgUnitId);
 
 }

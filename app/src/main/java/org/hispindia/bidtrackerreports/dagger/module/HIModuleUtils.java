@@ -1,6 +1,7 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
 
 import javax.inject.Singleton;
 
@@ -17,6 +18,12 @@ public class HIModuleUtils {
     @Singleton
     public HIAdapterBIDReport provideHIAdapterBIDReport() {
         return new HIAdapterBIDReport();
+    }
+
+    @Provides
+    @Singleton
+    public HIAdapterStockReport provideHIAdapterStockReport() {
+        return new HIAdapterStockReport();
     }
 
 }
