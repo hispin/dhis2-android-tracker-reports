@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by nhancao on 1/22/16.
  */
-public class BIDEvents {
+public class HIResBIDEvents {
     @JsonProperty("events")
     List<Event> eventList;
 

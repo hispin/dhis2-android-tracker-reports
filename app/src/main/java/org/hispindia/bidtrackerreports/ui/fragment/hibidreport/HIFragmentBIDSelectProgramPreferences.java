@@ -19,8 +19,8 @@ import static org.hisp.dhis.android.sdk.utils.Preconditions.isNull;
 /**
  * Created by nhancao on 1/21/16.
  */
-public class HIFragmentSelectProgramPreferences {
-    private static final String PROGRAM_FRAGMENT_PREFERENCES = "preferences:HIFragmentSelectProgramPreferences";
+public class HIFragmentBIDSelectProgramPreferences {
+    private static final String PROGRAM_FRAGMENT_PREFERENCES = "preferences:HIFragmentBIDSelectProgramPreferences";
 
     private static final String ORG_UNIT_ID = "key:orgUnitId";
     private static final String ORG_UNIT_LABEL = "key:orgUnitLabel";
@@ -36,7 +36,7 @@ public class HIFragmentSelectProgramPreferences {
 
     private final SharedPreferences mPrefs;
 
-    public HIFragmentSelectProgramPreferences(Context context) {
+    public HIFragmentBIDSelectProgramPreferences(Context context) {
         isNull(context, "Context object must not be null");
         mPrefs = context.getSharedPreferences(
                 PROGRAM_FRAGMENT_PREFERENCES, Context.MODE_PRIVATE);

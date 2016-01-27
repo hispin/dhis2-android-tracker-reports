@@ -21,12 +21,6 @@ public class HIDialogOrgUnitMode extends AutoCompleteDialogFragment {
     private static final String ORG_UNIT_MODE = "extra:orgUnitMode";
     private int unitMod = 0;
 
-    public static HIDialogOrgUnitMode newInstance(OnOptionSelectedListener listener) {
-        HIDialogOrgUnitMode fragment = new HIDialogOrgUnitMode();
-        fragment.setOnOptionSetListener(listener);
-        return fragment;
-    }
-
     public static HIDialogOrgUnitMode newInstance(OnOptionSelectedListener listener, int modeProgram) {
         HIDialogOrgUnitMode fragment = new HIDialogOrgUnitMode();
         Bundle args = new Bundle();

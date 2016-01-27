@@ -6,17 +6,17 @@ import android.os.Parcelable;
 /**
  * Created by nhancao on 1/21/16.
  */
-public class HIFragmentSelectProgramState implements Parcelable {
-    public final static String TAG = HIFragmentSelectProgramState.class.getSimpleName();
-    public static final Creator<HIFragmentSelectProgramState> CREATOR
-            = new Creator<HIFragmentSelectProgramState>() {
+public class HIFragmentBIDSelectProgramState implements Parcelable {
+    public final static String TAG = HIFragmentBIDSelectProgramState.class.getSimpleName();
+    public static final Creator<HIFragmentBIDSelectProgramState> CREATOR
+            = new Creator<HIFragmentBIDSelectProgramState>() {
 
-        public HIFragmentSelectProgramState createFromParcel(Parcel in) {
-            return new HIFragmentSelectProgramState(in);
+        public HIFragmentBIDSelectProgramState createFromParcel(Parcel in) {
+            return new HIFragmentBIDSelectProgramState(in);
         }
 
-        public HIFragmentSelectProgramState[] newArray(int size) {
-            return new HIFragmentSelectProgramState[size];
+        public HIFragmentBIDSelectProgramState[] newArray(int size) {
+            return new HIFragmentBIDSelectProgramState[size];
         }
     };
 
@@ -34,10 +34,10 @@ public class HIFragmentSelectProgramState implements Parcelable {
     private String programStageLabel;
     private String programStageId;
 
-    public HIFragmentSelectProgramState() {
+    public HIFragmentBIDSelectProgramState() {
     }
 
-    public HIFragmentSelectProgramState(HIFragmentSelectProgramState state) {
+    public HIFragmentBIDSelectProgramState(HIFragmentBIDSelectProgramState state) {
         if (state != null) {
             setSyncInProcess(state.isSyncInProcess());
             setOrgUnit(state.getOrgUnitId(), state.getOrgUnitLabel());
@@ -47,7 +47,7 @@ public class HIFragmentSelectProgramState implements Parcelable {
         }
     }
 
-    private HIFragmentSelectProgramState(Parcel in) {
+    private HIFragmentBIDSelectProgramState(Parcel in) {
         syncInProcess = in.readInt() == 1;
 
         orgUnitLabel = in.readString();

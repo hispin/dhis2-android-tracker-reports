@@ -13,7 +13,7 @@ import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectProgramFragment;
-import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 
 import butterknife.OnClick;
@@ -70,7 +70,7 @@ public class HIFragmentMain extends HICFragmentBase {
     @OnClick(R.id.btnBidReport)
     @SuppressWarnings("unused")
     public void btnBidReport() {
-        mNavigationHandler.switchFragment(new HIFragmentSelectProgram(), HIFragmentSelectProgram.TAG, true);
+        mNavigationHandler.switchFragment(new HIFragmentBIDSelectProgram(), HIFragmentBIDSelectProgram.TAG, true);
     }
 
     @OnClick(R.id.btnStockReport)

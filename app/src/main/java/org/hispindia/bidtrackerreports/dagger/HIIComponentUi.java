@@ -5,7 +5,7 @@ import org.hispindia.android.core.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDReport;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
-import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 
@@ -22,7 +22,7 @@ public interface HIIComponentUi {
     void inject(HIActivityMain activityMain);
 
     //inject fragment
-    void inject(HIFragmentSelectProgram fragmentSelectProgram);
+    void inject(HIFragmentBIDSelectProgram fragmentBIDSelectProgram);
 
     void inject(HIFragmentBIDReport fragmentBIDReport);
 

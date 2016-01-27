@@ -21,7 +21,7 @@ import org.hisp.dhis.android.sdk.utils.services.VariableService;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRowItem;
 import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
-import org.hispindia.bidtrackerreports.mvp.model.remote.response.BIDEvents;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResBIDEvents;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -165,7 +165,7 @@ public class HIBIDModel {
 
                 TrackedEntityInstance trackedEntityInstance = getTrackedEntityInstancebyUid(eventItem.getTrackedEntityInstance());
                 Enrollment enrollment = getEnrollmentbyUid(eventItem.getEnrollment());
-                BIDEvents eventTrackedEntityInstance = getEvents(eventItem.getTrackedEntityInstance());
+                HIResBIDEvents eventTrackedEntityInstance = getEvents(eventItem.getTrackedEntityInstance());
                 enrollment.setEvents(eventTrackedEntityInstance.getEventList());
 
                 for (HIBIDRowItem attRoot : trackedEntityAttributeList) {
@@ -223,7 +223,7 @@ public class HIBIDModel {
         }
     }
 
-    public Observable<BIDEvents> getEvents(String orgUnitUid, String ouModeUid, String programStageUid) {
+    public Observable<HIResBIDEvents> getEvents(String orgUnitUid, String ouModeUid, String programStageUid) {
         return Observable.defer(() -> getApiModel().getEvents(orgUnitUid, ouModeUid, programStageUid));
     }
 
@@ -235,7 +235,7 @@ public class HIBIDModel {
         return getApiModel().getEnrollmentbyUid(enrollmentUid);
     }
 
-    public BIDEvents getEvents(String trackedEntityInstanceUid) {
+    public HIResBIDEvents getEvents(String trackedEntityInstanceUid) {
         return getApiModel().getEvents(trackedEntityInstanceUid);
     }
 

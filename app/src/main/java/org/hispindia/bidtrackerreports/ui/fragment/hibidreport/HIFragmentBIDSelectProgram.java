@@ -42,15 +42,15 @@ import butterknife.ButterKnife;
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentSelectProgram extends HICFragmentBase
+public class HIFragmentBIDSelectProgram extends HICFragmentBase
         implements View.OnClickListener, AutoCompleteDialogFragment.OnOptionSelectedListener,
         SwipeRefreshLayout.OnRefreshListener,
         MenuItemCompat.OnActionExpandListener {
-    public final static String TAG = HIFragmentSelectProgram.class.getSimpleName();
+    public final static String TAG = HIFragmentBIDSelectProgram.class.getSimpleName();
     protected final String STATE;
 
-    protected HIFragmentSelectProgramState mState;
-    protected HIFragmentSelectProgramPreferences mPrefs;
+    protected HIFragmentBIDSelectProgramState mState;
+    protected HIFragmentBIDSelectProgramPreferences mPrefs;
     protected INavigationHandler mNavigationHandler;
 
     @Bind(R.id.btnGenerateReport)
@@ -66,12 +66,12 @@ public class HIFragmentSelectProgram extends HICFragmentBase
     @Bind(R.id.vSwipeRefreshLayout)
     SwipeRefreshLayout vSwipeRefreshLayout;
 
-    public HIFragmentSelectProgram() {
-        this("state:HIFragmentSelectProgram");
+    public HIFragmentBIDSelectProgram() {
+        this("state:HIFragmentBIDSelectProgram");
     }
 
     @SuppressLint("ValidFragment")
-    private HIFragmentSelectProgram(String stateName) {
+    private HIFragmentBIDSelectProgram(String stateName) {
         STATE = stateName;
     }
 
@@ -92,14 +92,14 @@ public class HIFragmentSelectProgram extends HICFragmentBase
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.hifragment_select_program, container, false);
+        return inflater.inflate(R.layout.hifragment_bid_select_program, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         setUpView(view, savedInstanceState);
-        mPrefs = new HIFragmentSelectProgramPreferences(
+        mPrefs = new HIFragmentBIDSelectProgramPreferences(
                 getActivity().getApplicationContext());
 
         if (savedInstanceState != null &&
@@ -113,7 +113,7 @@ public class HIFragmentSelectProgram extends HICFragmentBase
             Pair<String, String> program = mPrefs.getProgram();
             Pair<String, String> orgUnitMode = mPrefs.getOrgUnitMode();
             Pair<String, String> programStage = mPrefs.getProgramStage();
-            mState = new HIFragmentSelectProgramState();
+            mState = new HIFragmentBIDSelectProgramState();
             if (orgUnit != null) {
                 mState.setOrgUnit(orgUnit.first, orgUnit.second);
                 if (program != null) {
@@ -209,24 +209,24 @@ public class HIFragmentSelectProgram extends HICFragmentBase
         switch (view.getId()) {
             case R.id.vSelectOrgUnit:
                 OrgUnitDialogFragment fragmentOrg = OrgUnitDialogFragment
-                        .newInstance(HIFragmentSelectProgram.this,
+                        .newInstance(HIFragmentBIDSelectProgram.this,
                                 getProgramTypes());
                 fragmentOrg.show(getChildFragmentManager());
                 break;
             case R.id.vSelectProgram:
                 ProgramDialogFragment fragmentPro = ProgramDialogFragment
-                        .newInstance(HIFragmentSelectProgram.this, mState.getOrgUnitId(),
+                        .newInstance(HIFragmentBIDSelectProgram.this, mState.getOrgUnitId(),
                                 getProgramTypes());
                 fragmentPro.show(getChildFragmentManager());
                 break;
             case R.id.vSelectOrgMode:
                 HIDialogOrgUnitMode fragmentOrgMode = HIDialogOrgUnitMode
-                        .newInstance(HIFragmentSelectProgram.this);
+                        .newInstance(HIFragmentBIDSelectProgram.this, HIDialogOrgUnitMode.BID_MODE);
                 fragmentOrgMode.show(getChildFragmentManager());
                 break;
             case R.id.vSelectProgramStage:
                 HIDialogProgramStage fragmentProStage = HIDialogProgramStage
-                        .newInstance(HIFragmentSelectProgram.this, mState.getProgramId());
+                        .newInstance(HIFragmentBIDSelectProgram.this, mState.getProgramId());
                 fragmentProStage.show(getChildFragmentManager());
                 break;
             case R.id.btnGenerateReport:
@@ -311,7 +311,7 @@ public class HIFragmentSelectProgram extends HICFragmentBase
             return;
         }
 
-        HIFragmentSelectProgramState backedUpState = new HIFragmentSelectProgramState(mState);
+        HIFragmentBIDSelectProgramState backedUpState = new HIFragmentBIDSelectProgramState(mState);
         if (!backedUpState.isOrgUnitEmpty()) {
             onUnitSelected(
                     backedUpState.getOrgUnitId(),

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,6 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
     @Override
     public void onPause() {
         HIEvent.unregister(this);
-        Log.e(TAG, "onPause: ");
         flow.onStop();
         super.onPause();
     }
@@ -102,7 +100,6 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
 
     @Override
     protected void onInjected() {
-        Log.e(TAG, "onInjected: ");
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
