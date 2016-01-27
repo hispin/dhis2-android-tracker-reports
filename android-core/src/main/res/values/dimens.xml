@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_larger">32dp</dimen>
+    <dimen name="smallest_touch_region">48dp</dimen>
+    <dimen name="base_button_height">48dp</dimen>
+</resources>

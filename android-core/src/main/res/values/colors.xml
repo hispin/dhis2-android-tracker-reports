@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="window_background">#2e2e41</color>
+    <color name="primary">#2a2a40</color>
+    <color name="primary_dark">#142E3C</color>
+    <color name="accent">#40C4FF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="orange">#FFC300</color>
+
+    <color name="text_enabled">#FFFFFFFF</color>
+    <color name="text_disabled">#4DFFFFFF</color>
+
+    <color name="icon_enabled">#FFC300</color>
+    <color name="icon_disabled">#AAAAC8</color>
+
+    <color name="medium_text_enabled">#FF000000</color>
+    <color name="medium_text_disabled">#4D000000</color>
+
+    <color name="light_blue_500">#03A9F4</color>
+    <color name="cyan_500">#00BCD4</color>
+    <color name="teal_500">#009688</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="light_green_500">#8BC34A</color>
+
+    <color name="progress_gray">#FFD8D8D8</color>
+    <color name="progress_gray_dark">#FF383838</color>
+    <color name="red">#ffe2231a</color>
+    <color name="dark_red">#ff510209</color>
+
+
+    <!-- main color-->
+    <color name="tab_header_bg">#2e2e41</color>
+    <color name="header_title">#aaaac8</color>
+    <color name="content_bg">#1e1e2d</color>
+    <color name="item_line">#2e2e41</color>
+    <color name="item_selected">#181826</color>
+
+
+</resources>
