@@ -1,6 +1,9 @@
 # dhis2-android-tracker-reports
-SKELETON APP
+BID Reports App
 Use  url: https://bid.dhis2.org/epireg
+     user:
+     pwd:
+     
 
     
      
