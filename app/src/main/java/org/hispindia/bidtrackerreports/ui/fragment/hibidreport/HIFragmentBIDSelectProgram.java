@@ -396,6 +396,10 @@ public class HIFragmentBIDSelectProgram extends HICFragmentBase
                 //step 4 (choose program state mode done)
                 HICUtils.setShowViews(true, btnGenerateReport);
                 break;
+            default:
+                HICUtils.setShowViews(false, btnGenerateReport);
+
+
         }
     }
 
