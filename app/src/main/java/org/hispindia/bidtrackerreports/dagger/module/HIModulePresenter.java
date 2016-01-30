@@ -1,8 +1,10 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
+import org.hispindia.bidtrackerreports.mvp.model.HISchvaccineModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIStockModel;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterSchvaccineReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 
 import javax.inject.Singleton;
@@ -26,6 +28,12 @@ public class HIModulePresenter {
     @Singleton
     public HIPresenterStockReport provideHIPresenterStockReport(HIStockModel model) {
         return new HIPresenterStockReport(model);
+    }
+
+    @Provides
+    @Singleton
+    public HIPresenterSchvaccineReport provideHIPresenterSchvaccineReport(HISchvaccineModel model) {
+        return new HIPresenterSchvaccineReport(model);
     }
 
 }
