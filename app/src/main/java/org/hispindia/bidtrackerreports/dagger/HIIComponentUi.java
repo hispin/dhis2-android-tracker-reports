@@ -3,9 +3,11 @@ package org.hispindia.bidtrackerreports.dagger;
 import org.hispindia.android.core.dagger.HICIPerActivity;
 import org.hispindia.android.core.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
-import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDReport;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueReport;
+import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
@@ -37,4 +39,8 @@ public interface HIIComponentUi {
     void inject(HIFragmentSchvaccineSelectProgram fragmentSchvaccineSelectProgram);
 
     void inject(HIFragmentSchvaccineReport fragmentSchvaccineReport);
+
+    void inject(HIFragmentOverdueSelectProgram fragmentOverdueSelectProgram);
+
+    void inject(HIFragmentOverdueReport fragmentOverdueReport);
 }
