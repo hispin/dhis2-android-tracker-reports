@@ -40,13 +40,17 @@
                 android:id="@+id/vFromDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="From day" />
+                android:inputType="date"
+                android:hint="From : yyyy-mm-dd"
+                />
 
             <EditText
                 android:id="@+id/vToDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="To day" />
+                android:inputType="date"
+                android:hint="From : yyyy-mm-dd"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
