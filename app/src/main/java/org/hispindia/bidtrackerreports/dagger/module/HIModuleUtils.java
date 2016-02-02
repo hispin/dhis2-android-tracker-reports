@@ -1,6 +1,7 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterOverdueReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
 
@@ -33,4 +34,9 @@ public class HIModuleUtils {
         return new HIAdapterSchvaccineReport();
     }
 
+    @Provides
+    @Singleton
+    public HIAdapterOverdueReport provideHIAdapterOverdueReport() {
+        return new HIAdapterOverdueReport();
+    }
 }

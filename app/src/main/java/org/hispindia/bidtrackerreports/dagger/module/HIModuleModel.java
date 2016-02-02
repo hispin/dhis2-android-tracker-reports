@@ -11,6 +11,7 @@ import org.hisp.dhis.android.sdk.network.Credentials;
 import org.hisp.dhis.android.sdk.network.RepoManager;
 import org.hisp.dhis.android.sdk.utils.StringConverter;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
+import org.hispindia.bidtrackerreports.mvp.model.HIOverdueModel;
 import org.hispindia.bidtrackerreports.mvp.model.HISchvaccineModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIStockModel;
 import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
@@ -54,6 +55,12 @@ public class HIModuleModel {
     @Singleton
     public HISchvaccineModel provideHISchvaccineModel(Application application) {
         return new HISchvaccineModel(application, provideHIIApiDhis2());
+    }
+
+    @Provides
+    @Singleton
+    public HIOverdueModel provideHIOverdueModel(Application application) {
+        return new HIOverdueModel(application, provideHIIApiDhis2());
     }
 
     private RestAdapter getRestAdapter(HttpUrl serverUrl, Credentials credentials) {

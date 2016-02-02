@@ -25,4 +25,10 @@
         android:id="@+id/btnSchvaccineReport"
         style="@style/btnFragmentMain"
         android:text="Schedule Vaccine Report" />
+
+    <Button
+        android:id="@+id/btnOverdueReport"
+        style="@style/btnFragmentMain"
+        android:layout_gravity="center_horizontal"
+        android:text="Overdue Events" />
 </LinearLayout>
