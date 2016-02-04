@@ -39,7 +39,10 @@ public class HIOverdueRow {
     @JsonProperty("attributes")
     public List<HIAttribute> attributes;
 
+
     @JsonProperty("dataValues")
     List<DataValue> dataValues;
 
+    @JsonProperty("notes")
+    public List<HINotes> notes;
 }
