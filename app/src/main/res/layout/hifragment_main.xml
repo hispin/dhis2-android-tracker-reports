@@ -17,6 +17,11 @@
         android:text="@string/btn_today_report" />
 
     <Button
+        android:id="@+id/btnVaccineStatus"
+        style="@style/btnFragmentMain"
+        android:text="@string/btn_vaccine_report" />
+
+    <Button
         android:id="@+id/btnStockReport"
         style="@style/btnFragmentMain"
         android:text="@string/btn_stock_report" />

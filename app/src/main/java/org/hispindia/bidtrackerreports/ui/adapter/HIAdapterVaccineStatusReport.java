@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nhancao on 1/25/16.
  */
-public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
@@ -31,7 +30,7 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
     private boolean loadDone;
     private List<HIDBbidrow> hibidRowList;
 
-    public HIAdapterTodayScheduleReport() {
+    public HIAdapterVaccineStatusReport() {
         hibidRowList = new ArrayList<>();
         loadDone = false;
     }
@@ -76,10 +75,10 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_PROGRESS) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.hiviewitem_progress, parent, false);
-            return new HIAdapterToDayScheduleFooterHolder(v, parent.getContext());
+            return new HIAdapterFooterHolder(v, parent.getContext());
         } else if (viewType == TYPE_ITEM) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.hiviewitem_today_schedule_row, parent, false);
-            return new HIAdapterToDayScheduleReportHolder(v, parent.getContext());
+            return new HIAdapterReportHolder(v, parent.getContext());
         }
         return null;
 
@@ -87,13 +86,13 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof HIAdapterToDayScheduleFooterHolder) {
-            HIAdapterToDayScheduleFooterHolder viewHolder = (HIAdapterToDayScheduleFooterHolder) holder;
+        if (holder instanceof HIAdapterFooterHolder) {
+            HIAdapterFooterHolder viewHolder = (HIAdapterFooterHolder) holder;
             if (!loadDone) viewHolder.vProgressBar.setVisibility(View.VISIBLE);
             else viewHolder.vProgressBar.setVisibility(View.GONE);
-        } else if (holder instanceof HIAdapterToDayScheduleReportHolder) {
+        } else if (holder instanceof HIAdapterReportHolder) {
             HIDBbidrow row = getItem(position);
-            HIAdapterToDayScheduleReportHolder viewHolder = (HIAdapterToDayScheduleReportHolder) holder;
+            HIAdapterReportHolder viewHolder = (HIAdapterReportHolder) holder;
             viewHolder.tvOrder.setText("#" + row.getOrder());
             viewHolder.tvDueDate.setText(row.getDueDate());
             if (row.getIsOverdue()) {
@@ -146,17 +145,23 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
     }
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
-        if (item == null) {
+        if (item != null && !item.equals("-*#hidefield#*-")) {
             view.setVisibility(View.VISIBLE);
-            img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
-            img.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.GONE);
+            if (item.trim().toLowerCase().equals("true") || item.trim().equals("")) {
+                img.setBackgroundResource(R.drawable.ic_checkmark_holo_light);
+                img.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.GONE);
+            } else {
+                img.setVisibility(View.GONE);
+                tv.setVisibility(View.VISIBLE);
+                tv.setText(item);
+            }
         } else {
             view.setVisibility(View.GONE);
         }
     }
 
-    class HIAdapterToDayScheduleReportHolder extends RecyclerView.ViewHolder {
+    class HIAdapterReportHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tvOrder)
         TextView tvOrder;
@@ -166,10 +171,6 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         TextView tvFirstName;
         @Bind(R.id.tvChildName)
         TextView tvChildName;
-        @Bind(R.id.vAttribute)
-        LinearLayout vAttribute;
-        @Bind(R.id.vDataElement)
-        LinearLayout vDataElement;
 
         @Bind(R.id.vBCG)
         View vBCG;
@@ -278,20 +279,20 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
 
         Context context;
 
-        public HIAdapterToDayScheduleReportHolder(View itemView, Context context) {
+        public HIAdapterReportHolder(View itemView, Context context) {
             super(itemView);
             this.context = context;
             ButterKnife.bind(this, itemView);
         }
     }
 
-    class HIAdapterToDayScheduleFooterHolder extends RecyclerView.ViewHolder {
+    class HIAdapterFooterHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.vProgressBar)
         ProgressBar vProgressBar;
         Context context;
 
-        public HIAdapterToDayScheduleFooterHolder(View itemView, Context context) {
+        public HIAdapterFooterHolder(View itemView, Context context) {
             super(itemView);
             this.context = context;
             ButterKnife.bind(this, itemView);

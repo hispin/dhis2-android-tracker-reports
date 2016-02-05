@@ -1,4 +1,4 @@
-package org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule;
+package org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +18,7 @@ import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
-import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterTodayScheduleReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 
 import java.util.ArrayList;
@@ -31,24 +31,24 @@ import butterknife.Bind;
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HIIViewTodayScheduleReport {
+public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HIIViewTodayScheduleReport {
 
-    public final static String TAG = HIFragmentTodayScheduleReport.class.getSimpleName();
+    public final static String TAG = HIFragmentVaccineStatusReport.class.getSimpleName();
 
     @Bind(R.id.vReport)
     RecyclerView vReport;
 
     @Inject
     HIPresenterBIDReport flow;
-    HIAdapterTodayScheduleReport adapter;
+    HIAdapterVaccineStatusReport adapter;
 
     private String orgUnitId;
     private String orgUnitMode;
     private String programId;
     private String programStageId;
 
-    public static HIFragmentTodayScheduleReport newInstance() {
-        HIFragmentTodayScheduleReport fragment = new HIFragmentTodayScheduleReport();
+    public static HIFragmentVaccineStatusReport newInstance() {
+        HIFragmentVaccineStatusReport fragment = new HIFragmentVaccineStatusReport();
         return fragment;
     }
 
@@ -59,7 +59,7 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         this.orgUnitMode = HIParamBIDHardcode.OUMODE;
         this.programId = HIParamBIDHardcode.PROGRAMID;
         this.programStageId = HIParamBIDHardcode.PROGRAMSTAGEID;
-        adapter = new HIAdapterTodayScheduleReport();
+        adapter = new HIAdapterVaccineStatusReport();
     }
 
     @Nullable

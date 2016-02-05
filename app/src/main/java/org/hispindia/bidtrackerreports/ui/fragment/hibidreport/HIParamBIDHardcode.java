@@ -1,4 +1,4 @@
-package org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule;
+package org.hispindia.bidtrackerreports.ui.fragment.hibidreport;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by nhancao on 2/5/16.
  */
-public class HIParamTodaySchedule {
+public class HIParamBIDHardcode {
 
     public static final Map<String, DataElement> DE = new HashMap<String, DataElement>() {{
         put("bpBUOvqy1Jn", new DataElement("bpBUOvqy1Jn", "BCG", "BCG"));
