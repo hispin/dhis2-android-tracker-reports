@@ -14,10 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -25,23 +22,19 @@ import com.squareup.otto.Subscribe;
 import org.hisp.dhis.android.sdk.controllers.DhisService;
 import org.hisp.dhis.android.sdk.events.UiEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
-import org.hisp.dhis.android.sdk.persistence.models.DataValue;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
-import org.hisp.dhis.android.sdk.ui.adapters.rows.dataentry.DatePickerRow;
 import org.hisp.dhis.android.sdk.ui.dialogs.AutoCompleteDialogFragment;
 import org.hisp.dhis.android.sdk.ui.dialogs.OrgUnitDialogFragment;
 import org.hisp.dhis.android.sdk.ui.dialogs.ProgramDialogFragment;
 import org.hisp.dhis.android.sdk.ui.fragments.settings.SettingsFragment;
 import org.hisp.dhis.android.sdk.ui.views.CardTextViewButton;
 import org.hisp.dhis.android.sdk.utils.api.ProgramType;
-import org.hisp.dhis.android.sdk.utils.support.DateUtils;
 import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.android.core.utils.HICUtils;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogOrgUnitMode;
-import org.joda.time.LocalDate;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,14 +59,10 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
     CardTextViewButton vSelectProgram;
     @Bind(R.id.vSelectOrgMode)
     CardTextViewButton vSelectOrgMode;
-    @Bind(R.id.vFromDay)
-    TextView vFromDay;
-    @Bind(R.id.vToDay)
-    TextView vToDay;
+
+
     @Bind(R.id.vSwipeRefreshLayout)
     SwipeRefreshLayout vSwipeRefreshLayout;
-    private DataValue startDate;
-    private DataValue endDate;
 
 
     public HIFragmentOverdueSelectProgram() {
@@ -99,29 +88,7 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
         return inflater.inflate(R.layout.hifragment_overdue_select_program, container, false);
     }
 
-    protected View getListViewHeader(Bundle savedInstanceState) {
-        View header = getLayoutInflater(savedInstanceState).inflate(
-                R.layout.hifragment_overdue_select_program, null, false
-        );
 
-        startDate = new DataValue();
-        startDate.setValue(DateUtils.getMediumDateString());
-        endDate = new DataValue();
-        endDate.setValue(new LocalDate(DateUtils.getMediumDateString()).plusYears(1).toString());
-
-        DatePickerRow startDatePicker = new DatePickerRow(getString(R.string.startdate), false, null, startDate, true);
-        DatePickerRow endDatePicker = new DatePickerRow(getString(R.string.enddate), false, null, endDate, true);
-
-        LinearLayout dateFilterContainer = (LinearLayout) header.findViewById(R.id.datefilterlayout);
-        View view1 = startDatePicker.getView(getFragmentManager(), getActivity().getLayoutInflater(), null, dateFilterContainer);
-        view1.setLayoutParams(new TableLayout.LayoutParams(0, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-        View view2 = endDatePicker.getView(getFragmentManager(), getActivity().getLayoutInflater(), null, dateFilterContainer);
-        view2.setLayoutParams(new TableLayout.LayoutParams(0, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-
-        dateFilterContainer.addView(view1);
-        dateFilterContainer.addView(view2);
-        return header;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -252,9 +219,7 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
                         .newInstance(HIFragmentOverdueSelectProgram.this, HIDialogOrgUnitMode.BID_MODE);
                 fragmentOrgMode.show(getChildFragmentManager());
                 break;
-            case R.id.vFromDay:
 
-                break;
             case R.id.btnGenerateReport:
 
                 mNavigationHandler.switchFragment(HIFragmentOverdueReport.newInstance(mState.getOrgUnitId(), mState.getOrgUnitModeId(), mState.getProgramId()), HIFragmentOverdueReport.TAG, true);

@@ -43,4 +43,8 @@ public interface HIIApiDhis2 {
 
     @GET("/events/eventRows?skipPaging=true&programStatus=ACTIVE&eventStatus=SKIPPED")
     Observable<HIResOverdue> getOverdueReport(@Query("orgUnit") String orgUnitId, @Query("ouMode") String ouMode, @Query("program") String programId);
+
+
+    //  https://bid.dhis2.org/epireg/api/events.json?skipPaging=true&programStage=s53RFfXA75f&orgUnit=LWjoKmGc00n&ouMode=SELECTED&status=SCHEDULE
+
 }

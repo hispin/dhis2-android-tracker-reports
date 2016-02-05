@@ -30,5 +30,5 @@
         android:id="@+id/btnOverdueReport"
         style="@style/btnFragmentMain"
         android:layout_gravity="center_horizontal"
-        android:text="Overdue Events" />
+        android:text="Dropout/Skipped Report" />
 </LinearLayout>

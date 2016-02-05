@@ -22,6 +22,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvOrder"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="#"
+                android:textColor="@color/white" />
+
+            <TextView
                 android:id="@+id/tvDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

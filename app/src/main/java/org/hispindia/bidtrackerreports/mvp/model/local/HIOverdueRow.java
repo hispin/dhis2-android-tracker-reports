@@ -35,14 +35,27 @@ public class HIOverdueRow {
     public String eventDate;
     @JsonProperty("dueDate")
     public String dueDate;
-
     @JsonProperty("attributes")
     public List<HIAttribute> attributes;
-
-
-    @JsonProperty("dataValues")
-    List<DataValue> dataValues;
-
     @JsonProperty("notes")
     public List<HINotes> notes;
+    @JsonProperty("dataValues")
+    List<DataValue> dataValues;
+    private int order;
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 }

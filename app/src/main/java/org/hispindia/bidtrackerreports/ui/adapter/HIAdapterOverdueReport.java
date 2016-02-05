@@ -82,7 +82,11 @@ public class HIAdapterOverdueReport extends RecyclerView.Adapter<RecyclerView.Vi
             else viewHolder.vProgressBar.setVisibility(View.GONE);
         } else if (holder instanceof HIAdapterOverdueReportHolder) {
             HIOverdueRow currentItem = getItem(position);
+
             HIAdapterOverdueReportHolder viewHolder = (HIAdapterOverdueReportHolder) holder;
+
+            // viewHolder.tvOrder.setText("#" + currentItem.getOrder());
+
             viewHolder.tvDueDate.setText(currentItem.dueDate);
             viewHolder.tvEvent.setText(MetaDataController.getProgram(currentItem.program).getName());
             generaterRow(viewHolder.context, viewHolder.vAttribute, currentItem);
@@ -90,6 +94,7 @@ public class HIAdapterOverdueReport extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
+
     public int getItemCount() {
         return hiList.size() + 1;
     }
@@ -122,7 +127,8 @@ public class HIAdapterOverdueReport extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     class HIAdapterOverdueReportHolder extends RecyclerView.ViewHolder {
-
+        @Bind(R.id.tvOrder)
+        TextView tvOrder;
         @Bind(R.id.tvDueDate)
         TextView tvDueDate;
         @Bind(R.id.tvEvent)
