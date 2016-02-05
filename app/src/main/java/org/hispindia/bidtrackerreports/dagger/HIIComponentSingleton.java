@@ -39,7 +39,6 @@ public interface HIIComponentSingleton {
 
     HIAdapterSchvaccineReport hiHIAdapterSchvaccineReport();
 
-
     HIPresenterOverdueReport hiHIPresenterOverdueReport();
 
     HIAdapterOverdueReport hiHIAdapterOverdueReport();

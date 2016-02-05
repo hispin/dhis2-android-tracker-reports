@@ -12,9 +12,9 @@
         android:text="@string/btn_tracker_report" />
 
     <Button
-        android:id="@+id/btnBidReport"
+        android:id="@+id/btnTodayReport"
         style="@style/btnFragmentMain"
-        android:text="@string/btn_bid_report" />
+        android:text="@string/btn_today_report" />
 
     <Button
         android:id="@+id/btnStockReport"

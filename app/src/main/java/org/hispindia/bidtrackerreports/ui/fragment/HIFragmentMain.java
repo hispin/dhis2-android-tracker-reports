@@ -13,7 +13,7 @@ import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectProgramFragment;
-import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
@@ -69,10 +69,10 @@ public class HIFragmentMain extends HICFragmentBase {
         mNavigationHandler.switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
     }
 
-    @OnClick(R.id.btnBidReport)
+    @OnClick(R.id.btnTodayReport)
     @SuppressWarnings("unused")
     public void btnBidReport() {
-        mNavigationHandler.switchFragment(new HIFragmentBIDSelectProgram(), HIFragmentBIDSelectProgram.TAG, true);
+        mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
     }
 
     @OnClick(R.id.btnStockReport)

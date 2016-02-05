@@ -57,6 +57,7 @@
 
     <!-- DHIS2 -->
     <string name="btn_tracker_report">Tracker report</string>
+    <string name="btn_today_report">Today schedule</string>
     <string name="btn_bid_report">BID report</string>
     <string name="btn_stock_report">Stock report</string>
 

@@ -39,4 +39,5 @@ public class HIModuleUtils {
     public HIAdapterOverdueReport provideHIAdapterOverdueReport() {
         return new HIAdapterOverdueReport();
     }
+
 }
