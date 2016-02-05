@@ -77,7 +77,6 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
     @Override
     public void onPause() {
         HIEvent.unregister(this);
-        flow.onStop();
         super.onPause();
     }
 
@@ -119,6 +118,7 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
             Log.e(TAG, "updateRow: DONE");
             adapter.setLoadDone(true);
         } else {
+//            Log.e(TAG, "updateRow: "+row.getOrder());
 //            adapter.updateRow(row);
         }
     }

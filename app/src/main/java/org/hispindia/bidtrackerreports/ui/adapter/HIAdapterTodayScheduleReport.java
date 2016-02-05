@@ -107,30 +107,27 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
                 viewHolder.tvOrder.setTextColor(Color.WHITE);
                 viewHolder.tvDueDate.setTextColor(Color.WHITE);
             }
-
-            viewHolder.vAttribute.removeAllViews();
-            setDataElement("First Name", row.getFirstName(), viewHolder.context, viewHolder.vAttribute);
-            setDataElement("Child Number", row.getChilName(), viewHolder.context, viewHolder.vAttribute);
+            setAttr(row.getFirstName(), viewHolder.tvFirstName);
+            setAttr(row.getChilName(), viewHolder.tvChildName);
 
             //data element
-            viewHolder.vDataElement.removeAllViews();
-            setDataElement("BCG", row.getBcg(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("BCG Scar", row.getBcgScar(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("BCG Repeat Dose", row.getBcgRepeatDose(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("OPV 0", row.getOpv0(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("OPV 1", row.getOpv1(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("DPT-HepB-Hib1", row.getDptHepBHib1(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("PCV 1", row.getPcv1(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("RV 1", row.getRv1(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("OPV 2", row.getOpv2(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("PCV 2", row.getPcv2(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("RV 2", row.getRv2(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("OPV 3", row.getOpv3(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("DPT-HepB-Hib3", row.getDptHepBHib3(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("PCV 3", row.getOpv3(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("OPV 4", row.getOpv4(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("Measles 1", row.getMeasles1(), viewHolder.context, viewHolder.vDataElement);
-            setDataElement("Measles 2", row.getMeasles2(), viewHolder.context, viewHolder.vDataElement);
+            setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
+            setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
+            setDe(row.getBcgRepeatDose(), viewHolder.tvBCGRepeatDose, viewHolder.imgBCGRepeatDose, viewHolder.vBCGRepeatDose);
+            setDe(row.getOpv0(), viewHolder.tvOPV0, viewHolder.imgOPV0, viewHolder.vOPV0);
+            setDe(row.getOpv1(), viewHolder.tvOPV1, viewHolder.imgOPV1, viewHolder.vOPV1);
+            setDe(row.getDptHepBHib1(), viewHolder.tvDptHepBHib1, viewHolder.imgDptHepBHib1, viewHolder.vDptHepBHib1);
+            setDe(row.getPcv1(), viewHolder.tvPCV1, viewHolder.imgPCV1, viewHolder.vPCV1);
+            setDe(row.getRv1(), viewHolder.tvRV1, viewHolder.imgRV1, viewHolder.vRV1);
+            setDe(row.getOpv2(), viewHolder.tvOPV2, viewHolder.imgOPV2, viewHolder.vOPV2);
+            setDe(row.getPcv2(), viewHolder.tvPCV2, viewHolder.imgPCV2, viewHolder.vPCV2);
+            setDe(row.getRv2(), viewHolder.tvRV2, viewHolder.imgRV2, viewHolder.vRV2);
+            setDe(row.getOpv3(), viewHolder.tvOPV3, viewHolder.imgOPV3, viewHolder.vOPV3);
+            setDe(row.getDptHepBHib3(), viewHolder.tvDptHepBHib3, viewHolder.imgDptHepBHib3, viewHolder.vDptHepBHib3);
+            setDe(row.getPcv3(), viewHolder.tvPCV3, viewHolder.imgPCV3, viewHolder.vPCV3);
+            setDe(row.getOpv4(), viewHolder.tvOPV4, viewHolder.imgOPV4, viewHolder.vOPV4);
+            setDe(row.getMeasles1(), viewHolder.tvMeasles1, viewHolder.imgMeasles1, viewHolder.vMeasles1);
+            setDe(row.getMeasles2(), viewHolder.tvMeasles2, viewHolder.imgMeasles2, viewHolder.vMeasles2);
         }
     }
 
@@ -147,31 +144,29 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         return position == hibidRowList.size();
     }
 
-    public void setDataElement(String title, String item, Context context, LinearLayout view) {
-        view.post(() -> {
-            LinearLayout lv = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.hiviewitem_today_schedule_row_item, null, false);
-            TextView tvLeft = (TextView) lv.findViewById(R.id.tvLeft);
-            TextView tvRight = (TextView) lv.findViewById(R.id.tvRight);
-            ImageView imageView = (ImageView) lv.findViewById(R.id.imgIcon);
-            tvLeft.setText(title);
-            if (item == null || !item.equals("-*#hidefield#*-")) {
-                if (item == null) {
-                    imageView.setBackgroundResource(R.drawable.ic_menu_my_calendar);
-                    imageView.setVisibility(View.VISIBLE);
-                    tvRight.setVisibility(View.GONE);
-                } else if (item.trim().toLowerCase().equals("true") || item.trim().equals("")) {
-                    imageView.setBackgroundResource(R.drawable.ic_checkmark_holo_light);
-                    imageView.setVisibility(View.VISIBLE);
-                    tvRight.setVisibility(View.GONE);
-                } else {
-                    imageView.setVisibility(View.GONE);
-                    tvRight.setVisibility(View.VISIBLE);
-                    tvRight.setText(item);
-                }
-                if (view != null) view.addView(lv);
-            }
-        });
+    public void setAttr(String item, TextView tv) {
+        if (item != null) tv.setText(item);
+    }
 
+    public void setDe(String item, TextView tv, ImageView img, View view) {
+        if (item == null || !item.equals("-*#hidefield#*-")) {
+            view.setVisibility(View.VISIBLE);
+            if (item == null) {
+                img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
+                img.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.GONE);
+            } else if (item.trim().toLowerCase().equals("true") || item.trim().equals("")) {
+                img.setBackgroundResource(R.drawable.ic_checkmark_holo_light);
+                img.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.GONE);
+            } else {
+                img.setVisibility(View.GONE);
+                tv.setVisibility(View.VISIBLE);
+                tv.setText(item);
+            }
+        } else {
+            view.setVisibility(View.GONE);
+        }
     }
 
     class HIAdapterToDayScheduleReportHolder extends RecyclerView.ViewHolder {
@@ -188,6 +183,112 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         LinearLayout vAttribute;
         @Bind(R.id.vDataElement)
         LinearLayout vDataElement;
+
+        @Bind(R.id.vBCG)
+        View vBCG;
+        @Bind(R.id.vBCGScar)
+        View vBCGScar;
+        @Bind(R.id.vBCGRepeatDose)
+        View vBCGRepeatDose;
+        @Bind(R.id.vOPV0)
+        View vOPV0;
+        @Bind(R.id.vOPV1)
+        View vOPV1;
+        @Bind(R.id.vDptHepBHib1)
+        View vDptHepBHib1;
+        @Bind(R.id.vPCV1)
+        View vPCV1;
+        @Bind(R.id.vRV1)
+        View vRV1;
+        @Bind(R.id.vOPV2)
+        View vOPV2;
+        @Bind(R.id.vPCV2)
+        View vPCV2;
+        @Bind(R.id.vRV2)
+        View vRV2;
+        @Bind(R.id.vOPV3)
+        View vOPV3;
+        @Bind(R.id.vDptHepBHib3)
+        View vDptHepBHib3;
+        @Bind(R.id.vPCV3)
+        View vPCV3;
+        @Bind(R.id.vOPV4)
+        View vOPV4;
+        @Bind(R.id.vMeasles1)
+        View vMeasles1;
+        @Bind(R.id.vMeasles2)
+        View vMeasles2;
+
+        @Bind(R.id.tvBCG)
+        TextView tvBCG;
+        @Bind(R.id.tvBCGScar)
+        TextView tvBCGScar;
+        @Bind(R.id.tvBCGRepeatDose)
+        TextView tvBCGRepeatDose;
+        @Bind(R.id.tvOPV0)
+        TextView tvOPV0;
+        @Bind(R.id.tvOPV1)
+        TextView tvOPV1;
+        @Bind(R.id.tvDptHepBHib1)
+        TextView tvDptHepBHib1;
+        @Bind(R.id.tvPCV1)
+        TextView tvPCV1;
+        @Bind(R.id.tvRV1)
+        TextView tvRV1;
+        @Bind(R.id.tvOPV2)
+        TextView tvOPV2;
+        @Bind(R.id.tvPCV2)
+        TextView tvPCV2;
+        @Bind(R.id.tvRV2)
+        TextView tvRV2;
+        @Bind(R.id.tvOPV3)
+        TextView tvOPV3;
+        @Bind(R.id.tvDptHepBHib3)
+        TextView tvDptHepBHib3;
+        @Bind(R.id.tvPCV3)
+        TextView tvPCV3;
+        @Bind(R.id.tvOPV4)
+        TextView tvOPV4;
+        @Bind(R.id.tvMeasles1)
+        TextView tvMeasles1;
+        @Bind(R.id.tvMeasles2)
+        TextView tvMeasles2;
+
+        @Bind(R.id.imgBCG)
+        ImageView imgBCG;
+        @Bind(R.id.imgBCGScar)
+        ImageView imgBCGScar;
+        @Bind(R.id.imgBCGRepeatDose)
+        ImageView imgBCGRepeatDose;
+        @Bind(R.id.imgOPV0)
+        ImageView imgOPV0;
+        @Bind(R.id.imgOPV1)
+        ImageView imgOPV1;
+        @Bind(R.id.imgDptHepBHib1)
+        ImageView imgDptHepBHib1;
+        @Bind(R.id.imgPCV1)
+        ImageView imgPCV1;
+        @Bind(R.id.imgRV1)
+        ImageView imgRV1;
+        @Bind(R.id.imgOPV2)
+        ImageView imgOPV2;
+        @Bind(R.id.imgPCV2)
+        ImageView imgPCV2;
+        @Bind(R.id.imgRV2)
+        ImageView imgRV2;
+        @Bind(R.id.imgOPV3)
+        ImageView imgOPV3;
+        @Bind(R.id.imgDptHepBHib3)
+        ImageView imgDptHepBHib3;
+        @Bind(R.id.imgPCV3)
+        ImageView imgPCV3;
+        @Bind(R.id.imgOPV4)
+        ImageView imgOPV4;
+        @Bind(R.id.imgMeasles1)
+        ImageView imgMeasles1;
+        @Bind(R.id.imgMeasles2)
+        ImageView imgMeasles2;
+
         Context context;
 
         public HIAdapterToDayScheduleReportHolder(View itemView, Context context) {
