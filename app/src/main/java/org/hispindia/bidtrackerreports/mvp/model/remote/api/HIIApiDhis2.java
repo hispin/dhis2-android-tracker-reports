@@ -34,6 +34,8 @@ public interface HIIApiDhis2 {
     @GET("/sqlViews/{orgUnitModeId}/data")
     Observable<JsonNode> getStockReport(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitLevel, @Query("var") String orgUnitId);
 
+    @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockInHandReport(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
     //startDate=2016-01-30&endDate=2016-03-31
     @GET("/events/eventRows?skipPaging=true&programStatus=ACTIVE&eventStatus=SCHEDULE")
     Observable<HIResSchvaccine> getSchvaccineReport(@Query("orgUnit") String orgUnitId, @Query("ouMode") String ouMode, @Query("program") String programId, @Query("startDate") String startDate, @Query("endDate") String endDate);

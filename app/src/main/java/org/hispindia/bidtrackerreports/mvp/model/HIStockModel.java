@@ -21,11 +21,15 @@ public class HIStockModel {
         this.apiModel = apiModel;
     }
 
-    public Observable<HIResStock> getStockReport(String orgUnitModeId, int orgUnitLevel, String orgUnitId) {
-        return Observable.defer(() -> getApiModel().getStockReport(orgUnitModeId, "level:" + orgUnitLevel, "ouuid:" + orgUnitId)
+    public Observable<HIResStock> getStockReport(String orgUnitMode, int orgUnitLevel, String orgUnitId) {
+        return Observable.defer(() -> getApiModel().getStockReport(orgUnitMode, "level:" + orgUnitLevel, "ouuid:" + orgUnitId)
                 .map(HIResStock::new));
     }
 
+    public Observable<HIResStock> getStockInHandReport(String orgUnitMode, String orgUnitId) {
+        return Observable.defer(() -> getApiModel().getStockInHandReport(orgUnitMode, "ouuid:" + orgUnitId)
+                .map(HIResStock::new));
+    }
     public HIIApiDhis2 getApiModel() {
         return apiModel;
     }

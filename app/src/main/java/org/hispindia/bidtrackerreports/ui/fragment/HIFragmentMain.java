@@ -18,6 +18,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.H
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 
 import butterknife.OnClick;
 
@@ -100,4 +101,9 @@ public class HIFragmentMain extends HICFragmentBase {
         mNavigationHandler.switchFragment(new HIFragmentOverdueSelectProgram(), HIFragmentOverdueSelectProgram.TAG, true);
     }
 
+    @OnClick(R.id.btnStockInHandReport)
+    @SuppressWarnings("unused")
+    public void btnStockInHandReport() {
+        mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
+    }
 }

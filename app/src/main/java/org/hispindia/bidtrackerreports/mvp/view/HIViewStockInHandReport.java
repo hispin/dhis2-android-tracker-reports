@@ -3,9 +3,9 @@ package org.hispindia.bidtrackerreports.mvp.view;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock;
 
 /**
- * Created by nhancao on 1/25/16.
+ * Created by Sourabh on 2/6/2016.
  */
-public interface HIIViewStockReport {
+public interface HIViewStockInHandReport {
 
     void updateRow(HIResStock rows);
 }

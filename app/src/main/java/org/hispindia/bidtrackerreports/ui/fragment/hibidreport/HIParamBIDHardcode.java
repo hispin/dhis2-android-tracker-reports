@@ -36,6 +36,7 @@ public class HIParamBIDHardcode {
     public static String PROGRAMID = "SSLpOM0r1U7";
     public static String PROGRAMSTAGEID = "s53RFfXA75f";
     public static String OUMODE = "SELECTED";
+    public static String OUMODEID = "lTqNF1rWha3";
     public static String FIRSTNAMEID = "sB1IHYu2xQT";
     public static String CHILDNAMEID = "wbtl3uN0spv";
 
