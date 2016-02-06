@@ -36,4 +36,10 @@
         style="@style/btnFragmentMain"
         android:layout_gravity="center_horizontal"
         android:text="Dropout/Skipped Report" />
+
+    <Button
+        android:id="@+id/btnStockInHandReport"
+        style="@style/btnFragmentMain"
+        android:layout_gravity="center_horizontal"
+        android:text="Stock In Hand Report" />
 </LinearLayout>
