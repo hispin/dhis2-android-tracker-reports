@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
@@ -18,6 +17,7 @@ import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterSchvaccineReport
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterSchvaccineReport;
+import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 
 import java.util.ArrayList;
 

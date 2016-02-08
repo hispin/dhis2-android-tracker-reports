@@ -2,9 +2,9 @@ package org.hispindia.bidtrackerreports.mvp.presenter;
 
 import android.util.Log;
 
-import org.hispindia.android.core.utils.HICUtilRxHelper;
 import org.hispindia.bidtrackerreports.mvp.model.HISchvaccineModel;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewSchvaccineReport;
+import org.hispindia.bidtrackerreports.utils.HICUtilRxHelper;
 
 import rx.Subscription;
 

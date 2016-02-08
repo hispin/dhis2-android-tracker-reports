@@ -88,7 +88,7 @@ dependencies {
 
     def dependency = rootProject.ext.dependency
     compile project(':..:dhis2-android-sdk:app')
-    compile project(':android-core')
+//    compile project(':android-core')
 
     compile dependency.appcompatv7
     compile dependency.supportDesign
@@ -96,17 +96,10 @@ dependencies {
 
     compile dependency.dagger
     apt dependency.daggerCompiler
-    provided dependency.generatedAnnotation;
-    compile dependency.gson
-    compile dependency.realm
-//    compile dependency.butterknife
-//    compile dependency.rxAndroid
-//    compile dependency.rxJava
-//    compile dependency.retrofit
-//    compile dependency.retrofitConverterGson
-//    compile dependency.retrofitAdapterRxjava
-//    compile dependency.jodaTime
-//    compile dependency.jodaTimeConvert
+//    provided dependency.generatedAnnotation;
+    compile dependency.butterknife
+    compile dependency.rxAndroid
+    compile dependency.rxJava
 
     testCompile dependency.jUnit
 

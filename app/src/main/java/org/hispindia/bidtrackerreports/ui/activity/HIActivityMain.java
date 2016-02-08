@@ -14,11 +14,11 @@ import org.hisp.dhis.android.sdk.persistence.preferences.ResourceType;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hisp.dhis.android.sdk.ui.activities.OnBackPressedListener;
 import org.hisp.dhis.android.sdk.utils.UiUtils;
-import org.hispindia.android.core.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
+import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {

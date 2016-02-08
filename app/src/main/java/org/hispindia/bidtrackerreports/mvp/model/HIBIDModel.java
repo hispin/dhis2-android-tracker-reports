@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.mvp.model;
 
 import android.app.Application;
-import android.util.Log;
 
 import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
 import org.hisp.dhis.android.sdk.persistence.models.DataValue;
@@ -19,14 +18,12 @@ import org.hisp.dhis.android.sdk.utils.comparators.ProgramRulePriorityComparator
 import org.hisp.dhis.android.sdk.utils.services.ProgramIndicatorService;
 import org.hisp.dhis.android.sdk.utils.services.ProgramRuleService;
 import org.hisp.dhis.android.sdk.utils.services.VariableService;
-import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRowItem;
-import org.hispindia.bidtrackerreports.mvp.model.local.HIDBMapping;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
+import org.hispindia.bidtrackerreports.mvp.model.local.db.HIMetaDataController;
 import org.hispindia.bidtrackerreports.mvp.model.remote.api.HIIApiDhis2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResBIDEvents;
-import org.hispindia.bidtrackerreports.utils.HIUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -36,12 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Observable;
 import rx.Subscriber;
 
-import static org.hispindia.android.core.utils.HICUtilRxHelper.onNext;
+import static org.hispindia.bidtrackerreports.utils.HICUtilRxHelper.onNext;
+
 
 /**
  * Created by nhancao on 1/22/16.
@@ -51,20 +47,19 @@ public class HIBIDModel {
 
     private final Application application;
     private final HIIApiDhis2 apiModel;
-
+    HIMetaDataController controller;
     private HIBIDRow headerRow;
     private Program program;
     private Event event;
     private Enrollment enrollment;
     private ProgramStage programStage;
-
     private Map<String, List<ProgramRule>> programRulesForDataElements;
     private Map<String, List<ProgramIndicator>> programIndicatorsForDataElements;
     private List<String> affectedFieldsWithValue;
-
     public HIBIDModel(Application application, HIIApiDhis2 apiModel) {
         this.application = application;
         this.apiModel = apiModel;
+        controller = new HIMetaDataController(application);
     }
 
     /**
@@ -337,51 +332,10 @@ public class HIBIDModel {
     }
 
     public void cacheToLocal(List<HIDBbidrow> localList) {
-        Realm realm = null;
-        try {
-            realm = Realm.getInstance(((HIApplication) getApplication()).getConfig0());
-            realm.beginTransaction();
-            realm.clear(HIDBbidrow.class);
-            for (HIDBbidrow item : localList) {
-                realm.copyToRealm(item);
-            }
-            realm.commitTransaction();
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        } finally {
-            if (realm != null) {
-                realm.close();
-            }
-
-        }
+        controller.cacheHIDBbidrowLocal(localList);
     }
 
     public List<HIDBbidrow> getDbLocal() {
-        List<HIDBbidrow> result = new ArrayList<>();
-        Realm realm = null;
-        try {
-            realm = Realm.getInstance(((HIApplication) getApplication()).getConfig0());
-            final RealmResults<HIDBbidrow> dbStores = realm.allObjects(HIDBbidrow.class);
-            if (dbStores.size() > 0) {
-                for (int i = 0; i < dbStores.size(); i++) {
-                    HIDBbidrow dbStore = HIDBMapping.clone(dbStores.get(i));
-                    try {
-                        dbStore.setIsOverdue(HIUtils.isOverDue(dbStore.getDueDate()));
-                    } catch (Exception e) {
-                        Log.e(TAG, "getDbLocal: " + e.toString() + " - " + dbStore.getDueDate());
-                        e.printStackTrace();
-                    }
-                    result.add(dbStore);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        } finally {
-            if (realm != null) {
-                realm.close();
-            }
-
-        }
-        return result;
+        return controller.getHIDBbidrowLocal();
     }
 }

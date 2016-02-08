@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
-import org.hispindia.android.core.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
@@ -20,6 +19,7 @@ import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
+import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 
 import java.util.ArrayList;

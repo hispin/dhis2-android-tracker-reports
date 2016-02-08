@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.dagger;
 
-import org.hispindia.android.core.dagger.HICIPerActivity;
-import org.hispindia.android.core.dagger.module.HICModuleActivity;
+import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIFragmentBIDReport;

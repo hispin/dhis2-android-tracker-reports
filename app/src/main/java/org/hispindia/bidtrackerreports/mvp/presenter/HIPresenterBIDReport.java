@@ -2,13 +2,13 @@ package org.hispindia.bidtrackerreports.mvp.presenter;
 
 import android.util.Log;
 
-import org.hispindia.android.core.utils.HICUtilRxHelper;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDRow;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIDBMapping;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewBIDReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
+import org.hispindia.bidtrackerreports.utils.HICUtilRxHelper;
 
 import java.util.ArrayList;
 import java.util.List;

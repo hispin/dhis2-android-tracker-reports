@@ -28,13 +28,13 @@ import org.hisp.dhis.android.sdk.ui.dialogs.ProgramDialogFragment;
 import org.hisp.dhis.android.sdk.ui.fragments.settings.SettingsFragment;
 import org.hisp.dhis.android.sdk.ui.views.CardTextViewButton;
 import org.hisp.dhis.android.sdk.utils.api.ProgramType;
-import org.hispindia.android.core.ui.fragment.HICFragmentBase;
-import org.hispindia.android.core.utils.HICUtils;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
+import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogOrgUnitMode;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogProgramStage;
+import org.hispindia.bidtrackerreports.utils.HICUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
