@@ -88,7 +88,6 @@ dependencies {
 
     def dependency = rootProject.ext.dependency
     compile project(':..:dhis2-android-sdk:app')
-//    compile project(':android-core')
 
     compile dependency.appcompatv7
     compile dependency.supportDesign
@@ -96,11 +95,10 @@ dependencies {
 
     compile dependency.dagger
     apt dependency.daggerCompiler
-//    provided dependency.generatedAnnotation;
     compile dependency.butterknife
     compile dependency.rxAndroid
     compile dependency.rxJava
-
+    compile 'com.github.cvnhan:MPAndroidChart:v2.2.0'
     testCompile dependency.jUnit
 
 }
