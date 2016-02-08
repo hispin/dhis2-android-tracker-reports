@@ -71,6 +71,8 @@ public class HIFragmentSchvaccineReport extends HICFragmentBase implements HIIVi
         this.programId = fragmentArguments.getString(PROGRAM_ID);
         this.fromDay = fragmentArguments.getString(FROM_DAY);
         this.toDay = fragmentArguments.getString(TO_DAY);
+        getActivity().setTitle(getString(R.string.btn_schedule_vaccine_report));
+
     }
 
     @Nullable

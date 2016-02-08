@@ -59,7 +59,8 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         this.orgUnitMode = HIParamBIDHardcode.OUMODE;
         this.programId = HIParamBIDHardcode.PROGRAMID;
         this.programStageId = HIParamBIDHardcode.PROGRAMSTAGEID;
-        adapter = new HIAdapterTodayScheduleReport();
+        this.adapter = new HIAdapterTodayScheduleReport();
+        getActivity().setTitle(getString(R.string.btn_today_report));
     }
 
     @Nullable

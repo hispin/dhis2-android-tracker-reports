@@ -23,6 +23,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 
+    public Toolbar toolbar;
     private OnBackPressedListener mBackPressedListener;
     private HIIComponentUi uiComponent;
 
@@ -31,7 +32,7 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         super.onCreate(savedInstanceState);
         injectDependencies();
         setContentView(R.layout.hiactivity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         LoadingController.enableLoading(this, ResourceType.ASSIGNEDPROGRAMS);

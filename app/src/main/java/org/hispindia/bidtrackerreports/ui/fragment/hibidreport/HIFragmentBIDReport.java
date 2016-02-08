@@ -68,6 +68,7 @@ public class HIFragmentBIDReport extends HICFragmentBase implements HIIViewBIDRe
         this.orgUnitMode = fragmentArguments.getString(ORG_UNIT_MODE);
         this.programId = fragmentArguments.getString(PROGRAM_ID);
         this.programStageId = fragmentArguments.getString(PROGRAM_STAGE_ID);
+        getActivity().setTitle(getString(R.string.btn_bid_report));
     }
 
     @Nullable

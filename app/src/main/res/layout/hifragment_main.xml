@@ -6,40 +6,63 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnTrackerReport"
-        style="@style/btnFragmentMain"
-        android:text="@string/btn_tracker_report" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnTodayReport"
-        style="@style/btnFragmentMain"
-        android:text="@string/btn_today_report" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnVaccineStatus"
-        style="@style/btnFragmentMain"
-        android:text="@string/btn_vaccine_report" />
+            <LinearLayout style="@style/vFragmentMain">
 
-    <Button
-        android:id="@+id/btnStockReport"
-        style="@style/btnFragmentMain"
-        android:text="@string/btn_stock_report" />
+                <Button
+                    android:id="@+id/btnTrackerReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_tracker_report" />
 
-    <Button
-        android:id="@+id/btnSchvaccineReport"
-        style="@style/btnFragmentMain"
-        android:text="Schedule Vaccine Report" />
+                <Button
+                    android:id="@+id/btnTodayReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_today_report" />
 
-    <Button
-        android:id="@+id/btnOverdueReport"
-        style="@style/btnFragmentMain"
-        android:layout_gravity="center_horizontal"
-        android:text="Dropout/Skipped Report" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btnStockInHandReport"
-        style="@style/btnFragmentMain"
-        android:layout_gravity="center_horizontal"
-        android:text="Stock In Hand Report" />
+            <LinearLayout style="@style/vFragmentMain">
+
+                <Button
+                    android:id="@+id/btnVaccineStatus"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_vaccine_report" />
+
+                <Button
+                    android:id="@+id/btnStockReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_stock_report" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/vFragmentMain">
+
+                <Button
+                    android:id="@+id/btnSchvaccineReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_schedule_vaccine_report" />
+
+                <Button
+                    android:id="@+id/btnOverdueReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_overdue_report" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/vFragmentMain">
+
+                <Button
+                    android:id="@+id/btnStockInHandReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_stockinhand_report" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

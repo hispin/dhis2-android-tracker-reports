@@ -61,6 +61,10 @@
     <string name="btn_vaccine_report">Vaccine status</string>
     <string name="btn_bid_report">BID report</string>
     <string name="btn_stock_report">Stock report</string>
+    <string name="btn_schedule_vaccine_report">Schedule Vaccine Report</string>
+    <string name="btn_overdue_report">Dropout/Skipped Report</string>
+    <string name="btn_stockinhand_report">Stock In Hand Report</string>
+    <string name="btn_stockinhandvsdemand_report">Stock In Hand vs Demand Report</string>
 
     <string name="hi_stock_report_no">S No</string>
     <string name="hi_stock_report_name">Name</string>

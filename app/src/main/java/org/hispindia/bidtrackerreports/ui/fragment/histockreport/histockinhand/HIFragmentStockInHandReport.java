@@ -106,6 +106,8 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
             throw new IllegalArgumentException("Activity must " +
                     "implement INavigationHandler interface");
         }
+        getActivity().setTitle(getString(R.string.btn_stockinhand_report));
+
     }
 
     @Override

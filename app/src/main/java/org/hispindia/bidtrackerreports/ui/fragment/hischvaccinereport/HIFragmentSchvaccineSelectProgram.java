@@ -140,6 +140,8 @@ public class HIFragmentSchvaccineSelectProgram extends HICFragmentBase implement
             throw new IllegalArgumentException("Activity must " +
                     "implement INavigationHandler interface");
         }
+        getActivity().setTitle(getString(R.string.btn_schedule_vaccine_report));
+
     }
 
     @Override
