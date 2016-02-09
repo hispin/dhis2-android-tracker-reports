@@ -10,10 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
+import org.hispindia.bidtrackerreports.mvp.model.local.HIStockRow;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
@@ -23,6 +33,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,10 +49,14 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
     protected INavigationHandler mNavigationHandler;
     @Bind(R.id.vReport)
     RecyclerView vReport;
+    @Bind(R.id.vChart)
+    BarChart vChart;
+
     @Inject
     HIPresenterStockReport flow;
     @Inject
     HIAdapterStockReport adapter;
+
     private String orgUnitId;
     private String orgUnitMode;
 
@@ -83,6 +98,33 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
     protected void onInjected() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        vChart.setDrawBarShadow(false);
+        vChart.setDrawValueAboveBar(true);
+        vChart.setDescription("");
+        vChart.setPinchZoom(false);
+        vChart.setDrawGridBackground(false);
+        XAxis xAxis = vChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(2);
+
+        YAxis leftAxis = vChart.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+
+        YAxis rightAxis = vChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setLabelCount(8, false);
+        rightAxis.setSpaceTop(15f);
+
+        Legend l = vChart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setForm(Legend.LegendForm.SQUARE);
+        l.setFormSize(9f);
+        l.setTextSize(11f);
+        l.setXEntrySpace(4f);
 
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
@@ -130,11 +172,46 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
     }
 
     @Override
-    public void updateRow(HIResStock rows) {
-        if (rows != null) {
-            adapter.setHiStockRowList(rows.rows);
+    public void updateRow(HIResStock resStock) {
+        if (resStock != null) {
+            adapter.setHiStockRowList(resStock.rows);
             adapter.setLoadDone(true);
+            createChart(resStock.rows);
         }
+    }
+
+    public void createChart(List<HIStockRow> rows) {
+
+        ArrayList<String> xVals = new ArrayList<>();
+        for (int i = 0; i < rows.size(); i++) {
+            String name = rows.get(i).getName();
+            try {
+                xVals.add(name.substring(0, name.indexOf(" ")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        for (int i = 0; i < rows.size(); i++) {
+            try {
+                yVals1.add(new BarEntry(Integer.parseInt(rows.get(i).getValue()), i));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        BarDataSet set1 = new BarDataSet(yVals1, "value");
+        set1.setBarSpacePercent(35f);
+
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+
+        vChart.setData(data);
+        vChart.animateXY(500, 1000);
     }
 
 }
