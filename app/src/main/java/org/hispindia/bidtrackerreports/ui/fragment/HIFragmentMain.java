@@ -68,6 +68,8 @@ public class HIFragmentMain extends HICFragmentBase {
     @SuppressWarnings("unused")
     public void btnTrackerReport() {
         mNavigationHandler.switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
+//        EventDataEntryFragment fragment = EventDataEntryFragment.newInstanceWithEnrollment("DQjaNvP9ulw", "SSLpOM0r1U7", "s53RFfXA75f" , 1, 1);
+//        mNavigationHandler.switchFragment(fragment, EventDataEntryFragment.TAG, true);
     }
 
     @OnClick(R.id.btnTodayReport)

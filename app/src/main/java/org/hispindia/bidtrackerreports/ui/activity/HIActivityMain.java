@@ -37,6 +37,7 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         LoadingController.enableLoading(this, ResourceType.ASSIGNEDPROGRAMS);
         LoadingController.enableLoading(this, ResourceType.OPTIONSETS);
         LoadingController.enableLoading(this, ResourceType.PROGRAMS);
+        LoadingController.enableLoading(this, ResourceType.PROGRAM);
         LoadingController.enableLoading(this, ResourceType.CONSTANTS);
         LoadingController.enableLoading(this, ResourceType.PROGRAMRULES);
         LoadingController.enableLoading(this, ResourceType.PROGRAMRULEVARIABLES);
@@ -44,6 +45,10 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         LoadingController.enableLoading(this, ResourceType.RELATIONSHIPTYPES);
         LoadingController.enableLoading(this, ResourceType.TRACKEDENTITYINSTANCE);
         LoadingController.enableLoading(this, ResourceType.TRACKEDENTITYATTRIBUTES);
+        LoadingController.enableLoading(this, ResourceType.EVENTS);
+        LoadingController.enableLoading(this, ResourceType.EVENT);
+        LoadingController.enableLoading(this, ResourceType.ENROLLMENTS);
+        LoadingController.enableLoading(this, ResourceType.ENROLLMENT);
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
         showMainFragment();
         loadInitialData();

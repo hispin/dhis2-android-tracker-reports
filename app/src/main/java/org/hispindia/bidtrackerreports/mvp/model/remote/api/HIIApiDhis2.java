@@ -19,7 +19,7 @@ import rx.Observable;
  */
 public interface HIIApiDhis2 {
 
-    @GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true")
+    @GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true&status=SCHEDULE")
     Observable<HIResBIDEvents> getEvents(@Query("orgUnit") String orgUnitUid, @Query("ouMode") String ouModeUid, @Query("programStage") String programStageUid);
 
     @GET("/" + ApiEndpointContainer.TRACKED_ENTITY_INSTANCES + "/{trackedEntityInstanceUid}")
