@@ -67,6 +67,8 @@ public class HIFragmentOverdueReport extends HICFragmentBase implements HIIViewO
         this.orgUnitId = fragmentArguments.getString(ORG_UNIT_ID);
         this.orgUnitMode = fragmentArguments.getString(ORG_UNIT_MODE);
         this.programId = fragmentArguments.getString(PROGRAM_ID);
+        getActivity().setTitle(getString(R.string.btn_overdue_report));
+
     }
 
     @Nullable

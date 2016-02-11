@@ -74,6 +74,7 @@ public class HIFragmentStockSelectProgram extends HICFragmentBase
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getActivity().setTitle(getString(R.string.btn_stock_report));
     }
 
     @Override

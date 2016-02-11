@@ -64,6 +64,8 @@ public class HIFragmentStockReport extends HICFragmentBase implements HIIViewSto
         this.orgUnitId = fragmentArguments.getString(ORG_UNIT_ID);
         this.orgUnitLevel = fragmentArguments.getInt(ORG_UNIT_LV);
         this.orgUnitModeId = fragmentArguments.getString(ORG_UNIT_MODE_ID);
+        getActivity().setTitle(getString(R.string.btn_stock_report));
+
     }
 
     @Nullable

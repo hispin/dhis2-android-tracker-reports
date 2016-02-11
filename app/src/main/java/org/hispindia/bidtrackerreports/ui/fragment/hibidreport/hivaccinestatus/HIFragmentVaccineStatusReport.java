@@ -59,7 +59,9 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
         this.orgUnitMode = HIParamBIDHardcode.OUMODE;
         this.programId = HIParamBIDHardcode.PROGRAMID;
         this.programStageId = HIParamBIDHardcode.PROGRAMSTAGEID;
-        adapter = new HIAdapterVaccineStatusReport();
+        this.adapter = new HIAdapterVaccineStatusReport();
+        getActivity().setTitle(getString(R.string.btn_vaccine_report));
+
     }
 
     @Nullable

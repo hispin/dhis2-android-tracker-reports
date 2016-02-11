@@ -9,7 +9,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vReport"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:padding="5dp" />
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/vChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
 </LinearLayout>

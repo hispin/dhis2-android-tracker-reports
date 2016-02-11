@@ -134,6 +134,8 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
             throw new IllegalArgumentException("Activity must " +
                     "implement INavigationHandler interface");
         }
+        getActivity().setTitle(getString(R.string.btn_overdue_report));
+
     }
 
     @Override

@@ -56,6 +56,7 @@ public class HIFragmentMain extends HICFragmentBase {
             throw new IllegalArgumentException("Activity must " +
                     "implement INavigationHandler interface");
         }
+        getActivity().setTitle(getString(R.string.app_name));
     }
 
     @Override
