@@ -3,10 +3,15 @@ package org.hispindia.bidtrackerreports.mvp.presenter;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import org.hisp.dhis.android.sdk.controllers.DhisController;
 import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
 import org.hisp.dhis.android.sdk.controllers.tracker.TrackerController;
+import org.hisp.dhis.android.sdk.persistence.models.DataElement;
 import org.hisp.dhis.android.sdk.persistence.models.DataValue;
+import org.hisp.dhis.android.sdk.persistence.models.DataValue$Table;
 import org.hisp.dhis.android.sdk.persistence.models.Enrollment;
 import org.hisp.dhis.android.sdk.persistence.models.Event;
 import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
@@ -30,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController.getDataElement;
+
 /**
  * Created by nhancao on 2/12/16.
  */
@@ -42,6 +49,8 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
     private Map<String, List<ProgramRule>> programRulesForDataElements;
     private Map<String, List<ProgramIndicator>> programIndicatorsForDataElements;
     private Map<String, DataValue> dataValues;
+    private Map<String, DataValue> dataValuesCompleted;
+    private Map<String, Event> eventsCompleted;
     private Map<String, TrackedEntityAttributeValue> trackedEntityAttributeValues;
     private Map<String, String> dataElementNames;
     String unitId;
@@ -64,6 +73,14 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
         this.program = MetaDataController.getProgram(programId);
         this.organisationUnit = MetaDataController.getOrganisationUnit(unitId);
 
+        this.applyRuleLogic = new ApplyRuleLogic();
+        this.applyRuleLogic.setProgramRuleFragmentHelper(this);
+
+        this.dataValues = new HashMap<>();
+        this.dataValuesCompleted = new HashMap<>();
+        this.eventsCompleted = new HashMap<>();
+        this.trackedEntityAttributeValues = new HashMap<>();
+        this.dataElementNames = new HashMap<>();
 
         final String username = DhisController.getInstance().getSession().getCredentials().getUsername();
         event = generateEvent(
@@ -78,14 +95,51 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
             enrollment.getEvents(true);
         }
 
-        this.applyRuleLogic = new ApplyRuleLogic();
-        this.applyRuleLogic.setProgramRuleFragmentHelper(this);
+        //populate data value
+        for (ProgramStageDataElement stageDataElement : getProgramStage().getProgramStageDataElements()) {
+            DataValue dataValue = getDataValue(stageDataElement.getDataelement(), getEvent(), username);
+            DataElement dataElement = getDataElement(stageDataElement.getDataelement());
+            if (dataElement != null) {
+                getDataElementNames().put(stageDataElement.getDataelement(),
+                        dataElement.getDisplayName());
+                getDataValues().put(dataValue.getDataElement(), dataValue);
+            }
+        }
 
-        this.dataValues = new HashMap<>();
-        this.trackedEntityAttributeValues = new HashMap<>();
-        this.dataElementNames = new HashMap<>();
+        //populate data of event had completed
+        for (Event item : TrackerController.getEvents(orgUnitId, programId)) {
+            if (item.getTrackedEntityInstance() != null && item.getTrackedEntityInstance().equals(getEvent().getTrackedEntityInstance()) &&
+                    item.getStatus().equals(Event.STATUS_COMPLETED)) {
+                eventsCompleted.put(item.getEvent(), item);
+            }
+        }
+
+        for (String key : eventsCompleted.keySet()) {
+            List<DataValue> dataVList = new Select().from(DataValue.class).where(Condition.column(DataValue$Table.EVENT).is(key)).queryList();
+            for (DataValue item : dataVList) {
+                Log.e(TAG, "ApplyRuleHelper: complete = " + item.getDataElement() + " - " + item.getValue());
+                getDataValues().put(item.getDataElement(), item);
+                getDataElementNames().put(item.getDataElement(), MetaDataController.getDataElement(item.getDataElement()).getDisplayName());
+            }
+        }
+
     }
 
+    public static DataValue getDataValue(String dataElement, Event event,
+                                         String username) {
+        for (DataValue dataValue : event.getDataValues()) {
+            if (dataValue.getDataElement().equals(dataElement)) {
+                return dataValue;
+            }
+        }
+
+        // The DataValue didn't exist for some reason. Create a new one.
+        DataValue dataValue = new DataValue(
+                event, "", dataElement, false, username
+        );
+        event.getDataValues().add(dataValue);
+        return dataValue;
+    }
 
     @Override
     public ArrayList<String> getProgramRuleValidationErrors() {
@@ -107,8 +161,8 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
 
     @Override
     public void mapFieldsToRulesAndIndicators() {
-        setProgramRulesForDataElements(new HashMap<String, List<ProgramRule>>());
-        setProgramIndicatorsForDataElements(new HashMap<String, List<ProgramIndicator>>());
+        setProgramRulesForDataElements(new HashMap<>());
+        setProgramIndicatorsForDataElements(new HashMap<>());
         for (ProgramRule programRule : getProgramStage().getProgram().getProgramRules()) {
             for (String dataElement : ProgramRuleService.getDataElementsInRule(programRule)) {
                 List<ProgramRule> rulesForDataElement = getProgramRulesForDataElements().get(dataElement);
@@ -142,6 +196,21 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
 
     @Override
     public void showWarningHiddenValuesDialog(Fragment fragment, ArrayList<String> affectedValues) {
+
+        for (String dataElementId : affectedValues) {
+            if (dataValues.containsKey(dataElementId) && dataValues.get(dataElementId).getValue().trim().equals("")) {
+                dataValues.remove(dataElementId);
+                if (dataElementNames.containsKey(dataElementId)) {
+                    dataElementNames.remove(dataElementId);
+                }
+            }
+
+        }
+        Log.e(TAG, "showWarningHiddenValuesDialog: ----------");
+        for (String key : dataElementNames.keySet()) {
+            Log.e(TAG, "showWarningHiddenValuesDialog: key=" + dataElementNames.get(key) + " - " + dataValues.get(key).getValue());
+        }
+        Log.e(TAG, "showWarningHiddenValuesDialog: ----###----");
 
     }
 
@@ -177,12 +246,9 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
 
     @Override
     public void applyHideFieldRuleAction(ProgramRuleAction programRuleAction, List<String> affectedFieldsWithValue) {
-//        affectedFieldsWithValue.add(programRuleAction.getDataElement());
         if (programRuleAction.getDataElement() != null) {
-            Log.e(TAG, "applyHideFieldRuleAction: hidden - " + MetaDataController.getDataElement(programRuleAction.getDataElement()).getName());
+            affectedFieldsWithValue.add(programRuleAction.getDataElement());
         }
-
-
     }
 
     @Override
@@ -263,6 +329,10 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
         return dataValues;
     }
 
+    public Map<String, DataValue> getDataValuesCompleted() {
+        return dataValuesCompleted;
+    }
+
     public Map<String, TrackedEntityAttributeValue> getTrackedEntityAttributeValues() {
         return trackedEntityAttributeValues;
     }
@@ -293,6 +363,8 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
                         new DataValue(event, "", dataElement.getDataelement(), false, username)
                 );
             }
+
+
             event.setDataValues(dataValues);
         } else {
             event = TrackerController.getEvent(eventId);
@@ -301,19 +373,4 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
         return event;
     }
 
-    public static DataValue getDataValue(String dataElement, Event event,
-                                         String username) {
-        for (DataValue dataValue : event.getDataValues()) {
-            if (dataValue.getDataElement().equals(dataElement)) {
-                return dataValue;
-            }
-        }
-
-        // The DataValue didn't exist for some reason. Create a new one.
-        DataValue dataValue = new DataValue(
-                event, "", dataElement, false, username
-        );
-        event.getDataValues().add(dataValue);
-        return dataValue;
-    }
 }
