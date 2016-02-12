@@ -23,10 +23,6 @@ public class ApplyRuleLogic {
 
     protected IProgramRuleFragmentHelper programRuleFragmentHelper;
 
-    public IProgramRuleFragmentHelper getProgramRuleFragmentHelper() {
-        return programRuleFragmentHelper;
-    }
-
     public void setProgramRuleFragmentHelper(IProgramRuleFragmentHelper programRuleFragmentHelper) {
         this.programRuleFragmentHelper = programRuleFragmentHelper;
     }

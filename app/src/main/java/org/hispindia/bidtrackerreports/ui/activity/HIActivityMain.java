@@ -5,10 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 
 import org.hisp.dhis.android.sdk.controllers.DhisService;
 import org.hisp.dhis.android.sdk.controllers.LoadingController;
 import org.hisp.dhis.android.sdk.controllers.PeriodicSynchronizerController;
+import org.hisp.dhis.android.sdk.events.UiEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.persistence.preferences.ResourceType;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
@@ -20,6 +24,7 @@ import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
+import org.hispindia.bidtrackerreports.utils.HIUtils;
 
 public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
 
@@ -51,8 +56,8 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         LoadingController.enableLoading(this, ResourceType.ENROLLMENTS);
         LoadingController.enableLoading(this, ResourceType.ENROLLMENT);
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
-        showMainFragment();
         loadInitialData();
+        showMainFragment();
     }
 
     @Override
@@ -134,5 +139,15 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
             }
         });
         switchFragment(new HIFragmentMain(), HIFragmentMain.TAG, true);
+    }
+
+    @Subscribe
+    public void syncNotify(UiEvent uiEvent) {
+        if (uiEvent.getEventType() == UiEvent.UiEventType.SYNCING_START) {
+            HIUtils.setViewAndChildrenEnabled(findViewById(R.id.fragment_container), false);
+        } else {
+            HIUtils.setViewAndChildrenEnabled(findViewById(R.id.fragment_container), true);
+        }
+        Toast.makeText(getApplicationContext(), uiEvent.getEventType().toString(), Toast.LENGTH_SHORT).show();
     }
 }

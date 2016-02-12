@@ -1,6 +1,5 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
-import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBIDReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterOverdueReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
@@ -15,12 +14,6 @@ import dagger.Provides;
  */
 @Module
 public class HIModuleUtils {
-
-    @Provides
-    @Singleton
-    public HIAdapterBIDReport provideHIAdapterBIDReport() {
-        return new HIAdapterBIDReport();
-    }
 
     @Provides
     @Singleton

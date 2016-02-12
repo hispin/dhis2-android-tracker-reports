@@ -34,7 +34,7 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogOrgUnitMode;
-import org.hispindia.bidtrackerreports.utils.HICUtils;
+import org.hispindia.bidtrackerreports.utils.HIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -277,9 +277,9 @@ public class HIFragmentSchvaccineSelectProgram extends HICFragmentBase implement
         vSelectOrgMode.setOnClickListener(this);
         btnGenerateReport.setOnClickListener(this);
 
-        HICUtils.setEnabledViews(true, vSelectOrgUnit);
-        HICUtils.setEnabledViews(false, vSelectProgram);
-        HICUtils.setShowViews(false, btnGenerateReport);
+        HIUtils.setEnabledViews(true, vSelectOrgUnit);
+        HIUtils.setEnabledViews(false, vSelectProgram);
+        HIUtils.setShowViews(false, btnGenerateReport);
     }
 
     protected ProgramType[] getProgramTypes() {
@@ -388,15 +388,15 @@ public class HIFragmentSchvaccineSelectProgram extends HICFragmentBase implement
                 //step 2 (choose program done)
                 break;
             case 2:
-                HICUtils.setShowViews(true, btnGenerateReport);
+                HIUtils.setShowViews(true, btnGenerateReport);
                 break;
             case 3:
                 break;
             case 4:
-                HICUtils.setShowViews(true, btnGenerateReport);
+                HIUtils.setShowViews(true, btnGenerateReport);
                 break;
             default:
-                HICUtils.setShowViews(false, btnGenerateReport);
+                HIUtils.setShowViews(false, btnGenerateReport);
 
 
         }

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +62,14 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         getActivity().setTitle(getString(R.string.btn_today_report));
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (flow != null) {
+            flow.onStop();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,11 +124,9 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
     @Override
     public void updateRow(HIDBbidrow row) {
         if (row == null) {
-            Log.e(TAG, "updateRow: DONE");
             adapter.setLoadDone(true);
         } else {
-//            Log.e(TAG, "updateRow: "+row.getOrder());
-//            adapter.updateRow(row);
+            adapter.updateRow(row);
         }
     }
 

@@ -34,7 +34,7 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogOrgUnitMode;
-import org.hispindia.bidtrackerreports.utils.HICUtils;
+import org.hispindia.bidtrackerreports.utils.HIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -272,9 +272,9 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
         vSelectOrgMode.setOnClickListener(this);
         btnGenerateReport.setOnClickListener(this);
 
-        HICUtils.setEnabledViews(true, vSelectOrgUnit);
-        HICUtils.setEnabledViews(false, vSelectProgram);
-        HICUtils.setShowViews(false, btnGenerateReport);
+        HIUtils.setEnabledViews(true, vSelectOrgUnit);
+        HIUtils.setEnabledViews(false, vSelectProgram);
+        HIUtils.setShowViews(false, btnGenerateReport);
     }
 
     protected ProgramType[] getProgramTypes() {
@@ -365,7 +365,7 @@ public class HIFragmentOverdueSelectProgram extends HICFragmentBase implements V
                 //step 2 (choose program done)
                 break;
             case 2:
-                HICUtils.setShowViews(true, btnGenerateReport);
+                HIUtils.setShowViews(true, btnGenerateReport);
                 break;
         }
     }

@@ -98,7 +98,7 @@
         <LinearLayout
             android:id="@+id/vBCG"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -132,7 +132,7 @@
         <LinearLayout
             android:id="@+id/vBCGScar"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -166,7 +166,7 @@
         <LinearLayout
             android:id="@+id/vBCGRepeatDose"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -200,7 +200,7 @@
         <LinearLayout
             android:id="@+id/vOPV0"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -234,7 +234,7 @@
         <LinearLayout
             android:id="@+id/vOPV1"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -268,7 +268,7 @@
         <LinearLayout
             android:id="@+id/vDptHepBHib1"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -302,7 +302,7 @@
         <LinearLayout
             android:id="@+id/vPCV1"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -336,7 +336,7 @@
         <LinearLayout
             android:id="@+id/vRV1"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -370,7 +370,7 @@
         <LinearLayout
             android:id="@+id/vOPV2"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -404,7 +404,7 @@
         <LinearLayout
             android:id="@+id/vPCV2"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -438,7 +438,7 @@
         <LinearLayout
             android:id="@+id/vRV2"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -472,7 +472,7 @@
         <LinearLayout
             android:id="@+id/vOPV3"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -506,7 +506,7 @@
         <LinearLayout
             android:id="@+id/vDptHepBHib3"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -540,7 +540,7 @@
         <LinearLayout
             android:id="@+id/vPCV3"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -574,7 +574,7 @@
         <LinearLayout
             android:id="@+id/vOPV4"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -608,7 +608,7 @@
         <LinearLayout
             android:id="@+id/vMeasles1"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"
@@ -642,7 +642,7 @@
         <LinearLayout
             android:id="@+id/vMeasles2"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="30dp">
 
             <TextView
                 android:layout_width="200dp"

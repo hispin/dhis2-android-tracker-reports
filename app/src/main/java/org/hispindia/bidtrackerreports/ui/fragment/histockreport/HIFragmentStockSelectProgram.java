@@ -33,7 +33,7 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.dialogs.HIDialogOrgUnitMode;
-import org.hispindia.bidtrackerreports.utils.HICUtils;
+import org.hispindia.bidtrackerreports.utils.HIUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -248,8 +248,8 @@ public class HIFragmentStockSelectProgram extends HICFragmentBase
         vSelectOrgMode.setOnClickListener(this);
         btnGenerateReport.setOnClickListener(this);
 
-        HICUtils.setEnabledViews(true, vSelectOrgUnit);
-        HICUtils.setShowViews(false, btnGenerateReport);
+        HIUtils.setEnabledViews(true, vSelectOrgUnit);
+        HIUtils.setShowViews(false, btnGenerateReport);
     }
 
     protected ProgramType[] getProgramTypes() {
@@ -317,7 +317,7 @@ public class HIFragmentStockSelectProgram extends HICFragmentBase
                 //step 1 (choose org unit done)
                 break;
             case 1:
-                HICUtils.setShowViews(true, btnGenerateReport);
+                HIUtils.setShowViews(true, btnGenerateReport);
                 break;
         }
     }

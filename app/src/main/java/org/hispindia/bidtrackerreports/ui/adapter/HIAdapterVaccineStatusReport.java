@@ -145,7 +145,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
     }
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
-        if (item != null && !item.equals("-*#hidefield#*-")) {
+        if (item != null && !item.trim().equals("")) {
             view.setVisibility(View.VISIBLE);
             if (item.trim().toLowerCase().equals("true") || item.trim().equals("")) {
                 img.setBackgroundResource(R.drawable.ic_checkmark_holo_light);

@@ -146,7 +146,7 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
     }
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
-        if (item == null) {
+        if (item != null && item.trim().equals("")) {
             view.setVisibility(View.VISIBLE);
             img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
             img.setVisibility(View.VISIBLE);
