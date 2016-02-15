@@ -11,7 +11,7 @@ public class HIDBbidrow {
     //attr
     public String firstName;
     public String chilName;
-    //data element: value or true:"check", null:"calendar", "-*#hidefield#*-":hiden rule
+    //de
     public String bcg;
     public String bcgScar;
     public String bcgRepeatDose;
@@ -145,5 +145,52 @@ public class HIDBbidrow {
 
     public Boolean getIsOverdue() {
         return isOverdue;
+    }
+
+    public int getBCGCount() {
+        int count = 0;
+        if (getBcg() != null && getBcg().trim().equals("")) count++;
+        if (getBcgScar() != null && getBcgScar().trim().equals("")) count++;
+        if (getBcgRepeatDose() != null && getBcgRepeatDose().trim().equals("")) count++;
+        return count;
+    }
+
+    public int getDPTCount() {
+        int count = 0;
+        if (getDptHepBHib1() != null && getDptHepBHib1().trim().equals("")) count++;
+        if (getDptHepBHib3() != null && getDptHepBHib3().trim().equals("")) count++;
+        return count;
+    }
+
+    public int getOPVCount() {
+        int count = 0;
+        if (getOpv0() != null && getOpv0().trim().equals("")) count++;
+        if (getOpv1() != null && getOpv1().trim().equals("")) count++;
+        if (getOpv2() != null && getOpv2().trim().equals("")) count++;
+        if (getOpv3() != null && getOpv3().trim().equals("")) count++;
+        if (getOpv4() != null && getOpv4().trim().equals("")) count++;
+        return count;
+    }
+
+    public int getPCVCount() {
+        int count = 0;
+        if (getPcv1() != null && getPcv1().trim().equals("")) count++;
+        if (getPcv2() != null && getPcv2().trim().equals("")) count++;
+        if (getPcv3() != null && getPcv3().trim().equals("")) count++;
+        return count;
+    }
+
+    public int getRVCount() {
+        int count = 0;
+        if (getRv1() != null && getRv1().trim().equals("")) count++;
+        if (getRv2() != null && getRv2().trim().equals("")) count++;
+        return count;
+    }
+
+    public int getMeaslesCount() {
+        int count = 0;
+        if (getMeasles1() != null && getMeasles1().trim().equals("")) count++;
+        if (getMeasles2() != null && getMeasles2().trim().equals("")) count++;
+        return count;
     }
 }

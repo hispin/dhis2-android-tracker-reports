@@ -21,7 +21,6 @@ import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -112,13 +111,6 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
             adapter.setHibidRowList(new ArrayList<>());
             adapter.setLoadDone(false);
             flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, false);
-        }
-    }
-
-    @Override
-    public void updateList(List<HIDBbidrow> localList) {
-        if (localList != null) {
-            adapter.setHibidRowList(localList);
         }
     }
 

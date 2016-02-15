@@ -6,15 +6,30 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/vReport"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="5dp" />
+        android:layout_height="match_parent">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/vChart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/vChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <Spinner
+                android:id="@+id/vReportOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vReport"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:padding="5dp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

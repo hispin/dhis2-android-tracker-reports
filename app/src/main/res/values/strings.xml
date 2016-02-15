@@ -69,6 +69,8 @@
     <string name="hi_stock_report_no">S No</string>
     <string name="hi_stock_report_name">Name</string>
     <string name="hi_stock_report_value">Value</string>
+    <string name="hi_stock_inhand_value">Inhand</string>
+    <string name="hi_stock_demand_value">Demand</string>
 
 
 </resources>

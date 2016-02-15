@@ -36,11 +36,6 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         loadDone = false;
     }
 
-    public void setHibidRowList(List<HIDBbidrow> hibidRowList) {
-        this.hibidRowList = hibidRowList;
-        notifyDataSetChanged();
-    }
-
     public void setLoadDone(boolean loadDone) {
         this.loadDone = loadDone;
     }

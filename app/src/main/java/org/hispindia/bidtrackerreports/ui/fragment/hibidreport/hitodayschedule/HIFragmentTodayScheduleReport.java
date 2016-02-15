@@ -20,9 +20,6 @@ import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -108,16 +105,8 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
-            adapter.setHibidRowList(new ArrayList<>());
             adapter.setLoadDone(false);
             flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, true);
-        }
-    }
-
-    @Override
-    public void updateList(List<HIDBbidrow> localList) {
-        if (localList != null) {
-            adapter.setHibidRowList(localList);
         }
     }
 
