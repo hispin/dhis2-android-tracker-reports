@@ -94,15 +94,16 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
             }
         }
 
-        //populate data of event had completed
+    }
+
+    public void populateCompletedEvent(String orgUnitId, String programId){
         Map<String, Event> eventsCompleted = new HashMap<>();
         for (Event item : TrackerController.getEvents(orgUnitId, programId)) {
             if (item.getTrackedEntityInstance() != null && item.getTrackedEntityInstance().equals(getEvent().getTrackedEntityInstance()) &&
-                    item.getStatus().equals(Event.STATUS_COMPLETED)) {
+                    (item.getStatus().equals(Event.STATUS_COMPLETED) || item.getStatus().equals(Event.STATUS_FUTURE_VISIT))) {
                 eventsCompleted.put(item.getEvent(), item);
             }
         }
-
         for (String key : eventsCompleted.keySet()) {
             List<DataValue> dataVList = new Select().from(DataValue.class).where(Condition.column(DataValue$Table.EVENT).is(key)).queryList();
             for (DataValue item : dataVList) {
@@ -110,7 +111,6 @@ public class ApplyRuleHelper implements IProgramRuleFragmentHelper {
                 getDataElementNames().put(item.getDataElement(), MetaDataController.getDataElement(item.getDataElement()).getDisplayName());
             }
         }
-
     }
 
     public static DataValue getDataValue(String dataElement, Event event,

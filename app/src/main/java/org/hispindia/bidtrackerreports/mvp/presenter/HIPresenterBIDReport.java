@@ -46,7 +46,7 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
 
     }
 
-    public void getTodayScheduleEventReport(HIIViewTodayScheduleReport view, String orgUnitUid, String ouModeUid, String programId, String programStageUid) {
+    public void getTodayScheduleEventReport(HIIViewTodayScheduleReport view, String orgUnitUid, String ouModeUid, String programId, String programStageUid, boolean getTodaySchedule) {
         onStop();
         subscription = Observable.create(subscriber -> {
             List<Event> eventList = new ArrayList<>();
@@ -66,8 +66,11 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
             for (int i = 0; i < eventList.size(); i++) {
                 Event event = eventList.get(i);
                 ApplyRuleHelper applyRuleHelper = new ApplyRuleHelper(orgUnitUid, programId, programStageUid, event.getLocalId(), event.getLocalEnrollmentId());
-                applyRuleHelper.initiateEvaluateProgramRules();
-
+                if(getTodaySchedule){
+                    applyRuleHelper.initiateEvaluateProgramRules();
+                }else{
+                    applyRuleHelper.populateCompletedEvent(orgUnitUid, programId);
+                }
                 List<HIBIDRowItem> trackedEntityAttributeList = new ArrayList<>();
                 List<HIBIDRowItem> dataElementList = new ArrayList<>();
                 for (TrackedEntityAttributeValue teiAtt : TrackerController.getTrackedEntityAttributeValues(event.getTrackedEntityInstance())) {

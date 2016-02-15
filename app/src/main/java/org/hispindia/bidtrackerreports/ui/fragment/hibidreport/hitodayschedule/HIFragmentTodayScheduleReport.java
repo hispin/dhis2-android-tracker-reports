@@ -110,7 +110,7 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         if (flow != null) {
             adapter.setHibidRowList(new ArrayList<>());
             adapter.setLoadDone(false);
-            flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId);
+            flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, true);
         }
     }
 
