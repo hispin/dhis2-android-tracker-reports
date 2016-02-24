@@ -14,7 +14,6 @@ import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectProgramFragment;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
-import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
@@ -66,8 +65,8 @@ public class HIFragmentMain extends HICFragmentBase {
         mNavigationHandler = null;
     }
 
-    @OnClick(R.id.btnTrackerReport)
     @SuppressWarnings("unused")
+
     public void btnTrackerReport() {
         mNavigationHandler.switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
 //        EventDataEntryFragment fragment = EventDataEntryFragment.newInstanceWithEnrollment("DQjaNvP9ulw", "SSLpOM0r1U7", "s53RFfXA75f" , 1, 1);
@@ -86,23 +85,23 @@ public class HIFragmentMain extends HICFragmentBase {
         mNavigationHandler.switchFragment(new HIFragmentVaccineStatusReport(), HIFragmentVaccineStatusReport.TAG, true);
     }
 
-    @OnClick(R.id.btnStockReport)
+
     @SuppressWarnings("unused")
     public void btnStockReport() {
         mNavigationHandler.switchFragment(new HIFragmentStockSelectProgram(), HIFragmentStockSelectProgram.TAG, true);
     }
 
-    @OnClick(R.id.btnSchvaccineReport)
+
     @SuppressWarnings("unused")
     public void btnSchvaccineReport() {
         mNavigationHandler.switchFragment(new HIFragmentSchvaccineSelectProgram(), HIFragmentSchvaccineSelectProgram.TAG, true);
     }
 
-    @OnClick(R.id.btnOverdueReport)
-    @SuppressWarnings("unused")
-    public void btnOverdueReport() {
-        mNavigationHandler.switchFragment(new HIFragmentOverdueSelectProgram(), HIFragmentOverdueSelectProgram.TAG, true);
-    }
+//    @OnClick(R.id.btnOverdueReport)
+//    @SuppressWarnings("unused")
+//    public void btnOverdueReport() {
+//        mNavigationHandler.switchFragment(new HIFragmentOverdueSelectProgram(), HIFragmentOverdueSelectProgram.TAG, true);
+//    }
 
     @OnClick(R.id.btnStockInHandReport)
     @SuppressWarnings("unused")
