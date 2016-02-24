@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
+
+import org.hisp.dhis.android.sdk.events.UiEvent;
+import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
-import org.hispindia.bidtrackerreports.event.HIEvent;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
@@ -80,12 +83,14 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
     @Override
     public void onResume() {
         super.onResume();
-        HIEvent.register(this);
+        Dhis2Application.getEventBus().register(this);
+
     }
 
     @Override
     public void onPause() {
-        HIEvent.unregister(this);
+        Dhis2Application.getEventBus().unregister(this);
+
         super.onPause();
     }
 
@@ -109,7 +114,6 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setHibidRowList(new ArrayList<>());
-            adapter.setLoadDone(false);
             flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, false);
         }
     }
@@ -117,10 +121,25 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
     @Override
     public void updateRow(HIDBbidrow row) {
         if (row == null) {
-            adapter.setLoadDone(true);
+//            adapter.sortList();
         } else {
             adapter.updateRow(row);
         }
     }
 
+    @Override
+    public void updateProgress(boolean status) {
+        adapter.setLoadDone(status);
+    }
+
+    @Subscribe
+    public void syncNotify(UiEvent uiEvent) {
+        if (uiEvent.getEventType() == UiEvent.UiEventType.BID_TEI_SERVERDONE) {
+            updateProgress(true);
+            if (adapter.getItemCount() == 1) {
+                flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, true, false);
+            }
+        } else {
+        }
+    }
 }

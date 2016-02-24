@@ -8,4 +8,6 @@ import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 public interface HIIViewTodayScheduleReport {
 
     void updateRow(HIDBbidrow row);
+
+    void updateProgress(boolean status);
 }

@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,6 +40,17 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
 
     public void setHibidRowList(List<HIDBbidrow> hibidRowList) {
         this.hibidRowList = hibidRowList;
+        notifyDataSetChanged();
+    }
+
+    public void sortList() {
+        Collections.sort(hibidRowList, (lhs, rhs) -> {
+            DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            if (left.isAfter(right)) return 1;
+            if (left.isEqual(right)) return 0;
+            return -1;
+        });
         notifyDataSetChanged();
     }
 
@@ -93,7 +107,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         } else if (holder instanceof HIAdapterReportHolder) {
             HIDBbidrow row = getItem(position);
             HIAdapterReportHolder viewHolder = (HIAdapterReportHolder) holder;
-            viewHolder.tvOrder.setText("#" + row.getOrder());
+            viewHolder.tvOrder.setText("#" + (position + 1));
             viewHolder.tvDueDate.setText(row.getDueDate());
             if (row.getIsOverdue()) {
                 viewHolder.tvOrder.setTextColor(Color.RED);

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.squareup.otto.Subscribe;
 
+import org.hisp.dhis.android.sdk.events.UiEvent;
+import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -174,11 +178,13 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     public void onResume() {
         super.onResume();
         HIEvent.register(this);
+        Dhis2Application.getEventBus().register(this);
     }
 
     @Override
     public void onPause() {
         HIEvent.unregister(this);
+        Dhis2Application.getEventBus().unregister(this);
         flow.onStop();
         flowGetDemand.onStop();
         super.onPause();
@@ -236,6 +242,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
         if (row != null) {
             listTemp.add(row);
         } else {
+            Log.e(TAG, "updateRow: null");
             adapter.setDemandList(filterDemand(1, 0));
             createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
         }
@@ -278,5 +285,22 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
             }
         }
         return result;
+    }
+
+    @Override
+    public void updateProgress(boolean status) {
+        adapter.setLoadDone(status);
+    }
+
+
+    @Subscribe
+    public void syncNotify(UiEvent uiEvent) {
+        if (uiEvent.getEventType() == UiEvent.UiEventType.BID_TEI_SERVERDONE) {
+            updateProgress(true);
+            if (adapter.getItemCount() == 2) {
+                flowGetDemand.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true, false);
+            }
+        } else {
+        }
     }
 }

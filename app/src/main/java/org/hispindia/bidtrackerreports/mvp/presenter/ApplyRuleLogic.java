@@ -34,7 +34,12 @@ public class ApplyRuleLogic {
         List<ProgramRule> programRules = programRuleFragmentHelper.getProgramRules();
         Collections.sort(programRules, new ProgramRulePriorityComparator());
         for (ProgramRule programRule : programRules) {
-            boolean evaluatedTrue = ProgramRuleService.evaluate(programRule.getCondition());
+            boolean evaluatedTrue = true;
+            try {
+                evaluatedTrue = ProgramRuleService.evaluate(programRule.getCondition());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             for (ProgramRuleAction action : programRule.getProgramRuleActions()) {
                 if (evaluatedTrue) {
                     applyProgramRuleAction(action, affectedFieldsWithValue);
