@@ -7,11 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -47,6 +49,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by Sourabh on 2/6/2016.
@@ -62,6 +65,14 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     @Bind(R.id.vReportOption)
     Spinner vReportOption;
 
+    @Bind(R.id.etStartDate)
+    EditText etStartDate;
+    @Bind(R.id.etEndDate)
+    EditText etEndDate;
+
+
+
+
     @Inject
     HIPresenterStockReport flow;
     @Inject
@@ -69,6 +80,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
 
     HIAdapterStockDemandReport adapter;
     List<HIDBbidrow> listTemp = new ArrayList<>();
+    List<HIDBbidrow> listTempFilter = new ArrayList<>();
 
     private String orgUnitId;
     private String orgUnitMode;
@@ -209,7 +221,10 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         if (inhand != null && inhand.size() > 0) {
-            for (int i = 0; i < xAxis.size(); i++) {
+//            for (int i = 0; i < xAxis.size(); i++) {
+//                yVals1.add(new BarEntry(inhand.get(xAxis.get(i)), i));
+//            }
+            for (int i = 0; i < 6; i++) {
                 yVals1.add(new BarEntry(inhand.get(xAxis.get(i)), i));
             }
             BarDataSet set1 = new BarDataSet(yVals1, "Inhand");
@@ -222,7 +237,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
             }
             BarDataSet set2 = new BarDataSet(yVals2, "Demand");
             set2.setBarSpacePercent(35f);
-            set2.setColor(Color.RED);
+            set2.setColor(Color.DKGRAY);
             dataSets.add(set2);
         }
         BarData data = new BarData(xVals, dataSets);
@@ -245,19 +260,24 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                adapter.setDemandList(filterDemand(1, 0));
+                listTempFilter = filterDemand(1, 0);
+                adapter.setDemandList(listTempFilter);
                 break;
             case 1:
-                adapter.setDemandList(filterDemand(3, 0));
+                listTempFilter = filterDemand(3, 0);
+                adapter.setDemandList(listTempFilter);
                 break;
             case 2:
-                adapter.setDemandList(filterDemand(7, 0));
+                listTempFilter = filterDemand(7, 0);
+                adapter.setDemandList(listTempFilter);
                 break;
             case 3:
-                adapter.setDemandList(filterDemand(14, 0));
+                listTempFilter = filterDemand(14, 0);
+                adapter.setDemandList(listTempFilter);
                 break;
             case 4:
-                adapter.setDemandList(filterDemand(0, 1));
+                listTempFilter = filterDemand(0, 1);
+                adapter.setDemandList(listTempFilter);
                 break;
         }
         createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
@@ -268,12 +288,33 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
 
     }
 
+    @OnClick(R.id.btnFilter)
+    public void btnFilterOnClick() {
+        adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
+        createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+    }
+
     public List<HIDBbidrow> filterDemand(int dayNum, int monthNum) {
         List<HIDBbidrow> result = new ArrayList<>();
         for (HIDBbidrow item : listTemp) {
             DateTime desDate = DateTime.now().plusDays(dayNum).plusMonths(monthNum);
             DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
             if (dueDate.isBefore(desDate)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
+
+    public List<HIDBbidrow> filterDemandbydate(List<HIDBbidrow> arrOrigin, String startdate, String enddate) {
+        Log.e(TAG, "filterDemandbydate: " + startdate + " - " + enddate + " size = " + arrOrigin.size());
+        List<HIDBbidrow> result = new ArrayList<>();
+        for (HIDBbidrow item : arrOrigin) {
+            DateTime startD = DateTime.parse(startdate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+            DateTime endD = DateTime.parse(enddate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+            DateTime maxD = ((startD.isAfter(endD) ? startD : endD));
+            DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            if (dueDate.isBefore(maxD)) {
                 result.add(item);
             }
         }

@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
  * Created by nhancao on 1/25/16.
  */
 public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     public final static String TAG = HIAdapterStockDemandReport.class.getSimpleName();
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
@@ -42,12 +43,16 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
         hiStockRowList.add("DPT");
         hiStockRowList.add("BCG");
         hiStockRowList.add("OPV");
+        hiStockRowList.add("Total");
         loadDone = false;
     }
+
 
     public void setInHandList(List<HIStockRow> inHandList) {
         for (HIStockRow item : inHandList) {
             inhand.put(item.getName().substring(0, item.getName().indexOf(" ")), Integer.parseInt(item.getValue()));
+
+
         }
         notifyDataSetChanged();
         if (demand.size() > 0) setLoadDone(true);
@@ -70,6 +75,8 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
             demand.put(key, demand.get(key) + item.getBCGCount());
             key = "OPV";
             demand.put(key, demand.get(key) + item.getOPVCount());
+            key = "Total";
+            demand.put(key, demand.get(key) + item.getVaccineCount());
         }
         notifyDataSetChanged();
         if (inhand.size() > 0) setLoadDone(true);
