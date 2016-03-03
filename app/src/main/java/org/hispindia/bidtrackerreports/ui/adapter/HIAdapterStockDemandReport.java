@@ -1,7 +1,9 @@
 package org.hispindia.bidtrackerreports.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by nhancao on 1/25/16.
  */
 public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    public final static int abc = 0;
     public final static String TAG = HIAdapterStockDemandReport.class.getSimpleName();
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
@@ -31,19 +33,23 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
     public List<String> hiStockRowList;
     public HashMap<String, Integer> inhand;
     public HashMap<String, Integer> demand;
+    public HashMap<String, Integer> difference;
+
     private boolean loadDone;
 
     public HIAdapterStockDemandReport() {
         hiStockRowList = new ArrayList<>();
         inhand = new HashMap<>();
         demand = new HashMap<>();
+        difference = new HashMap<>();
+
         hiStockRowList.add("RV");
         hiStockRowList.add("PCV");
         hiStockRowList.add("Measles");
         hiStockRowList.add("DPT");
         hiStockRowList.add("BCG");
         hiStockRowList.add("OPV");
-        hiStockRowList.add("Total");
+        // hiStockRowList.add("Total");
         loadDone = false;
     }
 
@@ -51,20 +57,26 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
     public void setInHandList(List<HIStockRow> inHandList) {
         for (HIStockRow item : inHandList) {
             inhand.put(item.getName().substring(0, item.getName().indexOf(" ")), Integer.parseInt(item.getValue()));
-
-
+            Log.e(TAG, "inhand item value  " + item.getValue());
         }
+        Log.e(TAG, "inhand after " + inhand);
+        updateDifference();
         notifyDataSetChanged();
         if (demand.size() > 0) setLoadDone(true);
     }
+
 
     public void setDemandList(List<HIDBbidrow> demandList) {
         for (String key : hiStockRowList) {
             demand.put(key, 0);
         }
+
+        Log.e(TAG, "Match Found" + inhand.keySet());
+        Log.e(TAG, "Demand Found" + demand.keySet());
         for (HIDBbidrow item : demandList) {
             String key = "RV";
             demand.put(key, demand.get(key) + item.getRVCount());
+
             key = "PCV";
             demand.put(key, demand.get(key) + item.getPCVCount());
             key = "Measles";
@@ -75,11 +87,23 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
             demand.put(key, demand.get(key) + item.getBCGCount());
             key = "OPV";
             demand.put(key, demand.get(key) + item.getOPVCount());
-            key = "Total";
-            demand.put(key, demand.get(key) + item.getVaccineCount());
+//            key = "Total";
+//            demand.put(key, demand.get(key) + item.getVaccineCount());
         }
+        updateDifference();
+        Log.e(TAG, "demand after " + demand);
+
         notifyDataSetChanged();
         if (inhand.size() > 0) setLoadDone(true);
+    }
+
+    void updateDifference() {
+        for (String key : inhand.keySet()) {
+            if (demand.keySet().contains(key)) {
+                difference.put(key, inhand.get(key) - demand.get(key));
+            }
+        }
+        Log.e(TAG, "updateDifference: " + difference);
     }
 
     public void setLoadDone(boolean loadDone) {
@@ -127,6 +151,12 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
             viewHolder.tvName.setText(currentItem);
             viewHolder.tvInhand.setText(String.valueOf(inhand.get(currentItem)));
             viewHolder.tvDemand.setText(String.valueOf(demand.get(currentItem)));
+            viewHolder.tvDifference.setText(String.valueOf(difference.get(currentItem)));
+            if (difference.get(currentItem) != null && difference.get(currentItem) <= 0) {
+                viewHolder.tvDifference.setBackgroundColor(Color.RED);
+            } else {
+                viewHolder.tvDifference.setBackgroundColor(Color.TRANSPARENT);
+            }
         }
     }
 
@@ -166,6 +196,9 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
         TextView tvInhand;
         @Bind(R.id.tvDemand)
         TextView tvDemand;
+        @Bind(R.id.tvDifference)
+        TextView tvDifference;
+
         Context context;
 
         public HIAdapterStockReportHolder(View itemView, Context context) {
