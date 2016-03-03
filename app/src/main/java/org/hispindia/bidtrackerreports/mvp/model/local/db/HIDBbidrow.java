@@ -147,6 +147,7 @@ public class HIDBbidrow {
         return isOverdue;
     }
 
+
     public int getBCGCount() {
         int count = 0;
         if (getBcg() != null && getBcg().trim().equals("")) count++;
