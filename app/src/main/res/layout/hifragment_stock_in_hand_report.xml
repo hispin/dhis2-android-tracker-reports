@@ -25,25 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/etStartDate"
-                android:layout_width="match_parent"
-                android:layout_height="59dp"
-                android:hint="Start Date: yyyy-mm-dd" />
-
-            <EditText
-                android:id="@+id/etEndDate"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:hint="End Date: yyyy-mm-dd" />
-
-
-            <Button
-                android:id="@+id/btnFilter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Filter" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/vReport"
