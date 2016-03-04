@@ -97,7 +97,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.hifragment_stock_in_hand_report, container, false);
+        View view = inflater.inflate(R.layout.hifragment_stock_in_handvsdemand_report, container, false);
         return view;
     }
 
@@ -140,6 +140,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
 
+        vChart.setTouchEnabled(false);
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
