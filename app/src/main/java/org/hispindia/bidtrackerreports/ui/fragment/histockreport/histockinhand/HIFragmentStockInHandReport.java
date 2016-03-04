@@ -126,6 +126,7 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
 
+        vChart.setTouchEnabled(false);
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
