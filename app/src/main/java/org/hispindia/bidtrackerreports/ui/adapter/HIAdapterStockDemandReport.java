@@ -155,7 +155,7 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
             if (difference.get(currentItem) != null && difference.get(currentItem) <= 0) {
                 viewHolder.tvDifference.setBackgroundColor(Color.RED);
             } else {
-                viewHolder.tvDifference.setBackgroundColor(Color.TRANSPARENT);
+                viewHolder.tvDifference.setBackgroundColor(Color.GREEN);
             }
         }
     }
