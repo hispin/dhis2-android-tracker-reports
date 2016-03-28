@@ -17,10 +17,12 @@ repositories {
 }
 
 
-Integer VERSION_CODE = 2016011900 //yyyymmddhh
+Integer VERSION_CODE = 2016031812 //yyyymmddhh
 String VERSION_NAME = "1.0.0"
 String APK_NAME = "BID"
 android {
+    signingConfigs {
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     applicationVariants.all { variant ->
@@ -30,7 +32,6 @@ android {
                     output.outputFile.name.replace(output.outputFile.name, VERSION_CODE + "-" + VERSION_NAME + "-" + APK_NAME + ".apk"))
         }
     }
-
     defaultConfig {
         applicationId "org.hispindia.bidtrackerreports"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -38,7 +39,6 @@ android {
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }
-
     buildTypes {
         debug {
             applicationIdSuffix '.dev'
@@ -48,8 +48,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            debuggable true
-            minifyEnabled true
+            debuggable false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -84,15 +84,12 @@ android {
     }
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     def dependency = rootProject.ext.dependency
     compile project(':..:dhis2-android-sdk:app')
-
     compile dependency.appcompatv7
     compile dependency.supportDesign
     compile dependency.recyclerviewv7
-
     compile dependency.dagger
     apt dependency.daggerCompiler
     compile dependency.butterknife
@@ -100,6 +97,5 @@ dependencies {
     compile dependency.rxJava
     compile 'com.github.cvnhan:MPAndroidChart:v2.2.0'
     testCompile dependency.jUnit
-
 }
 

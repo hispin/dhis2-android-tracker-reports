@@ -43,6 +43,16 @@
                 <!--style="@style/btnFragmentMain"-->
                 <!--android:text="@string/btn_overdue_report" />-->
             </LinearLayout>
+            <LinearLayout style="@style/vFragmentMain">
+                <Button
+                    android:id="@+id/btnStockInDemandReport"
+                    style="@style/btnFragmentMain"
+                    android:text="Stock Demand" />
+                <!--<Button-->
+                <!--android:id="@+id/btnOverdueReport"-->
+                <!--style="@style/btnFragmentMain"-->
+                <!--android:text="@string/btn_overdue_report" />-->
+            </LinearLayout>
 
             <LinearLayout style="@style/vFragmentMain">
 
