@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -111,6 +112,12 @@ public class HIFragmentSchvaccineSelectProgram extends HICFragmentBase implement
             Pair<String, String> orgUnitMode = mPrefs.getOrgUnitMode();
             String fromDay = mPrefs.getFromDay();
             String toDay = mPrefs.getToDay();
+
+            Log.e(TAG ,"Today:  "+ toDay);
+            Log.e(TAG ,"Fromday:  "+ fromDay);
+            Log.e(TAG ,"orgUnit:  "+ orgUnit);
+            Log.e(TAG ,"program:  "+ program);
+            Log.e(TAG ,"orgUnitMode:  "+ orgUnitMode);
             mState = new HIFragmentSchvaccineSelectProgramState();
             if (orgUnit != null) {
                 mState.setOrgUnit(orgUnit.first, orgUnit.second);

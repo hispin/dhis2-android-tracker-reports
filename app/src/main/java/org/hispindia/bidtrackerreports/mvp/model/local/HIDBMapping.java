@@ -19,6 +19,10 @@ public class HIDBMapping {
             } else if (item.getId().equals(HIParamBIDHardcode.CHILDNAMEID)) {
                 local.chilName = item.getValue();
             }
+            else if (item.getId().equals(HIParamBIDHardcode.DATEOFBIRTH)) {
+                local.dob = item.getValue();
+            }
+
         }
         for (HIBIDRowItem item : remote.getDataElementList()) {
             if (item.getId().equals(HIParamBIDHardcode.DE.get("bpBUOvqy1Jn").getId())) {

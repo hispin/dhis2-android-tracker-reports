@@ -106,6 +106,7 @@ public class HIDBHelper extends SQLiteOpenHelper {
                     res.getString(res.getColumnIndex("dueDate")),
                     res.getString(res.getColumnIndex("firstName")),
                     res.getString(res.getColumnIndex("chilName")),
+                    res.getString(res.getColumnIndex("dob")),
                     res.getString(res.getColumnIndex("bcg")),
                     res.getString(res.getColumnIndex("bcgScar")),
                     res.getString(res.getColumnIndex("bcgRepeatDose")),

@@ -358,6 +358,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
 
     @OnClick(R.id.btnFilter)
     public void btnFilterOnClick() {
+
         adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
         createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
     }

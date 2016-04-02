@@ -39,6 +39,7 @@ public class HIParamBIDHardcode {
     public static String OUMODEID = "lTqNF1rWha3";
     public static String FIRSTNAMEID = "sB1IHYu2xQT";
     public static String CHILDNAMEID = "wbtl3uN0spv";
+    public static String DATEOFBIRTH = "rKtHjgcO2Bn";
 
     public static class DataElement {
         private String id;

@@ -33,6 +33,15 @@
 
             </LinearLayout>
 
+            <!--<LinearLayout style="@style/vFragmentMain">-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/factodo"-->
+                    <!--style="@style/btnFragmentMain"-->
+                    <!--android:text="Facility " />-->
+
+            <!--</LinearLayout>-->
+
             <LinearLayout style="@style/vFragmentMain">
                 <Button
                     android:id="@+id/btnStockInHandReport"

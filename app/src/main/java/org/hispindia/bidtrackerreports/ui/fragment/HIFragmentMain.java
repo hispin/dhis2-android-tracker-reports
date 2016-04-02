@@ -16,9 +16,10 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.H
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
-import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
+
 import butterknife.OnClick;
 
 /**
@@ -84,6 +85,12 @@ public class HIFragmentMain extends HICFragmentBase {
     public void btnVaccineStatus() {
         mNavigationHandler.switchFragment(new HIFragmentVaccineStatusReport(), HIFragmentVaccineStatusReport.TAG, true);
     }
+
+//    @OnClick(R.id.factodo)
+//    @SuppressWarnings("unused")
+//    public void factodo() {
+//        mNavigationHandler.switchFragment(new HIFragmentSchvaccineSelectProgram(), HIFragmentSchvaccineReport.TAG, true);
+//    }
 
 
     @SuppressWarnings("unused")

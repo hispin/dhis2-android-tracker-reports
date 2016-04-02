@@ -73,7 +73,7 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hifragment_today_schedule_report, container, false);
+        View view = inflater.inflate(R.layout.hifragment_vaccine_status_report, container, false);
         return view;
     }
 

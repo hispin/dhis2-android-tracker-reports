@@ -31,6 +31,8 @@ public class HISchvaccineRow {
     @JsonProperty("dueDate")
     public String dueDate;
 
+    @JsonProperty("eventDate")
+    public String eventDate;
     @JsonProperty("attributes")
     public List<HIAttribute> attributes;
 }

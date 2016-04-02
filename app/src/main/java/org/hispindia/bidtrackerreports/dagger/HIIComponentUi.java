@@ -4,6 +4,7 @@ import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
@@ -11,9 +12,10 @@ import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragment
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
-import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
+
 import dagger.Component;
 
 /**
@@ -35,9 +37,13 @@ public interface HIIComponentUi {
 
     void inject(HIFragmentSchvaccineSelectProgram fragmentSchvaccineSelectProgram);
 
+    void inject(HIFragmentTodayScheduleSelectProgram fragmentSchvaccineSelectProgram);
+
     void inject(HIFragmentSchvaccineReport fragmentSchvaccineReport);
 
     void inject(HIFragmentOverdueSelectProgram fragmentOverdueSelectProgram);
+
+
 
     void inject(HIFragmentOverdueReport fragmentOverdueReport);
 

@@ -104,7 +104,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             }
             setAttr(row.getFirstName(), viewHolder.tvFirstName);
             setAttr(row.getChilName(), viewHolder.tvChildName);
-
+            setAttr(row.getDob(), viewHolder.tvdob);
             //data element
             setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
             setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
@@ -169,8 +169,12 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         TextView tvDueDate;
         @Bind(R.id.tvFirstName)
         TextView tvFirstName;
+
         @Bind(R.id.tvChildName)
         TextView tvChildName;
+
+        @Bind(R.id.tvdob)
+        TextView tvdob;
 
         @Bind(R.id.vBCG)
         View vBCG;

@@ -5,10 +5,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/etStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:focusable="false"
+        android:hint="DOB From: yyyy-mm-dd" />
+
+    <!--<DatePicker-->
+    <!--android:id="@+id/dpResult"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <EditText
+        android:id="@+id/etEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:focusable="false"
+        android:layout_gravity="center_horizontal"
+        android:hint="DOB To: yyyy-mm-dd" />
+
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View"
+        android:visibility="gone"/>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vReport"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
+
+
 
 </LinearLayout>

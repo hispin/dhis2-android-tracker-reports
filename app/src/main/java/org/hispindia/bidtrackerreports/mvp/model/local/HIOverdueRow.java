@@ -23,6 +23,10 @@ public class HIOverdueRow {
     public String trackedEntityInstanceInactive;
     @JsonProperty("event")
     public String event;
+    @JsonProperty("startDate")
+    public String startDate;
+    @JsonProperty("endDate")
+    public String endDate;
     @JsonProperty("program")
     public String program;
     @JsonProperty("programStage")

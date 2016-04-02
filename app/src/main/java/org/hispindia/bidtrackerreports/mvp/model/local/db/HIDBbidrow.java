@@ -11,6 +11,7 @@ public class HIDBbidrow {
     //attr
     public String firstName;
     public String chilName;
+    public String dob;
     //de
     public String bcg;
     public String bcgScar;
@@ -34,11 +35,13 @@ public class HIDBbidrow {
     public HIDBbidrow() {
     }
 
-    public HIDBbidrow(int order, String dueDate, String firstName, String chilName, String bcg, String bcgScar, String bcgRepeatDose, String opv0, String opv1, String dptHepBHib1, String pcv1, String rv1, String opv2, String pcv2, String rv2, String opv3, String dptHepBHib3, String pcv3, String opv4, String measles1, String measles2, Boolean isOverdue) {
+    public HIDBbidrow(int order, String dueDate, String firstName, String chilName,String dob, String bcg, String bcgScar, String bcgRepeatDose, String opv0, String opv1, String dptHepBHib1, String pcv1, String rv1, String opv2, String pcv2, String rv2, String opv3, String dptHepBHib3, String pcv3, String opv4, String measles1, String measles2, Boolean isOverdue) {
         this.order = order;
         this.dueDate = dueDate;
         this.firstName = firstName;
         this.chilName = chilName;
+
+        this.dob = dob;
         this.bcg = bcg;
         this.bcgScar = bcgScar;
         this.bcgRepeatDose = bcgRepeatDose;
@@ -73,6 +76,10 @@ public class HIDBbidrow {
 
     public String getChilName() {
         return chilName;
+    }
+
+    public String getDob() {
+        return dob;
     }
 
     public String getBcg() {
