@@ -84,7 +84,11 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
 
         for (HIDBbidrow item : originList) {
             if(TextUtils.isEmpty(item.getDob())) continue;
-            DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            //DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            DateTime item_dob = DateTime.parse(item.getDob());
+            Log.e("LOG", "item_dob today schedule" + item_dob);
+            Log.e("LOG", "item_dget_ob" + item.getDob());
+            Log.e("LOG", "item_dget_ob" + item.getDob());
             if(item_dob.isBefore(endD) && item_dob.isAfter(startD)){
                 hibidRowList.add(item);
                 Log.e("LOG ", " hibidRowList "+ hibidRowList);
@@ -138,6 +142,8 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
             setAttr(row.getFirstName(), viewHolder.tvFirstName);
             setAttr(row.getChilName(), viewHolder.tvChildName);
             setAttr(row.getDob(), viewHolder.tvdob);
+
+            Log.e("DOB", "DOB" + row.getDob());
 
             //data element
             setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);

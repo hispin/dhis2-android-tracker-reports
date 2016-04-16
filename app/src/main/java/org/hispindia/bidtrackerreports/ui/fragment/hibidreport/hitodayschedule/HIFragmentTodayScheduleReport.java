@@ -178,13 +178,13 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         });
     }
 
+
     @OnClick(R.id.btnFilter)
     public void btnFilterOnClick() {
         adapter.filter(etStartDate.getText().toString(), etEndDate.getText().toString());
         //adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
 
     }
-
 
     @Override
     protected void onInjected() {

@@ -3,6 +3,8 @@ package org.hispindia.bidtrackerreports.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +32,16 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
     private static final int TYPE_PROGRESS = 1;
 
     private boolean loadDone;
+    private boolean filter;
     private List<HIDBbidrow> hibidRowList;
+    private List<HIDBbidrow> originList;
 
     public HIAdapterVaccineStatusReport() {
         hibidRowList = new ArrayList<>();
+        originList = new ArrayList<>();
         loadDone = false;
+        filter = false;
+
     }
 
     public void setHibidRowList(List<HIDBbidrow> hibidRowList) {
@@ -44,24 +53,55 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         this.loadDone = loadDone;
     }
 
+    public void revertList() {
+        hibidRowList.clear();
+        for (HIDBbidrow item : originList) {
+            hibidRowList.add(item);
+        }
+    }
+
     public void updateRow(HIDBbidrow hibidRow) {
-        if (hibidRowList == null) {
-            hibidRowList = new ArrayList<>();
+        if (originList == null) {
+            originList = new ArrayList<>();
         }
         boolean flag = false;
-        for (int i = 0; i < hibidRowList.size(); i++) {
-            HIDBbidrow item = hibidRowList.get(i);
+        for (int i = 0; i < originList.size(); i++) {
+            HIDBbidrow item = originList.get(i);
             if (item.getOrder() == hibidRow.getOrder()) {
-                hibidRowList.set(i, hibidRow);
+                originList.set(i, hibidRow);
                 flag = true;
                 break;
             }
         }
         if (!flag) {
-            hibidRowList.add(hibidRow);
+            originList.add(hibidRow);
         }
         notifyDataSetChanged();
     }
+
+    public void filter(String etStartDate, String etEndDate) {
+        filter = true;
+        hibidRowList.clear();
+
+        DateTime startD = DateTime.parse(etStartDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+        DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+
+        for (HIDBbidrow item : originList) {
+            if (TextUtils.isEmpty(item.getDob())) continue;
+            DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+
+            Log.e("LOG", "item_dob" + item_dob);
+            Log.e("LOG", "item_get_dob" + item.getDob());
+            if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
+                hibidRowList.add(item);
+                Log.e("LOG ", " hibidRowList " + hibidRowList);
+
+            }
+        }
+        Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size() + " Size list: " + hibidRowList.size());
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -105,6 +145,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             setAttr(row.getFirstName(), viewHolder.tvFirstName);
             setAttr(row.getChilName(), viewHolder.tvChildName);
             setAttr(row.getDob(), viewHolder.tvdob);
+
             //data element
             setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
             setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
@@ -126,24 +167,28 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+    public List<HIDBbidrow> getList() {
+        if (!filter) return originList;
+        return hibidRowList;
+    }
+
     @Override
     public int getItemCount() {
-        return hibidRowList.size() + 1;
+        return getList().size() + 1;
     }
 
     private HIDBbidrow getItem(int position) {
-        return hibidRowList.get(position);
+        return getList().get(position);
     }
 
     private boolean isPositionFooter(int position) {
-        return position == hibidRowList.size();
+        return position == getList().size();
     }
 
     public void setAttr(String item, TextView tv) {
         if (item != null) tv.setText(item);
         else tv.setText("");
     }
-
     public void setDe(String item, TextView tv, ImageView img, View view) {
         if (item != null && !item.trim().equals("")) {
             view.setVisibility(View.VISIBLE);

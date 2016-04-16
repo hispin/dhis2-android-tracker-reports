@@ -17,7 +17,7 @@ repositories {
 }
 
 
-Integer VERSION_CODE = 2016031813//yyyymmddhh
+Integer VERSION_CODE = 2016031815//yyyymmddhh
 String VERSION_NAME = "1.0.1"
 String APK_NAME = "BID"
 android {
