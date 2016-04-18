@@ -86,6 +86,10 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         DateTime startD = DateTime.parse(etStartDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
         DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
 
+        Log.e("LOG", "Start Date" +startD );
+        Log.e("LOG", "End Date" +endD );
+
+
         for (HIDBbidrow item : originList) {
             if (TextUtils.isEmpty(item.getDob())) continue;
             DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
@@ -94,12 +98,30 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             Log.e("LOG", "item_get_dob" + item.getDob());
             if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
                 hibidRowList.add(item);
-                Log.e("LOG ", " hibidRowList " + hibidRowList);
+                Log.e("LOG ", " success hibidRowList " + hibidRowList);
 
             }
         }
+
         Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size() + " Size list: " + hibidRowList.size());
+
+        if(hibidRowList.size()==0)
+        {
+            Log.e("LOG","Fail");
+            Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size() + " Size list: " + hibidRowList.size());
+
+            //Toast.makeText(this , "Hello Android !!!", Toast.LENGTH_SHORT).show();
+
+        }
+        else
+        {
+            Log.e("LOG","Success");
+        }
+
         notifyDataSetChanged();
+        etStartDate="";
+        etEndDate="";
+
     }
 
 
