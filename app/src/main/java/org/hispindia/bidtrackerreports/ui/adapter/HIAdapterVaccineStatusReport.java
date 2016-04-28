@@ -79,48 +79,55 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged();
     }
 
+    public final static String TAG = HIAdapterVaccineStatusReport.class.getSimpleName();
+
     public void filter(String etStartDate, String etEndDate) {
         filter = true;
         hibidRowList.clear();
+//
+//        DateTime startD = DateTime.parse(etStartDate, DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+//        DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
 
         DateTime startD = DateTime.parse(etStartDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
         DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
 
-        Log.e("LOG", "Start Date" +startD );
-        Log.e("LOG", "End Date" +endD );
+        Log.e("LOG", "Start Date" + startD);
+        Log.e("LOG", "End Date" + endD);
 
 
         for (HIDBbidrow item : originList) {
-            if (TextUtils.isEmpty(item.getDob())) continue;
-            DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
+            try {
+                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
-            Log.e("LOG", "item_dob" + item_dob);
-            Log.e("LOG", "item_get_dob" + item.getDob());
-            if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
-                hibidRowList.add(item);
-                Log.e("LOG ", " success hibidRowList " + hibidRowList);
+                Log.e("LOG", "item_dob" + item_dob);
+                Log.e("LOG", "item_get_dob" + item.getDob());
+                if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
+                    hibidRowList.add(item);
+                    Log.e("LOG ", " success hibidRowList " + hibidRowList);
 
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "filter: " + e.toString());
             }
         }
 
         Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size() + " Size list: " + hibidRowList.size());
 
-        if(hibidRowList.size()==0)
-        {
-            Log.e("LOG","Fail");
+        if (hibidRowList.size() == 0) {
+            Log.e("LOG", "Fail");
             Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size() + " Size list: " + hibidRowList.size());
 
             //Toast.makeText(this , "Hello Android !!!", Toast.LENGTH_SHORT).show();
 
-        }
-        else
-        {
-            Log.e("LOG","Success");
+        } else {
+            Log.e("LOG", "Success");
         }
 
         notifyDataSetChanged();
-        etStartDate="";
-        etEndDate="";
+        etStartDate = "";
+        etEndDate = "";
 
     }
 
@@ -211,6 +218,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
         if (item != null) tv.setText(item);
         else tv.setText("");
     }
+
     public void setDe(String item, TextView tv, ImageView img, View view) {
         if (item != null && !item.trim().equals("")) {
             view.setVisibility(View.VISIBLE);

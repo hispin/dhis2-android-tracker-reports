@@ -1,9 +1,5 @@
 package org.hispindia.bidtrackerreports.ui.fragment.hibidreport;
 
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +27,37 @@ public class HIParamBIDHardcode {
         put("g8dMiUOTFla", new DataElement("g8dMiUOTFla", "Measles", "Measles 1"));
         put("Bxh1xgIY9nA", new DataElement("Bxh1xgIY9nA", "Measles", "Measles 2"));
     }};
-    ;
-    public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
+
+//public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
+    public static String ORGUNITID ="GUhbn1R8q6w";
+
+    /*
+    <organisationUnit id="DQjaNvP9ulw">
+<displayName>Linda Clinic</displayName>
+</organisationUnit>
+<organisationUnit id="GUhbn1R8q6w">
+<displayName>Livingstone District</displayName>
+</organisationUnit>
+<organisationUnit id="WxEt7wHRNeW">
+<displayName>Maramba Clinic</displayName>
+</organisationUnit>
+<organisationUnit id="ozvn5V1CkYM">
+<displayName>Simoonga Clinic</displayName>
+</organisationUnit>
+<organisationUnit id="MClooR8Tjs6">
+<displayName>Southern Province</displayName>
+</organisationUnit>
+<organisationUnit id="LWjoKmGc00n">
+<displayName>Victoria Falls Clinic</displayName>
+</organisationUnit>
+    */
+
+    public static String ORGUNITID1 ="GUhbn1R8q6w";
+    public static String ORGUNITID2 ="WxEt7wHRNeW";
+    public static String ORGUNITID3 ="ozvn5V1CkYM";
+    public static String ORGUNITID4 ="MClooR8Tjs6";
+    public static String ORGUNITID5 ="DQjaNvP9ulw";
+
     public static String PROGRAMID = "SSLpOM0r1U7";
     public static String PROGRAMSTAGEID = "s53RFfXA75f";
     public static String OUMODE = "SELECTED";

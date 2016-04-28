@@ -1,6 +1,7 @@
 package org.hispindia.bidtrackerreports.dagger;
 
 import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
+import org.hispindia.bidtrackerreports.ui.activity.FragmentDrawer;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
@@ -10,6 +11,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOve
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
@@ -30,6 +32,7 @@ public interface HIIComponentUi {
 
     //inject fragment
     void inject(HIFragmentMain fragmentMain);
+    void inject (FragmentDrawer fragmentDrawer);
 
     void inject(HIFragmentStockSelectProgram fragmentStockSelectProgram);
 
@@ -52,6 +55,8 @@ public interface HIIComponentUi {
     void inject(HIFragmentVaccineStatusReport fragmentVaccineStatusReport);
 
     void inject(HIFragmentStockInHandReport fragmentStockInHandReport);
+
+    void inject(HIFragmentDistrictStockInHandReport fragmentStockInHandReport);
 
     void inject(HIFragmentStockInHandvsDemandReport fragmentStockInHandvsDemandReport);
 

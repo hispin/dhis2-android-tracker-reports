@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:focusable="false"
-        android:hint="DOB From: yyyy-mm-dd" />
+        android:hint="From DOB:" />
 
     <!--<DatePicker-->
     <!--android:id="@+id/dpResult"-->
@@ -23,7 +23,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:focusable="false"
-        android:hint="DOB To: yyyy-mm-dd" />
+        android:hint="To DOB:" />
 
 
     <Button

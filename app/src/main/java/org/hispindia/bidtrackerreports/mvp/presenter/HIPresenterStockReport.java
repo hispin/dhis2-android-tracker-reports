@@ -41,6 +41,23 @@ public class HIPresenterStockReport implements HIIPresenterBase<HIIViewStockRepo
 
     public void getStockInHandReport(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
         onStop();
+
+
+            Log.e(TAG,"Presenter Loop");
+            subscription = model.getStockInHandReport(orgUnitMode, orgUnitId)
+                    .compose(HICUtilRxHelper.applySchedulers())
+                    .subscribe((rows) -> {
+                        view.updateRow(rows);
+                    }, e -> {
+                        Log.e(TAG, "getStockReport: " + e.toString());
+                        e.printStackTrace();
+                    });
+
+
+
+    }
+    public void getStockInHandReport2(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
+        onStop();
         subscription = model.getStockInHandReport(orgUnitMode, orgUnitId)
                 .compose(HICUtilRxHelper.applySchedulers())
                 .subscribe((rows) -> {
@@ -50,6 +67,31 @@ public class HIPresenterStockReport implements HIIPresenterBase<HIIViewStockRepo
                     e.printStackTrace();
                 });
     }
+
+    public void getStockInHandReport3(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
+        onStop();
+        subscription = model.getStockInHandReport(orgUnitMode, orgUnitId)
+                .compose(HICUtilRxHelper.applySchedulers())
+                .subscribe((rows) -> {
+                    view.updateRow(rows);
+                }, e -> {
+                    Log.e(TAG, "getStockReport: " + e.toString());
+                    e.printStackTrace();
+                });
+    }
+
+    public void getStockInHandReport4(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
+        onStop();
+        subscription = model.getStockInHandReport(orgUnitMode, orgUnitId)
+                .compose(HICUtilRxHelper.applySchedulers())
+                .subscribe((rows) -> {
+                    view.updateRow(rows);
+                }, e -> {
+                    Log.e(TAG, "getStockReport: " + e.toString());
+                    e.printStackTrace();
+                });
+    }
+
     @Override
     public void onStop() {
         if (subscription != null && !subscription.isUnsubscribed()) {

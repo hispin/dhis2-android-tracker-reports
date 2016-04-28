@@ -74,7 +74,7 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         }
         notifyDataSetChanged();
     }
-
+    public final static String TAG = HIAdapterTodayScheduleReport.class.getSimpleName();
     public void filter(String etStartDate, String etEndDate) {
         filter = true;
         hibidRowList.clear();
@@ -83,16 +83,20 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
 
         for (HIDBbidrow item : originList) {
-            if(TextUtils.isEmpty(item.getDob())) continue;
-            //DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
-            DateTime item_dob = DateTime.parse(item.getDob());
-            Log.e("LOG", "item_dob today schedule" + item_dob);
-            Log.e("LOG", "item_dget_ob" + item.getDob());
-            Log.e("LOG", "item_dget_ob" + item.getDob());
-            if(item_dob.isBefore(endD) && item_dob.isAfter(startD)){
-                hibidRowList.add(item);
-                Log.e("LOG ", " hibidRowList "+ hibidRowList);
+            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
+            try {
+                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
+                Log.e("LOG", "item_dob" + item_dob);
+                Log.e("LOG", "item_get_dob" + item.getDob());
+                if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
+                    hibidRowList.add(item);
+                    Log.e("LOG ", " success hibidRowList " + hibidRowList);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "filter: " + e.toString());
             }
         }
         Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size()+" Size list: " + hibidRowList.size());
@@ -210,15 +214,12 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         TextView tvFirstName;
         @Bind(R.id.tvChildName)
         TextView tvChildName;
-
         @Bind(R.id.tvdob)
         TextView tvdob;
-
         @Bind(R.id.vAttribute)
         LinearLayout vAttribute;
         @Bind(R.id.vDataElement)
         LinearLayout vDataElement;
-
         @Bind(R.id.vBCG)
         View vBCG;
         @Bind(R.id.vBCGScar)
@@ -253,7 +254,6 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         View vMeasles1;
         @Bind(R.id.vMeasles2)
         View vMeasles2;
-
         @Bind(R.id.tvBCG)
         TextView tvBCG;
         @Bind(R.id.tvBCGScar)
@@ -288,7 +288,6 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         TextView tvMeasles1;
         @Bind(R.id.tvMeasles2)
         TextView tvMeasles2;
-
         @Bind(R.id.imgBCG)
         ImageView imgBCG;
         @Bind(R.id.imgBCGScar)

@@ -25,7 +25,9 @@ public class HIOverdueModel {
     public Observable<HIResOverdue> getOverdueReport(String orgUnitId, String ouMode, String programId) {
         return Observable.defer(() -> getApiModel().getOverdueReport(orgUnitId, ouMode, programId));
         //return Observable.defer(() -> getApiModel().getOverdueReport());
+
     }
+
 
 
     public HIIApiDhis2 getApiModel() {

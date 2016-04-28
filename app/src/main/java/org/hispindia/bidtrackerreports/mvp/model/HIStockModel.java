@@ -30,6 +30,13 @@ public class HIStockModel {
         return Observable.defer(() -> getApiModel().getStockInHandReport(orgUnitMode, "ouuid:" + orgUnitId)
                 .map(HIResStock::new));
     }
+
+    public Observable<HIResStock> getStockInHandReport2(String orgUnitMode, String orgUnitId) {
+        return Observable.defer(() -> getApiModel().getStockInHandReport2(orgUnitMode, "ouuid:" + orgUnitId)
+                .map(HIResStock::new));
+    }
+
+
     public HIIApiDhis2 getApiModel() {
         return apiModel;
     }

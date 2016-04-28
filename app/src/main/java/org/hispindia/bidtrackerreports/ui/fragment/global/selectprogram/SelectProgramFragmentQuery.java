@@ -167,7 +167,7 @@ public class SelectProgramFragmentQuery implements Query<SelectProgramFragmentFo
         fragmentForm.setColumnNames(columnNames);
 
         if (selectedProgram.getTrackedEntity() != null) {
-            columnNames.setmTitle(selectedProgram.getTrackedEntity().getName() + "(" + (teiRows.size() - 1) + ")");
+            columnNames.setTitle(selectedProgram.getTrackedEntity().getName() + "(" + (teiRows.size() - 1) + ")");
         }
 
         return fragmentForm;

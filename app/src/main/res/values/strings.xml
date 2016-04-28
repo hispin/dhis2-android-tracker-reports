@@ -28,6 +28,24 @@
     <string name="no_active_enrollment">No active enrollment</string>
     <string name="select_relationship_type">Select relationship type</string>
 
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_notifications">Messages</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_notifications</item>
+    </string-array>
+
+    <string name="title_messages">Messages</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_home">Home</string>
+
     <string name="search">Search</string>
     <string name="http_error_400">Bad request</string>
     <string name="http_error_401">Unauthorized</string>

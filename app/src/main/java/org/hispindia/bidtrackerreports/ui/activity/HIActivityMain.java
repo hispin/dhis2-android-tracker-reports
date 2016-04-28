@@ -70,7 +70,6 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
     protected void onPause() {
         super.onPause();
         Dhis2Application.getEventBus().unregister(this);
-
     }
 
     @Override

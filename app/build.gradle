@@ -13,55 +13,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
-repositories {
-}
-
-
-Integer VERSION_CODE = 2016031815//yyyymmddhh
-String VERSION_NAME = "1.0.1"
-String APK_NAME = "BID"
 android {
-    signingConfigs {
-    }
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    output.outputFile.name.replace(output.outputFile.name, VERSION_CODE + "-" + VERSION_NAME + "-" + APK_NAME + ".apk"))
-        }
-    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
     defaultConfig {
         applicationId "org.hispindia.bidtrackerreports"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode VERSION_CODE
-        versionName VERSION_NAME
+        minSdkVersion 17
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
-        debug {
-            applicationIdSuffix '.dev'
-            versionNameSuffix '-dev'
-            debuggable true
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
         release {
-            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-        dev {
-            buildConfigField 'String', 'HOST', '"https://bid.dhis2.org/epireg"'
-        }
 
-        staging {
-            buildConfigField 'String', 'HOST', '"https://bid.dhis2.org/epireg"'
-        }
-    }
     // Configure for RetroLambda
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -82,20 +52,21 @@ android {
     configurations {
         all*.exclude module: 'commons-logging'
     }
+
 }
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    def dependency = rootProject.ext.dependency
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    testCompile 'junit:junit:4.12'
+//    compile 'com.android.support:appcompat-v7:23.2.1'
     compile project(':..:dhis2-android-sdk:app')
-    compile dependency.appcompatv7
-    compile dependency.supportDesign
-    compile dependency.recyclerviewv7
+    compile 'com.github.cvnhan:MPAndroidChart:v2.2.0'
+    def dependency = rootProject.ext.dependency
     compile dependency.dagger
     apt dependency.daggerCompiler
+    compile dependency.recyclerviewv7
     compile dependency.butterknife
     compile dependency.rxAndroid
     compile dependency.rxJava
-    compile 'com.github.cvnhan:MPAndroidChart:v2.2.0'
-    testCompile dependency.jUnit
+    compile 'com.android.support:multidex:1.0.0'
 }
-

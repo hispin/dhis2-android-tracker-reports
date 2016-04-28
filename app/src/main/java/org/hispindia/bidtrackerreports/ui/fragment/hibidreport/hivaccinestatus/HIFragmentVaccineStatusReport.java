@@ -144,6 +144,8 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                //String myFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+
                 String myFormat = "yyyy-MM-dd"; //In which you need put here
 
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
