@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.ui.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectPr
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
-import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.ListViewMultiChartActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
@@ -133,13 +131,13 @@ public class HIFragmentMain extends HICFragmentBase {
         mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
     }
 
-    @OnClick(R.id.btnstockdistrict)
-         @SuppressWarnings("unused")
-         public void btnstockdistrict() {
-        Intent intent = new Intent(getActivity(), ListViewMultiChartActivity.class);
-        startActivity(intent);
-        //  mNavigationHandler.switchFragment(new ListViewMultiChartActivity(), ListViewMultiChartActivity.TAG, true);
-    }
+//    @OnClick(R.id.btnstockdistrict)
+//         @SuppressWarnings("unused")
+//         public void btnstockdistrict() {
+//        Intent intent = new Intent(getActivity(), ListViewMultiChartActivity.class);
+//        startActivity(intent);
+//        //  mNavigationHandler.switchFragment(new ListViewMultiChartActivity(), ListViewMultiChartActivity.TAG, true);
+//    }
 
     @OnClick(R.id.btnstockdistrict1)
          @SuppressWarnings("unused")

@@ -88,19 +88,19 @@
                 android:layout_height="500dp"
                 android:padding="5dp" />
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/vChart5"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
-            <Spinner
-                android:id="@+id/vReportOption5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/vReport5"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:padding="5dp" />
+            <!--<com.github.mikephil.charting.charts.BarChart-->
+                <!--android:id="@+id/vChart5"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp" />-->
+            <!--<Spinner-->
+                <!--android:id="@+id/vReportOption5"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/vReport5"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="500dp"-->
+                <!--android:padding="5dp" />-->
 
 
         </LinearLayout>

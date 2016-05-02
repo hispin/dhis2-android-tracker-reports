@@ -79,7 +79,7 @@
                 <Button
                     android:id="@+id/btnstockdistrict"
                     style="@style/btnFragmentMain"
-                    android:text="Stock District Wise" />
+                    android:text="Stock District Wise Sample" />
 
             </LinearLayout>
 
@@ -89,7 +89,7 @@
                 <Button
                     android:id="@+id/btnstockdistrict1"
                     style="@style/btnFragmentMain"
-                    android:text="Stock District Wise with Real Data" />
+                    android:text="District Level Stock" />
 
             </LinearLayout>
         </LinearLayout>
