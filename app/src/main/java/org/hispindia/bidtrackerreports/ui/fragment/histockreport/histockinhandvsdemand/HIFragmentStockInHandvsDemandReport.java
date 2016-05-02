@@ -28,12 +28,16 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
-
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock1;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock2;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock3;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock4;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock5;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
@@ -276,6 +280,41 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
         if (resStock != null) {
             adapter.setInHandList(resStock.rows);
             createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        }
+    }
+
+    public void updateRow1(HIResStock1 resStock) {
+        if (resStock != null) {
+            // adapter.setInHandList(resStock.rows);
+            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        }
+    }
+
+    public void updateRow2(HIResStock2 resStock2) {
+        if (resStock2 != null) {
+            // adapter.setInHandList(resStock.rows);
+            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        }
+    }
+
+    public void updateRow3(HIResStock3 resStock3) {
+        if (resStock3 != null) {
+            // adapter.setInHandList(resStock.rows);
+            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        }
+    }
+
+    public void updateRow4(HIResStock4 resStock4) {
+        if (resStock4 != null) {
+            // adapter.setInHandList(resStock.rows);
+            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        }
+    }
+
+    public void updateRow5(HIResStock5 resStock5) {
+        if (resStock5 != null) {
+            // adapter.setInHandList(resStock.rows);
+            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
         }
     }
 

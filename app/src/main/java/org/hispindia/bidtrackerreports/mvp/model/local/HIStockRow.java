@@ -37,4 +37,5 @@ public class HIStockRow {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

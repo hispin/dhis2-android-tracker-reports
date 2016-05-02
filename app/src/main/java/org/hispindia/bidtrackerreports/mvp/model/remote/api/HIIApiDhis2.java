@@ -27,7 +27,21 @@ public interface HIIApiDhis2 {
     Observable<JsonNode> getStockInHandReport(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
 
     @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockInHandReport1(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
+
+    @GET("/sqlViews/{orgUnitModeId}/data")
     Observable<JsonNode> getStockInHandReport2(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
+
+
+    @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockInHandReport3(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
+
+    @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockInHandReport4(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
+
+    @GET("/sqlViews/{orgUnitModeId}/data")
+    Observable<JsonNode> getStockInHandReport5(@Path("orgUnitModeId") String orgUnitModeId, @Query("var") String orgUnitId);
+
 
     //startDate=2016-01-30&endDate=2016-03-31
     @GET("/events/eventRows?skipPaging=true&programStatus=ACTIVE&eventStatus=SCHEDULE")

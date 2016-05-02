@@ -29,15 +29,18 @@ public class HIAdapterStockReport extends RecyclerView.Adapter<RecyclerView.View
     private boolean loadDone;
     private List<HIStockRow> hiStockRowList;
 
+
     public HIAdapterStockReport() {
         hiStockRowList = new ArrayList<>();
         loadDone = false;
     }
 
+
     public void setHiStockRowList(List<HIStockRow> hiStockRowList) {
         this.hiStockRowList = hiStockRowList;
         notifyDataSetChanged();
     }
+
 
     public void setLoadDone(boolean loadDone) {
         this.loadDone = loadDone;

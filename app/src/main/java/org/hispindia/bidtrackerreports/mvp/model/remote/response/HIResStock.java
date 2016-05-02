@@ -29,6 +29,8 @@ public class HIResStock {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
 }

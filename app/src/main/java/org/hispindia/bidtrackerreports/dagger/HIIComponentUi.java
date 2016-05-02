@@ -11,10 +11,10 @@ import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOve
 import org.hispindia.bidtrackerreports.ui.fragment.hioverduereport.HIFragmentOverdueSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
-import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
 
@@ -56,7 +56,7 @@ public interface HIIComponentUi {
 
     void inject(HIFragmentStockInHandReport fragmentStockInHandReport);
 
-    void inject(HIFragmentDistrictStockInHandReport fragmentStockInHandReport);
+    void inject(HIFragmentDistrictStockInHandReport fragmentDistrictStockInHandReport);
 
     void inject(HIFragmentStockInHandvsDemandReport fragmentStockInHandvsDemandReport);
 

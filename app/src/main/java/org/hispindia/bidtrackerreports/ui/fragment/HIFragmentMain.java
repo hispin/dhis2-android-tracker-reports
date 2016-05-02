@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,10 @@ import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectPr
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
+import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.ListViewMultiChartActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
-import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.HIFragmentDistrictStockInHandReport;
-import org.hispindia.bidtrackerreports.ui.fragment.histockdistrict.ListViewMultiChartActivity;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
 
@@ -117,8 +116,9 @@ public class HIFragmentMain extends HICFragmentBase {
     @OnClick(R.id.btnStockInHandReport)
     @SuppressWarnings("unused")
     public void btnStockInHandReport() {
-        Fragment fragment = HIFragmentStockInHandReport.newInstance("GUhbn1R8q6w", "DQjaNvP9ulw","GUhbn1R8q6w","WxEt7wHRNeW","ozvn5V1CkYM","MClooR8Tjs6","lTqNF1rWha3");
-        mNavigationHandler.switchFragment(fragment, HIFragmentStockInHandReport.TAG, true);
+//        Fragment fragment = HIFragmentStockInHandReport.newInstance("GUhbn1R8q6w", "GUhbn1R8q6w","lTqNF1rWha3");
+//        mNavigationHandler.switchFragment(fragment, HIFragmentStockInHandReport.TAG, true);
+        mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
     }
 
     @OnClick(R.id.btnStockInHandvsDemandReport)
@@ -144,8 +144,9 @@ public class HIFragmentMain extends HICFragmentBase {
     @OnClick(R.id.btnstockdistrict1)
          @SuppressWarnings("unused")
          public void btnstockdistrict1() {
-        Intent intent = new Intent(getActivity(), HIFragmentDistrictStockInHandReport.class);
-        startActivity(intent);
+        //   Fragment fragment = HIFragmentStockInHandReport.newInstance("GUhbn1R8q6w", "GUhbn1R8q6w","lTqNF1rWha3");
+        //  mNavigationHandler.switchFragment(fragment, HIFragmentStockInHandReport.TAG, true);
+        mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
         //  mNavigationHandler.switchFragment(new ListViewMultiChartActivity(), ListViewMultiChartActivity.TAG, true);
     }
 
