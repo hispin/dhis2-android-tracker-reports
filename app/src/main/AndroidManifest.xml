@@ -60,13 +60,12 @@
 
 
         <activity
-            android:name=".ui.fragment.histockdistrict.HIFragmentDistrictStockInHandReport"
+            android:name=".ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
         </activity>
-
 
         <receiver android:name="org.hisp.dhis.android.sdk.services.PeriodicSynchronizer">
 
