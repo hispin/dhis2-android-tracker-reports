@@ -21,8 +21,8 @@ android {
         applicationId "org.hispindia.bidtrackerreports"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2016031817
+        versionName "1.1"
         multiDexEnabled true
     }
     buildTypes {

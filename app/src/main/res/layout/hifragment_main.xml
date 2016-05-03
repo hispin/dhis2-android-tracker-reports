@@ -73,15 +73,15 @@
 
             </LinearLayout>
 
-            <LinearLayout style="@style/vFragmentMain">
+            <!--<LinearLayout style="@style/vFragmentMain">-->
 
 
-                <Button
-                    android:id="@+id/btnstockdistrict"
-                    style="@style/btnFragmentMain"
-                    android:text="Stock District Wise Sample" />
+            <!--<Button-->
+            <!--android:id="@+id/btnstockdistrict"-->
+            <!--style="@style/btnFragmentMain"-->
+            <!--android:text="Stock District Wise Sample" />-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <LinearLayout style="@style/vFragmentMain">
 

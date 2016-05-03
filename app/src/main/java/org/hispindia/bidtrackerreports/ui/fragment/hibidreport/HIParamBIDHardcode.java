@@ -1,5 +1,9 @@
 package org.hispindia.bidtrackerreports.ui.fragment.hibidreport;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +32,8 @@ public class HIParamBIDHardcode {
         put("Bxh1xgIY9nA", new DataElement("Bxh1xgIY9nA", "Measles", "Measles 2"));
     }};
 
-//public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
-public static String ORGUNITID = "GUhbn1R8q6w";
+    public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
+    public static String ORGUNITId = "GUhbn1R8q6w";
 
     /*
     <organisationUnit id="DQjaNvP9ulw">

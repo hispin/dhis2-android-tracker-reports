@@ -3,9 +3,7 @@ package org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistric
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,28 +65,28 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
     private static final String ORG_UNIT_LV = "extra:orgUnitLv";
     protected INavigationHandler mNavigationHandler;
 
-    @Bind(R.id.vReport)
-    RecyclerView vReport;
+    //    @Bind(R.id.vReport)
+//    RecyclerView vReport;
     @Bind(R.id.vChart)
     BarChart vChart;
 
-    @Bind(R.id.vReport1)
-    RecyclerView vReport1;
+    //    @Bind(R.id.vReport1)
+//    RecyclerView vReport1;
     @Bind(R.id.vChart1)
     BarChart vChart1;
 
-    @Bind(R.id.vReport2)
-    RecyclerView vReport2;
+    //    @Bind(R.id.vReport2)
+//    RecyclerView vReport2;
     @Bind(R.id.vChart2)
     BarChart vChart2;
 
-    @Bind(R.id.vReport3)
-    RecyclerView vReport3;
+    //    @Bind(R.id.vReport3)
+//    RecyclerView vReport3;
     @Bind(R.id.vChart3)
     BarChart vChart3;
 
-    @Bind(R.id.vReport4)
-    RecyclerView vReport4;
+    //    @Bind(R.id.vReport4)
+//    RecyclerView vReport4;
     @Bind(R.id.vChart4)
     BarChart vChart4;
 
@@ -158,7 +156,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Bundle fragmentArguments = getArguments();
-        this.orgUnitId = HIParamBIDHardcode.ORGUNITID;
+        this.orgUnitId = HIParamBIDHardcode.ORGUNITId;
         this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID1;
         this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID2;
         this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID3;
@@ -376,39 +374,39 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 //        l5.setXEntrySpace(4f);
 
         vChart.setTouchEnabled(false);
-        vReport.setHasFixedSize(true);
-        vReport.setLayoutManager(llm);
-        vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport.setItemAnimator(new DefaultItemAnimator());
+//        vReport.setHasFixedSize(true);
+//        vReport.setLayoutManager(llm);
+//        vReport.setAdapter(adapter);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.setItemAnimator(new DefaultItemAnimator());
 
         vChart1.setTouchEnabled(false);
-        vReport1.setHasFixedSize(true);
-        vReport1.setLayoutManager(l2m);
-        vReport1.setAdapter(adapter1);
-        vReport1.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport1.setItemAnimator(new DefaultItemAnimator());
+//        vReport1.setHasFixedSize(true);
+//        vReport1.setLayoutManager(l2m);
+//        vReport1.setAdapter(adapter1);
+//        vReport1.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport1.setItemAnimator(new DefaultItemAnimator());
 
         vChart2.setTouchEnabled(false);
-        vReport2.setHasFixedSize(true);
-        vReport2.setLayoutManager(l3m);
-        vReport2.setAdapter(adapter2);
-        vReport2.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport2.setItemAnimator(new DefaultItemAnimator());
+//        vReport2.setHasFixedSize(true);
+//        vReport2.setLayoutManager(l3m);
+//        vReport2.setAdapter(adapter2);
+//        vReport2.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport2.setItemAnimator(new DefaultItemAnimator());
 
         vChart3.setTouchEnabled(false);
-        vReport3.setHasFixedSize(true);
-        vReport3.setLayoutManager(l4m);
-        vReport3.setAdapter(adapter3);
-        vReport3.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport3.setItemAnimator(new DefaultItemAnimator());
+//        vReport3.setHasFixedSize(true);
+//        vReport3.setLayoutManager(l4m);
+//        vReport3.setAdapter(adapter3);
+//        vReport3.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport3.setItemAnimator(new DefaultItemAnimator());
 
         vChart4.setTouchEnabled(false);
-        vReport4.setHasFixedSize(true);
-        vReport4.setLayoutManager(l5m);
-        vReport4.setAdapter(adapter4);
-        vReport4.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport4.setItemAnimator(new DefaultItemAnimator());
+//        vReport4.setHasFixedSize(true);
+//        vReport4.setLayoutManager(l5m);
+//        vReport4.setAdapter(adapter4);
+//        vReport4.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport4.setItemAnimator(new DefaultItemAnimator());
 
 //    vChart5.setTouchEnabled(false);
 //        vReport5.setHasFixedSize(true);
