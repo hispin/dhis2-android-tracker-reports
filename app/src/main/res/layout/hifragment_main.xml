@@ -74,22 +74,22 @@
             </LinearLayout>
 
             <!--<LinearLayout style="@style/vFragmentMain">-->
-
-
             <!--<Button-->
             <!--android:id="@+id/btnstockdistrict"-->
             <!--style="@style/btnFragmentMain"-->
             <!--android:text="Stock District Wise Sample" />-->
 
             <!--</LinearLayout>-->
-
+            <!--android:visibility="gone"-->
             <LinearLayout style="@style/vFragmentMain">
 
 
                 <Button
                     android:id="@+id/btnstockdistrict1"
                     style="@style/btnFragmentMain"
-                    android:text="District Level Stock" />
+                    android:text="District Level Stock"
+
+                    />
 
             </LinearLayout>
         </LinearLayout>

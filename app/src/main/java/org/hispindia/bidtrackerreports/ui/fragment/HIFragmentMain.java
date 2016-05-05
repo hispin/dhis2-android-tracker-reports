@@ -3,10 +3,14 @@ package org.hispindia.bidtrackerreports.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -17,7 +21,6 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.H
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
-import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
 
@@ -29,7 +32,11 @@ import butterknife.OnClick;
 public class HIFragmentMain extends HICFragmentBase {
 
     public final static String TAG = HIFragmentMain.class.getSimpleName();
-
+    public static int ORGUNITI = new Select().from(OrganisationUnit.class).querySingle().getLevel();
+    public static String olabel = new Select().from(OrganisationUnit.class).querySingle().getLabel();
+    public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
+    public String orglabel = olabel.toString();
+    public int orglevel = ORGUNITI;
     protected INavigationHandler mNavigationHandler;
 
     @Nullable
@@ -69,6 +76,7 @@ public class HIFragmentMain extends HICFragmentBase {
 
     @SuppressWarnings("unused")
 
+    //public static String ORGUNITID="GUhbn1R8q6w";
     public void btnTrackerReport() {
         mNavigationHandler.switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
 //        EventDataEntryFragment fragment = EventDataEntryFragment.newInstanceWithEnrollment("DQjaNvP9ulw", "SSLpOM0r1U7", "s53RFfXA75f" , 1, 1);
@@ -127,8 +135,12 @@ public class HIFragmentMain extends HICFragmentBase {
 
     @OnClick(R.id.btnStockInDemandReport)
     @SuppressWarnings("unused")
+
     public void btnStockInDemandReport() {
+
         mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
+
+
     }
 
 //    @OnClick(R.id.btnstockdistrict)
@@ -138,14 +150,47 @@ public class HIFragmentMain extends HICFragmentBase {
 //        startActivity(intent);
 //        //  mNavigationHandler.switchFragment(new ListViewMultiChartActivity(), ListViewMultiChartActivity.TAG, true);
 //    }
-
+//public void checklevel() {
+//    if (ORGUNITI == 3){
+//
+//    //show button
+//
+//    }
+//}
     @OnClick(R.id.btnstockdistrict1)
          @SuppressWarnings("unused")
          public void btnstockdistrict1() {
-        //   Fragment fragment = HIFragmentStockInHandReport.newInstance("GUhbn1R8q6w", "GUhbn1R8q6w","lTqNF1rWha3");
-        //  mNavigationHandler.switchFragment(fragment, HIFragmentStockInHandReport.TAG, true);
-        mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
-        //  mNavigationHandler.switchFragment(new ListViewMultiChartActivity(), ListViewMultiChartActivity.TAG, true);
+
+//        //mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//        if(ORGUNITID=="GUhbn1R8q6w" || olabel=="Livingstone District"|| ORGUNITID=="" )
+//        {
+//            Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT);
+//            mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//        }
+//else if(ORGUNITID=="" || orglevel==0 || new Select().from(OrganisationUnit.class).querySingle().getLevel()==3 )
+//        {
+//
+//            Toast.makeText(getActivity().getApplicationContext(), "Empty Results" , Toast.LENGTH_LONG).show();
+//        }
+//        else
+//        {
+//            Toast.makeText(getActivity().getApplicationContext(), "Else Nothing " , Toast.LENGTH_LONG).show();
+//        }
+//        Toast.makeText(getActivity().getApplicationContext(), "Level =="+ new Select().from(OrganisationUnit.class).querySingle().getLevel() , Toast.LENGTH_LONG).show();
+
+        if (new Select().from(OrganisationUnit.class).querySingle().getId().toString() == "GUhbn1R8q6w") {
+            Log.e(TAG, "Success for ID Match");
+        }
+        if (new Select().from(OrganisationUnit.class).querySingle().getLabel() == "Livingstone District") {
+            Log.e(TAG, "Success for Label Match");
+        }
+
+        Log.e(TAG, "Level==" + new Select().from(OrganisationUnit.class).querySingle().getLevel());
+        Log.e(TAG, "ID==" + new Select().from(OrganisationUnit.class).querySingle().getId());
+        Log.e(TAG, "Parent==" + new Select().from(OrganisationUnit.class).querySingle().getParent());
+        Log.e(TAG, "Label==" + new Select().from(OrganisationUnit.class).querySingle().getLabel());
+        Log.e(TAG, "Programs==" + new Select().from(OrganisationUnit.class).querySingle().getPrograms());
+        Log.e(TAG, "To string==" + new Select().from(OrganisationUnit.class).querySingle().toString());
     }
 
 }

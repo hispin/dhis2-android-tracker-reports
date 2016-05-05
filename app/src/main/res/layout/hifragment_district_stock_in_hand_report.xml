@@ -15,6 +15,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:background="@color/light_blue"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:id="@+id/tvdistrict"-->
+            <!--android:layout_gravity="center_horizontal" />-->
+            <TextView
+                android:id="@+id/tvchart1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/light_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/vChart"
                 android:layout_width="match_parent"
@@ -31,7 +48,14 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="500dp"-->
             <!--android:padding="5dp" />-->
-
+            <TextView
+                android:id="@+id/tvchart2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/light_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/vChart1"
                 android:layout_width="match_parent"
@@ -45,7 +69,14 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="500dp"-->
             <!--android:padding="5dp" />-->
-
+            <TextView
+                android:id="@+id/tvchart3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/light_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/vChart2"
                 android:layout_width="match_parent"
@@ -59,7 +90,14 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="500dp"-->
             <!--android:padding="5dp" />-->
-
+            <TextView
+                android:id="@+id/tvchart4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/light_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/vChart3"
                 android:layout_width="match_parent"
@@ -74,10 +112,10 @@
             <!--android:layout_height="500dp"-->
             <!--android:padding="5dp" />-->
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/vChart4"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
+            <!--<com.github.mikephil.charting.charts.BarChart-->
+            <!--android:id="@+id/vChart4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="300dp" />-->
             <!--<Spinner-->
             <!--android:id="@+id/vReportOption4"-->
             <!--android:layout_width="match_parent"-->

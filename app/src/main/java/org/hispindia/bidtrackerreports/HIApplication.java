@@ -41,7 +41,6 @@ public class HIApplication extends Dhis2Application {
                 .hIModuleUtils(new HIModuleUtils())
                 .build();
         HIApiEnvConfig.configEnv(HIApiEnvConfig.APIURL.BID);
-
     }
 
     public HIIComponentSingleton getComponent() {

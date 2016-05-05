@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -16,8 +17,11 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -49,6 +53,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,76 +68,75 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 
     public final static String TAG = HIFragmentDistrictStockInHandReport.class.getSimpleName();
     private static final String ORG_UNIT_LV = "extra:orgUnitLv";
-    protected INavigationHandler mNavigationHandler;
-
+    public static String olabel = new Select().from(OrganisationUnit.class).querySingle().getLabel();
+    public static int ORGUNITI = new Select().from(OrganisationUnit.class).querySingle().getLevel();
     //    @Bind(R.id.vReport)
 //    RecyclerView vReport;
+//    @Bind(R.id.tvdistrict)
+//    TextView Label;
+    public static String ORGUN = new Select().from(OrganisationUnit.class).querySingle().getLabel();
+    protected INavigationHandler mNavigationHandler;
+    @Bind(R.id.tvchart2)
+    TextView tvchart2;
+    @Bind(R.id.tvchart3)
+    TextView tvchart3;
+    @Bind(R.id.tvchart4)
+    TextView tvchart4;
+    @Bind(R.id.tvchart1)
+    TextView tvchart1;
     @Bind(R.id.vChart)
     BarChart vChart;
-
     //    @Bind(R.id.vReport1)
 //    RecyclerView vReport1;
     @Bind(R.id.vChart1)
     BarChart vChart1;
 
-    //    @Bind(R.id.vReport2)
-//    RecyclerView vReport2;
-    @Bind(R.id.vChart2)
-    BarChart vChart2;
-
-    //    @Bind(R.id.vReport3)
-//    RecyclerView vReport3;
-    @Bind(R.id.vChart3)
-    BarChart vChart3;
-
     //    @Bind(R.id.vReport4)
 //    RecyclerView vReport4;
-    @Bind(R.id.vChart4)
-    BarChart vChart4;
+//    @Bind(R.id.vChart4)
+//    BarChart vChart4;
 
 //    @Bind(R.id.vReport5)
 //    RecyclerView vReport5;
 //    @Bind(R.id.vChart5)
 //    BarChart vChart5;
-
-
+//    @Bind(R.id.vReport2)
+//    RecyclerView vReport2;
+@Bind(R.id.vChart2)
+BarChart vChart2;
+    //    @Bind(R.id.vReport3)
+//    RecyclerView vReport3;
+    @Bind(R.id.vChart3)
+    BarChart vChart3;
     @Inject
     HIPresenterStockReport flow;
     @Inject
     HIAdapterStockReport adapter;
-
-
     @Inject
     HIPresenterStockReport1 flow1;
     @Inject
     HIAdapterStockReport1 adapter1;
-
     @Inject
     HIPresenterStockReport2 flow2;
     @Inject
     HIAdapterStockReport2 adapter2;
-
     @Inject
     HIPresenterStockReport3 flow3;
     @Inject
     HIAdapterStockReport3 adapter3;
 
-    @Inject
-    HIPresenterStockReport4 flow4;
-    @Inject
-    HIAdapterStockReport4 adapter4;
-
 //    @Inject
 //    HIPresenterStockReport5 flow5;
 //    @Inject
 //    HIAdapterStockReport5 adapter5;
-
-
+@Inject
+HIPresenterStockReport4 flow4;
+    @Inject
+    HIAdapterStockReport4 adapter4;
     private String orgUnitId;
     private String orgUnitMode;
     private String orgUnitIdC1;
     private String orgUnitIdC2;
-
     private String orgUnitIdC3;
     private String orgUnitIdC4;
     private String orgUnitIdC5;
@@ -156,12 +160,12 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Bundle fragmentArguments = getArguments();
-        this.orgUnitId = HIParamBIDHardcode.ORGUNITId;
-        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID1;
-        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID2;
-        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID3;
-        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID4;
-        this.orgUnitIdC5 = HIParamBIDHardcode.ORGUNITID5;
+        this.orgUnitId = HIParamBIDHardcode.ORGUNITID1;
+        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
+        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
+        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID4;
+        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID5;
+        //  this.orgUnitIdC5 = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
 
         Log.e(TAG,"ouid:"+ HIParamBIDHardcode.ORGUNITID);
@@ -201,6 +205,13 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 //        LinearLayoutManager l6m = new LinearLayoutManager(getActivity());
 //        l6m.setOrientation(LinearLayoutManager.VERTICAL);
 
+//        Label.setText(olabel );
+
+        tvchart1.setText("Linda Clinic");
+        tvchart2.setText("Simoonga Clinic");
+        tvchart3.setText("Victoria Falls Clinic");
+        tvchart4.setText("Maramba Clinic");
+
         vChart.setDrawBarShadow(false);
         vChart.setDrawValueAboveBar(true);
         vChart.setDescription("");
@@ -227,11 +238,11 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         vChart3.setPinchZoom(false);
         vChart3.setDrawGridBackground(false);
 
-        vChart4.setDrawBarShadow(false);
-        vChart4.setDrawValueAboveBar(true);
-        vChart4.setDescription("");
-        vChart4.setPinchZoom(false);
-        vChart4.setDrawGridBackground(false);
+//        vChart4.setDrawBarShadow(false);
+//        vChart4.setDrawValueAboveBar(true);
+//        vChart4.setDescription("");
+//        vChart4.setPinchZoom(false);
+//        vChart4.setDrawGridBackground(false);
 
 //        vChart5.setDrawBarShadow(false);
 //        vChart5.setDrawValueAboveBar(true);
@@ -259,11 +270,11 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         xAxis3.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis3.setDrawGridLines(false);
         xAxis3.setSpaceBetweenLabels(2);
-
-        XAxis xAxis4 = vChart4.getXAxis();
-        xAxis4.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis4.setDrawGridLines(false);
-        xAxis4.setSpaceBetweenLabels(2);
+//
+//        XAxis xAxis4 = vChart4.getXAxis();
+//        xAxis4.setPosition(XAxis.XAxisPosition.BOTTOM);
+//        xAxis4.setDrawGridLines(false);
+//        xAxis4.setSpaceBetweenLabels(2);
 
 //        XAxis xAxis5 = vChart5.getXAxis();
 //        xAxis5.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -289,11 +300,11 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         leftAxis3.setLabelCount(8, false);
         leftAxis3.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis3.setSpaceTop(15f);
-
-        YAxis leftAxis4 = vChart4.getAxisLeft();
-        leftAxis4.setLabelCount(8, false);
-        leftAxis4.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis4.setSpaceTop(15f);
+//
+//        YAxis leftAxis4 = vChart4.getAxisLeft();
+//        leftAxis4.setLabelCount(8, false);
+//        leftAxis4.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+//        leftAxis4.setSpaceTop(15f);
 
 //        YAxis leftAxis5 = vChart4.getAxisLeft();
 //        leftAxis5.setLabelCount(8, false);
@@ -321,10 +332,10 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         rightAxis3.setLabelCount(8, false);
         rightAxis3.setSpaceTop(15f);
 
-        YAxis rightAxis4 = vChart4.getAxisRight();
-        rightAxis4.setDrawGridLines(false);
-        rightAxis4.setLabelCount(8, false);
-        rightAxis4.setSpaceTop(15f);
+//        YAxis rightAxis4 = vChart4.getAxisRight();
+//        rightAxis4.setDrawGridLines(false);
+//        rightAxis4.setLabelCount(8, false);
+//        rightAxis4.setSpaceTop(15f);
 
 //        YAxis rightAxis5 = vChart5.getAxisRight();
 //        rightAxis5.setDrawGridLines(false);
@@ -359,12 +370,12 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         l3.setTextSize(11f);
         l3.setXEntrySpace(4f);
 
-        Legend l4 = vChart4.getLegend();
-        l4.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l4.setForm(Legend.LegendForm.SQUARE);
-        l4.setFormSize(9f);
-        l4.setTextSize(11f);
-        l4.setXEntrySpace(4f);
+//        Legend l4 = vChart4.getLegend();
+//        l4.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+//        l4.setForm(Legend.LegendForm.SQUARE);
+//        l4.setFormSize(9f);
+//        l4.setTextSize(11f);
+//        l4.setXEntrySpace(4f);
 
 //        Legend l5 = vChart5.getLegend();
 //        l5.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
@@ -401,7 +412,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 //        vReport3.getItemAnimator().setSupportsChangeAnimations(true);
 //        vReport3.setItemAnimator(new DefaultItemAnimator());
 
-        vChart4.setTouchEnabled(false);
+//        vChart4.setTouchEnabled(false);
 //        vReport4.setHasFixedSize(true);
 //        vReport4.setLayoutManager(l5m);
 //        vReport4.setAdapter(adapter4);
@@ -425,8 +436,8 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         }
 
         if (flow1 != null) {
-           adapter1.setHiStockRowList1(new ArrayList<>());
-           adapter1.setLoadDone(false);
+            adapter1.setHiStockRowList1(new ArrayList<>());
+            adapter1.setLoadDone(false);
             flow1.getStockInHandReport1(this, orgUnitMode, orgUnitIdC1);
 
         }
@@ -449,6 +460,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
             flow4.getStockInHandReport4(this, orgUnitMode, orgUnitIdC4);
 
         }
+
 //        if (flow5 != null) {
 //            adapter5.setHiStockRowList5(new ArrayList<>());
 //            adapter5.setLoadDone(false);
@@ -488,6 +500,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 //        flow5.onStop();
         super.onPause();
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -520,6 +533,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
             createChart2(resStock2.rows2);
         }
     }
+
    public void updateRow3(HIResStock3 resStock3) {
         if (resStock3 != null) {
             Log.e(TAG,"Restock 1:"+resStock3 );
@@ -528,14 +542,16 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
             createChart3(resStock3.rows3);
         }
     }
+
     public void updateRow4(HIResStock4 resStock4) {
         if (resStock4 != null) {
-            Log.e(TAG,"Restock 1:"+resStock4 );
-            adapter4.setHiStockRowList4(resStock4.rows4);
-            adapter4.setLoadDone(true);
-            createChart4(resStock4.rows4);
+//            Log.e(TAG,"Restock 1:"+resStock4 );
+//            adapter4.setHiStockRowList4(resStock4.rows4);
+//            adapter4.setLoadDone(true);
+//            createChart4(resStock4.rows4);
         }
     }
+
     public void updateRow5(HIResStock5 resStock5) {
         if (resStock5 != null) {
             Log.e(TAG,"Restock 1:"+resStock5 );
@@ -547,7 +563,8 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 
     public void createChart(List<HIStockRow> rows) {
 
-        Log.e(TAG,"HIStockRow"+rows);   Log.e(TAG,"HIStockRow size"+rows.size());
+        Log.e(TAG, "HIStockRow" + rows);
+        Log.e(TAG, "HIStockRow size" + rows.size());
         ArrayList<String> xVals = new ArrayList<>();
         for (int i = 0; i < rows.size(); i++) {
             String name = rows.get(i).getName();
@@ -562,12 +579,14 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         for (int i = 0; i < rows.size(); i++) {
             try {
                 yVals1.add(new BarEntry(Integer.parseInt(rows.get(i).getValue()), i));
+                Log.e(TAG, "Y Values:" + yVals1);
+
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
-        BarDataSet set1 = new BarDataSet(yVals1, "Livingstone District");
+        BarDataSet set1 = new BarDataSet(yVals1, "Linda Clinic");
         set1.setBarSpacePercent(35f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
@@ -596,17 +615,18 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
         for (int i = 0; i < rows.size(); i++) {
             try {
                 yVals1.add(new BarEntry(Integer.parseInt(rows.get(i).getValue()), i));
+
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
-        BarDataSet set2 = new BarDataSet(yVals1, "Linda Clinic");
+        BarDataSet set2 = new BarDataSet(yVals1, "Simoonga Clinic");
         set2.setBarSpacePercent(35f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set2);
-
+        Log.e(TAG, "Data Set Value:" + dataSets);
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);
         vChart1.setData(data);
@@ -634,12 +654,12 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
             }
         }
 
-        BarDataSet set2 = new BarDataSet(yVals1, "Simoonga Clinic");
+        BarDataSet set2 = new BarDataSet(yVals1, "Victoria Falls Clinic");
         set2.setBarSpacePercent(35f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set2);
-
+        Log.e(TAG, "Data Set Value:" + dataSets);
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);
         vChart2.setData(data);
@@ -667,7 +687,7 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
             }
         }
 
-        BarDataSet set2 = new BarDataSet(yVals1, "Victoria Falls Clinic");
+        BarDataSet set2 = new BarDataSet(yVals1, "Maramba Clinic");
         set2.setBarSpacePercent(35f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
@@ -708,9 +728,26 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
 
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);
-        vChart4.setData(data);
-        vChart4.animateXY(500, 1000);
+//        vChart4.setData(data);
+//        vChart4.animateXY(500, 1000);
     }
+
+    public class MyYAxisValueFormatter implements YAxisValueFormatter {
+
+        private DecimalFormat mFormat;
+
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("###,###,##0.00"); // use one decimal
+        }
+
+        @Override
+        public String getFormattedValue(float value, YAxis yAxis) {
+            // write your logic here
+            // access the YAxis object to get more information
+            return mFormat.format(value) + " $"; // e.g. append a dollar-sign
+        }
+    }
+
 //   public void createChart5(List<HIStockRow5> rows) {
 //        Log.e(TAG,"HIStockRow"+rows);   Log.e(TAG,"HIStockRow size"+rows.size());
 //        ArrayList<String> xVals = new ArrayList<>();
