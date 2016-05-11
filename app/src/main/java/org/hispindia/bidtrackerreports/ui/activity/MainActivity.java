@@ -1,5 +1,7 @@
 package org.hispindia.bidtrackerreports.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,21 +14,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
-import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
+import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
-
-    private static String TAG = MainActivity.class.getSimpleName();
-
+    private HICFragmentBase hifragmentbased;
+//    private static String TAG = MainActivity.class.getSimpleName();
+    public final static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    protected INavigationHandler mNavigationHandler;
+//     @Bind(R.id.button)
+//      Button button;
+//
+//     @Bind(R.id.button1)
+//     Button button1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //hifragmentbased= new HICFragmentBase(this);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -39,6 +50,27 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         displayView(0);
+
+
+//        Button btn1 = (Button) findViewById(R.id.button1);
+//        btn1.setOnClickListener(new OnClickListener() {
+//
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(MainActivity.this, HIFragmentMain.class);
+//                startActivity(intent);
+//               // mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//                Toast.makeText(getBaseContext(), "Your answer is correct!" , Toast.LENGTH_SHORT ).show();
+//            }
+//        });
+//        Button btn2 = (Button) findViewById(R.id.button);
+//        btn2.setOnClickListener(new OnClickListener() {
+//
+//            public void onClick(View v)
+//            {
+//                Toast.makeText(getBaseContext(), "Your answer is correct!" , Toast.LENGTH_SHORT ).show();
+//            }
+//        });
     }
 
 
@@ -49,8 +81,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -77,10 +111,44 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private void displayView(int position) {
         Fragment fragment = null;
         String title = getString(R.string.app_name);
+
         switch (position) {
+
             case 0:
-                fragment = new HIFragmentMain();
-                title = getString(R.string.title_home);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setComponent(new ComponentName("org.hispindia.bidtrackerreports","org.hispindia.bidtrackerreports.ui.activity.HIActivitySplash"));
+                startActivity(intent);
+               //mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
+//                mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
+                title = getString(R.string.title_facility);
+                break;
+            case 1:
+                Intent intent1 = new Intent(Intent.ACTION_MAIN);
+                intent1.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.trackercapture.ui.MainActivity"));
+                startActivity(intent1);
+                //mNavigationHandler.switchFragment(new HIFragmentVaccineStatusReport(), HIFragmentVaccineStatusReport.TAG, true);
+                //fragment = new HIFragmentVaccineStatusReport();
+                title = getString(R.string.title_vaccine);
+                break;
+            case 2:
+                Toast.makeText(getApplicationContext(), "Stock In Hand Report", Toast.LENGTH_SHORT).show();
+                //mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
+                title = getString(R.string.title_stock);
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(), "Stock Demand Report", Toast.LENGTH_SHORT).show();
+                //mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
+                title = getString(R.string.title_demand);
+                break;
+            case 4:
+                Toast.makeText(getApplicationContext(), "Hand vs Demand Report", Toast.LENGTH_SHORT).show();
+                //mNavigationHandler.switchFragment(new HIFragmentStockInHandvsDemandReport(), HIFragmentStockInHandvsDemandReport.TAG, true);
+                title = getString(R.string.title_handvsdemand);
+                break;
+            case 5:
+                Toast.makeText(getApplicationContext(), "District Level Stock", Toast.LENGTH_SHORT).show();
+                //mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+                title = getString(R.string.title_district);
                 break;
 
             default:
@@ -96,5 +164,18 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
+
     }
+
+//    @OnClick(R.id.button)
+//    public void button() {
+//        mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//        Toast.makeText(getApplicationContext(), "Vaccinated Children Report", Toast.LENGTH_SHORT).show();
+//    }
+//    @OnClick(R.id.button1)
+//    public void button1() {
+//        mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//        Toast.makeText(getApplicationContext(), "Vaccinated Children Report", Toast.LENGTH_SHORT).show();
+//    }
+
 }

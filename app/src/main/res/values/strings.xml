@@ -31,20 +31,28 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <string name="nav_item_home">Home</string>
-    <string name="nav_item_friends">Friends</string>
-    <string name="nav_item_notifications">Messages</string>
+    <string name="nav_item_facility">Switch to BID Reports App</string>
+    <string name="nav_item_vaccine">Switch to DHIS2 Trackercapture App </string>
+    <string name="nav_item_stock">Switch to DHIS2 Dashboard App</string>
+    <string name="nav_item_demand">Switch to DHIS2 Eventcapture App</string>
+
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>@string/nav_item_home</item>
-        <item>@string/nav_item_friends</item>
-        <item>@string/nav_item_notifications</item>
+        <item>@string/nav_item_facility</item>
+        <item>@string/nav_item_vaccine</item>
+        <item>@string/nav_item_stock</item>
+        <item>@string/nav_item_demand</item>
+
     </string-array>
 
-    <string name="title_messages">Messages</string>
-    <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
+    <string name="title_facility">Facility to do</string>
+    <string name="title_vaccine">Vaccine Status</string>
+    <string name="title_stock">Stock in hand</string>
+    <string name="title_demand">Stock Demand Report</string>
+    <string name="title_handvsdemand">Stock in Hand Vs Demand Report</string>
+    <string name="title_district">District Level Stock</string>
 
     <string name="search">Search</string>
     <string name="http_error_400">Bad request</string>
@@ -90,6 +98,8 @@
     <string name="hi_stock_report_value">Value</string>
     <string name="hi_stock_inhand_value">Inhand</string>
     <string name="hi_stock_demand_value">Demand</string>
+
+
 
 
 </resources>
