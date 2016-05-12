@@ -9,7 +9,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click to switch "
+        android:text="Click to Switch"
+
+
         android:id="@+id/buttonswitch"
         android:layout_gravity="right" />
 

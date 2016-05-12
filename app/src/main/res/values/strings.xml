@@ -31,15 +31,13 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <string name="nav_item_facility">Switch to BID Reports App</string>
-    <string name="nav_item_vaccine">Switch to DHIS2 Trackercapture App </string>
-    <string name="nav_item_stock">Switch to DHIS2 Dashboard App</string>
-    <string name="nav_item_demand">Switch to DHIS2 Eventcapture App</string>
+    <string name="nav_item_vaccine">Switch to Trackercapture App </string>
+    <string name="nav_item_stock">Switch to Dashboard App</string>
+    <string name="nav_item_demand">Switch to Eventcapture App</string>
 
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>@string/nav_item_facility</item>
         <item>@string/nav_item_vaccine</item>
         <item>@string/nav_item_stock</item>
         <item>@string/nav_item_demand</item>

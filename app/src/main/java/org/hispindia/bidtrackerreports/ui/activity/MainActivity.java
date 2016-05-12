@@ -1,6 +1,7 @@
 package org.hispindia.bidtrackerreports.ui.activity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.hisp.dhis.android.sdk.controllers.DhisController;
+import org.hisp.dhis.android.sdk.controllers.DhisService;
+import org.hisp.dhis.android.sdk.persistence.models.UserAccount;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
+import org.hisp.dhis.android.sdk.ui.activities.LoginActivity;
+import org.hisp.dhis.android.sdk.utils.UiUtils;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 
@@ -25,19 +36,20 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     protected INavigationHandler mNavigationHandler;
-//     @Bind(R.id.button)
-//      Button button;
-//
-//     @Bind(R.id.button1)
-//     Button button1;
+     Button buttonlogout;
+    TextView tvname;
+    //
+//     @Bind(R.id.tvdname)
+//    TextView tvdname;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //hifragmentbased= new HICFragmentBase(this);
+        tvname=(TextView)findViewById(R.id.tvdname);
+       // buttonlogout=(Button)findViewById(R.id.buttonlogout);
+//        hifragmentbased= new HICFragmentBase(this);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -50,19 +62,43 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         displayView(0);
+        String dname=new Select().from(UserAccount.class).querySingle().getDisplayName();
+        Log.e(TAG,"DNAME: in SM "+dname );
+        tvname.setText(dname);
 
 
-//        Button btn1 = (Button) findViewById(R.id.button1);
-//        btn1.setOnClickListener(new OnClickListener() {
-//
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(MainActivity.this, HIFragmentMain.class);
-//                startActivity(intent);
-//               // mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
-//                Toast.makeText(getBaseContext(), "Your answer is correct!" , Toast.LENGTH_SHORT ).show();
-//            }
-//        });
+
+        Button buttonlogout= (Button) findViewById(R.id.buttonlogout);
+        buttonlogout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                UiUtils.showConfirmDialog(MainActivity.this, getString(org.hisp.dhis.android.sdk.R.string.logout_title), getString(org.hisp.dhis.android.sdk.R.string.logout_message),
+                        getString(org.hisp.dhis.android.sdk.R.string.logout_option), getString(org.hisp.dhis.android.sdk.R.string.cancel_option), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (DhisController.hasUnSynchronizedDatavalues) {
+                                    //show error dialog
+                                    UiUtils.showErrorDialog(MainActivity.this, getString(org.hisp.dhis.android.sdk.R.string.error_message),
+                                            getString(org.hisp.dhis.android.sdk.R.string.unsynchronized_data_values),
+                                            new DialogInterface.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                } else {
+                                    DhisService.logOutUser(MainActivity.this);
+                                   finish();
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+
+                                }
+                            }
+                        });
+            }
+        });
+
 //        Button btn2 = (Button) findViewById(R.id.button);
 //        btn2.setOnClickListener(new OnClickListener() {
 //
@@ -114,26 +150,27 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         switch (position) {
 
-            case 0:
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.setComponent(new ComponentName("org.hispindia.bidtrackerreports","org.hispindia.bidtrackerreports.ui.activity.HIActivitySplash"));
-                startActivity(intent);
-               //mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
-//                mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
-                title = getString(R.string.title_facility);
-                break;
+//            case 0:
+//                Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.setComponent(new ComponentName("org.hispindia.bidtrackerreports","org.hispindia.bidtrackerreports.ui.activity.HIActivitySplash"));
+//                startActivity(intent);
+//               //mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
+////                mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
+//                title = getString(R.string.title_facility);
+//                break;
             case 1:
                 Intent intent1 = new Intent(Intent.ACTION_MAIN);
-                intent1.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.trackercapture.ui.MainActivity"));
+                intent1.setComponent(new ComponentName("org.hispindia.bidtrackerreports","org.hispindia.bidtrackerreports.ui.activity.HIActivitySplash"));
                 startActivity(intent1);
                 //mNavigationHandler.switchFragment(new HIFragmentVaccineStatusReport(), HIFragmentVaccineStatusReport.TAG, true);
                 //fragment = new HIFragmentVaccineStatusReport();
                 title = getString(R.string.title_vaccine);
                 break;
             case 2:
-                Toast.makeText(getApplicationContext(), "Stock In Hand Report", Toast.LENGTH_SHORT).show();
-                //mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
-                title = getString(R.string.title_stock);
+                Toast.makeText(getApplicationContext(), "Stock Demand Report", Toast.LENGTH_SHORT).show();
+//                Intent intent2 = new Intent(Intent.ACTION_MAIN);
+//                intent2.setComponent(new ComponentName("org.hisp.dhis.android.eventcapture","org.hisp.dhis.android.eventcapture.ui.activities.LogInActivity"));
+//                startActivity(intent2);
                 break;
             case 3:
                 Toast.makeText(getApplicationContext(), "Stock Demand Report", Toast.LENGTH_SHORT).show();

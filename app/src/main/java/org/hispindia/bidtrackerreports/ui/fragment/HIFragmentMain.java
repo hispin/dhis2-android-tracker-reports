@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
+import org.hisp.dhis.android.sdk.persistence.models.UserAccount;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -175,6 +176,9 @@ public class HIFragmentMain extends HICFragmentBase {
 
         else
         {
+           String dname=new Select().from(UserAccount.class).querySingle().getDisplayName();
+                       Log.e(TAG,"DNAME:  "+dname );
+
             Toast.makeText(getActivity().getApplicationContext(), "For District Level Users only", Toast.LENGTH_SHORT).show();
             Log.e(TAG,"ID Failure "+new Select().from(OrganisationUnit.class).querySingle().getId() );
         }
