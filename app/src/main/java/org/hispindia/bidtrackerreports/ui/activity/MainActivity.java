@@ -167,18 +167,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_vaccine);
                 break;
             case 2:
-                Toast.makeText(getApplicationContext(), "Stock Demand Report", Toast.LENGTH_SHORT).show();
-//                Intent intent2 = new Intent(Intent.ACTION_MAIN);
-//                intent2.setComponent(new ComponentName("org.hisp.dhis.android.eventcapture","org.hisp.dhis.android.eventcapture.ui.activities.LogInActivity"));
-//                startActivity(intent2);
+                Toast.makeText(getApplicationContext(), "Switching to Eventcapture", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(Intent.ACTION_MAIN);
+                intent2.setComponent(new ComponentName("org.hisp.dhis.android.eventcapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+                startActivity(intent2);
                 break;
+
             case 3:
-                Toast.makeText(getApplicationContext(), "Stock Demand Report", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Switching to Trackercapture", Toast.LENGTH_SHORT).show();
                 //mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
+                Intent intent3 = new Intent(Intent.ACTION_MAIN);
+                intent3.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+                startActivity(intent3);
                 title = getString(R.string.title_demand);
                 break;
             case 4:
-                Toast.makeText(getApplicationContext(), "Hand vs Demand Report", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Switching to Datacapture", Toast.LENGTH_SHORT).show();
+//                Intent intent4 = new Intent(Intent.ACTION_MAIN);
+//                intent4.setComponent(new ComponentName("org.hisp.dhis.android.datacapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+//                startActivity(intent4);
                 //mNavigationHandler.switchFragment(new HIFragmentStockInHandvsDemandReport(), HIFragmentStockInHandvsDemandReport.TAG, true);
                 title = getString(R.string.title_handvsdemand);
                 break;

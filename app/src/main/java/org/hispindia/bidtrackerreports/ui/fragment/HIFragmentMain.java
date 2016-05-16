@@ -38,30 +38,47 @@ import butterknife.OnClick;
  */
 public class HIFragmentMain extends HICFragmentBase {
 
+Button btnstockdistrict;
     public final static String TAG = HIFragmentMain.class.getSimpleName();
     protected INavigationHandler mNavigationHandler;
+
+    @Bind(R.id.btnstockdistrict1)
+    Button btnstockdistrict1;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.hifragment_main, container, false);
+        btnstockdistrict = (Button) view.findViewById(R.id.btnstockdistrict1);
 
-
-
-
-
+        super.onCreate(savedInstanceState);
+//        btnstockdistrict=(Button)getView().findViewById(R.id.btnstockdistrict1);
+//        View view = inflater.inflate(R.layout.hifragment_main, container, false);
+        if(btnstockdistrict!=null) {
+            if (new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w")) {
+                btnstockdistrict.setVisibility(View.VISIBLE);
+            }
+        }
+        else
+        {
+            Log.e(TAG,"Button Null " );
+        }
         return view;
     }
-    @Bind(R.id.buttonswitch)
-    Button buttonswitch;
 
+//    @Bind(R.id.buttonswitch)
+//    Button buttonswitch;
+
+//
 
     @Override
     protected void injectDependencies() {
+
         HIIComponentUi uiComponent = ((HIActivityMain) getActivity()).getUiComponent();
         if (uiComponent != null) {
             uiComponent.inject(this);
+
         }
     }
 
@@ -75,23 +92,28 @@ public class HIFragmentMain extends HICFragmentBase {
             throw new IllegalArgumentException("Activity must " +
                     "implement INavigationHandler interface");
         }
+
         getActivity().setTitle(getString(R.string.app_name));
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mNavigationHandler = null;
+
     }
 
     @SuppressWarnings("unused")
 
     //public static String ORGUNITID="GUhbn1R8q6w";
     public void btnTrackerReport() {
+
         mNavigationHandler.switchFragment(new SelectProgramFragment(), SelectProgramFragment.TAG, true);
 //        EventDataEntryFragment fragment = EventDataEntryFragment.newInstanceWithEnrollment("DQjaNvP9ulw", "SSLpOM0r1U7", "s53RFfXA75f" , 1, 1);
 //        mNavigationHandler.switchFragment(fragment, EventDataEntryFragment.TAG, true);
     }
+
 
     @OnClick(R.id.btnTodayReport)
     @SuppressWarnings("unused")
@@ -110,8 +132,10 @@ public class HIFragmentMain extends HICFragmentBase {
     public void buttonswitch() {
         Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                startActivity(intent);
+
         //mNavigationHandler.switchFragment(new HIFragmentVaccineStatusReport(), HIFragmentVaccineStatusReport.TAG, true);
     }
+
 
 //    @OnClick(R.id.factodo)
 //    @SuppressWarnings("unused")
@@ -165,6 +189,7 @@ public class HIFragmentMain extends HICFragmentBase {
 
          @OnClick(R.id.btnstockdistrict1)
          @SuppressWarnings("unused")
+
          public void btnstockdistrict1() {
 
        //mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);

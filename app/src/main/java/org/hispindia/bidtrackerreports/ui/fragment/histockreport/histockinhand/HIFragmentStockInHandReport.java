@@ -90,6 +90,7 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
         // Bundle fragmentArguments = getArguments();
         this.orgUnitId = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
+        Log.e(TAG,"LOGIN ID:"+HIParamBIDHardcode.ORGUNITID);
     }
 
     @Nullable

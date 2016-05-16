@@ -31,9 +31,11 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <string name="nav_item_vaccine">Switch to Trackercapture App </string>
-    <string name="nav_item_stock">Switch to Dashboard App</string>
+    <string name="nav_item_vaccine"></string>
+    <string name="nav_item_stock">Switch Back to BID Reports</string>
     <string name="nav_item_demand">Switch to Eventcapture App</string>
+    <string name="nav_item_track">Switch to Trackercapture App</string>
+    <!--<string name="nav_item_dash">Switch to Dashboard App</string>-->
 
 
     <!-- navigation drawer item labels  -->
@@ -41,6 +43,8 @@
         <item>@string/nav_item_vaccine</item>
         <item>@string/nav_item_stock</item>
         <item>@string/nav_item_demand</item>
+        <item>@string/nav_item_track</item>
+        <!--<item>@string/nav_item_dash</item>-->
 
     </string-array>
 
