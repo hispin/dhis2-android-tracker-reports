@@ -33,6 +33,8 @@ public class HIParamBIDHardcode {
     }};
 
     public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
+    public static String ORGPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();
+
     public static int ORGUNITI = new Select().from(OrganisationUnit.class).querySingle().getLevel();
     public static String ORGUN = new Select().from(OrganisationUnit.class).querySingle().getLabel();
 

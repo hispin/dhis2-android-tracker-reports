@@ -90,17 +90,17 @@
 
             <!--</LinearLayout>-->
             <!--android:visibility="gone"-->
-            <LinearLayout style="@style/vFragmentMain">
+            <!--<LinearLayout style="@style/vFragmentMain">-->
 
 
-                <Button
-                    android:id="@+id/btnstockdistrict1"
-                    style="@style/btnFragmentMain"
-                    android:text="District Level Stock"
-                    android:visibility = "gone"
-                    />
+                <!--<Button-->
+                    <!--android:id="@+id/btnstockdistrict1"-->
+                    <!--style="@style/btnFragmentMain"-->
+                    <!--android:text="District Level Stock"-->
+                    <!--android:visibility = "gone"-->
+                    <!--/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

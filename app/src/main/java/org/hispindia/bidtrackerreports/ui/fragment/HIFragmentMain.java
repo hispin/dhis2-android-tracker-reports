@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
-import org.hisp.dhis.android.sdk.persistence.models.UserAccount;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -30,7 +28,6 @@ import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
 
-import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -42,28 +39,20 @@ Button btnstockdistrict;
     public final static String TAG = HIFragmentMain.class.getSimpleName();
     protected INavigationHandler mNavigationHandler;
 
-    @Bind(R.id.btnstockdistrict1)
-    Button btnstockdistrict1;
+//    @Bind(R.id.btnstockdistrict1)
+//    Button btnstockdistrict1;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.hifragment_main, container, false);
-        btnstockdistrict = (Button) view.findViewById(R.id.btnstockdistrict1);
+//        btnstockdistrict = (Button) view.findViewById(R.id.btnstockdistrict1);
 
         super.onCreate(savedInstanceState);
 //        btnstockdistrict=(Button)getView().findViewById(R.id.btnstockdistrict1);
 //        View view = inflater.inflate(R.layout.hifragment_main, container, false);
-        if(btnstockdistrict!=null) {
-            if (new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w")) {
-                btnstockdistrict.setVisibility(View.VISIBLE);
-            }
-        }
-        else
-        {
-            Log.e(TAG,"Button Null " );
-        }
+//
         return view;
     }
 
@@ -166,7 +155,18 @@ Button btnstockdistrict;
     public void btnStockInHandReport() {
 //        Fragment fragment = HIFragmentStockInHandReport.newInstance("GUhbn1R8q6w", "GUhbn1R8q6w","lTqNF1rWha3");
 //        mNavigationHandler.switchFragment(fragment, HIFragmentStockInHandReport.TAG, true);
-        mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
+
+
+        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+        {
+            mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+        }
+
+        else
+        {
+            mNavigationHandler.switchFragment(new HIFragmentStockInHandReport(), HIFragmentStockInHandReport.TAG, true);
+        }
     }
 
     @OnClick(R.id.btnStockInHandvsDemandReport)
@@ -187,28 +187,28 @@ Button btnstockdistrict;
     }
 
 
-         @OnClick(R.id.btnstockdistrict1)
-         @SuppressWarnings("unused")
-
-         public void btnstockdistrict1() {
-
-       //mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
-        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
-        {
-            mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
-            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
-        }
-
-        else
-        {
-           String dname=new Select().from(UserAccount.class).querySingle().getDisplayName();
-                       Log.e(TAG,"DNAME:  "+dname );
-
-            Toast.makeText(getActivity().getApplicationContext(), "For District Level Users only", Toast.LENGTH_SHORT).show();
-            Log.e(TAG,"ID Failure "+new Select().from(OrganisationUnit.class).querySingle().getId() );
-        }
-
-
-    }
+//         @OnClick(R.id.btnstockdistrict1)
+//         @SuppressWarnings("unused")
+//
+//         public void btnstockdistrict1() {
+//
+//       //mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+//        {
+//            mNavigationHandler.switchFragment(new HIFragmentDistrictStockInHandReport(), HIFragmentDistrictStockInHandReport.TAG, true);
+//            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+//        }
+//
+//        else
+//        {
+//           String dname=new Select().from(UserAccount.class).querySingle().getDisplayName();
+//                       Log.e(TAG,"DNAME:  "+dname );
+//
+//            Toast.makeText(getActivity().getApplicationContext(), "For District Level Users only", Toast.LENGTH_SHORT).show();
+//            Log.e(TAG,"ID Failure "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+//        }
+//
+//
+//    }
 
 }
