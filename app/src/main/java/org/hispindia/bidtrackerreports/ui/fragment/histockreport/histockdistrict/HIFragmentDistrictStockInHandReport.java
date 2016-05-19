@@ -53,7 +53,6 @@ import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,8 +85,10 @@ public class HIFragmentDistrictStockInHandReport extends HICFragmentBase impleme
     TextView tvchart1;
     @Bind(R.id.vChart)
     BarChart vChart;
+
     //    @Bind(R.id.vReport1)
 //    RecyclerView vReport1;
+
     @Bind(R.id.vChart1)
     BarChart vChart1;
 
@@ -129,8 +130,8 @@ BarChart vChart2;
 //    HIPresenterStockReport5 flow5;
 //    @Inject
 //    HIAdapterStockReport5 adapter5;
-@Inject
-HIPresenterStockReport4 flow4;
+    @Inject
+    HIPresenterStockReport4 flow4;
     @Inject
     HIAdapterStockReport4 adapter4;
     private String orgUnitId;
@@ -160,6 +161,7 @@ HIPresenterStockReport4 flow4;
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Bundle fragmentArguments = getArguments();
+
         this.orgUnitId = HIParamBIDHardcode.ORGUNITID1;
         this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
         this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
@@ -169,6 +171,8 @@ HIPresenterStockReport4 flow4;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
 
         Log.e(TAG,"ouid:"+ HIParamBIDHardcode.ORGUNITID);
+        Log.e(TAG,"ORG LIST"+ HIParamBIDHardcode.orglist);
+        Log.e(TAG,"ORG LIST NEW"+ HIParamBIDHardcode.orglistnew);
         Log.e(TAG,"omodeuid:"+ HIParamBIDHardcode.OUMODEID);
         Log.e(TAG,"od1:"+ HIParamBIDHardcode.ORGUNITID1);
 
@@ -281,22 +285,27 @@ HIPresenterStockReport4 flow4;
 //        xAxis5.setDrawGridLines(false);
 //        xAxis5.setSpaceBetweenLabels(2);
 
+
         YAxis leftAxis = vChart.getAxisLeft();
+        leftAxis.setValueFormatter(new MyYAxisValueFormatter());
         leftAxis.setLabelCount(8, false);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
 
         YAxis leftAxis1 = vChart1.getAxisLeft();
+        leftAxis1.setValueFormatter(new MyYAxisValueFormatter());
         leftAxis1.setLabelCount(8, false);
         leftAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis1.setSpaceTop(15f);
 
         YAxis leftAxis2 = vChart2.getAxisLeft();
+        leftAxis2.setValueFormatter(new MyYAxisValueFormatter());
         leftAxis2.setLabelCount(8, false);
         leftAxis2.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis2.setSpaceTop(15f);
 
         YAxis leftAxis3 = vChart3.getAxisLeft();
+        leftAxis3.setValueFormatter(new MyYAxisValueFormatter());
         leftAxis3.setLabelCount(8, false);
         leftAxis3.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis3.setSpaceTop(15f);
@@ -312,22 +321,26 @@ HIPresenterStockReport4 flow4;
 //        leftAxis5.setSpaceTop(15f);
 
         YAxis rightAxis = vChart.getAxisRight();
+        rightAxis.setValueFormatter(new MyYAxisValueFormatter());
         rightAxis.setDrawGridLines(false);
         rightAxis.setLabelCount(8, false);
         rightAxis.setSpaceTop(15f);
 
 
         YAxis rightAxis1 = vChart1.getAxisRight();
+        rightAxis1.setValueFormatter(new MyYAxisValueFormatter());
         rightAxis1.setDrawGridLines(false);
         rightAxis1.setLabelCount(8, false);
         rightAxis1.setSpaceTop(15f);
 
         YAxis rightAxis2 = vChart2.getAxisRight();
+        rightAxis2.setValueFormatter(new MyYAxisValueFormatter());
         rightAxis2.setDrawGridLines(false);
         rightAxis2.setLabelCount(8, false);
         rightAxis2.setSpaceTop(15f);
 
         YAxis rightAxis3 = vChart3.getAxisRight();
+        rightAxis3.setValueFormatter(new MyYAxisValueFormatter());
         rightAxis3.setDrawGridLines(false);
         rightAxis3.setLabelCount(8, false);
         rightAxis3.setSpaceTop(15f);
@@ -734,19 +747,29 @@ HIPresenterStockReport4 flow4;
 
     public class MyYAxisValueFormatter implements YAxisValueFormatter {
 
-        private DecimalFormat mFormat;
-
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("###,###,##0.00"); // use one decimal
-        }
-
         @Override
         public String getFormattedValue(float value, YAxis yAxis) {
-            // write your logic here
-            // access the YAxis object to get more information
-            return mFormat.format(value) + " $"; // e.g. append a dollar-sign
+            return Integer.valueOf((int) value).toString();
         }
     }
+
+
+//    public class MyYAxisValueFormatter implements YAxisValueFormatter {
+//
+//        private DecimalFormat mFormat;
+//
+//        public MyYAxisValueFormatter () {
+//            mFormat = new DecimalFormat("###,###,##0"); // use one decimal
+//        }
+//
+//        @Override
+//        public String getFormattedValue(float value, YAxis yAxis) {
+//            // write your logic here
+//            // access the YAxis object to get more information
+//            return mFormat.format(value) + " $"; // e.g. append a dollar-sign
+//        }
+//    }
+    // get an instance of the YAxis (e.g. left axis)
 
 //   public void createChart5(List<HIStockRow5> rows) {
 //        Log.e(TAG,"HIStockRow"+rows);   Log.e(TAG,"HIStockRow size"+rows.size());

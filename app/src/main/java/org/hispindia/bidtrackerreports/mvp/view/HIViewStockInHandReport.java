@@ -5,7 +5,6 @@ import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock1;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock3;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock4;
-import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock5;
 
 /**
  * Created by Sourabh on 2/6/2016.
@@ -22,5 +21,6 @@ public interface HIViewStockInHandReport {
 
     void updateRow4(HIResStock4 rows4);
 
-    void updateRow5(HIResStock5 rows5);
+//    void updateRow5(HIResStock5 rows5);
+
 }

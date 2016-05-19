@@ -102,6 +102,19 @@
                 android:id="@+id/vChart3"
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
+
+            <TextView
+                android:id="@+id/tvchart5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/light_blue"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/vChart5"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
             <!--<Spinner-->
             <!--android:id="@+id/vReportOption3"-->
             <!--android:layout_width="match_parent"-->

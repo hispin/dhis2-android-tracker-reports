@@ -1,7 +1,7 @@
 package org.hispindia.bidtrackerreports.mvp.model.local;
 
 /**
- * Created by Sourabh on 1/27/16.
+ * Created by nhancao on 1/27/16.
  */
 public class HIStockRow5 {
     private int order;

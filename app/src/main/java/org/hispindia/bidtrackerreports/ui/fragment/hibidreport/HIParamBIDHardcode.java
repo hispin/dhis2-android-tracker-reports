@@ -5,12 +5,14 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.hisp.dhis.android.sdk.persistence.models.OrganisationUnit;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by nhancao on 2/5/16.
  */
 public class HIParamBIDHardcode {
+    public final static String TAG = HIParamBIDHardcode.class.getSimpleName();
 
     public static final Map<String, DataElement> DE = new HashMap<String, DataElement>() {{
         put("bpBUOvqy1Jn", new DataElement("bpBUOvqy1Jn", "BCG", "BCG"));
@@ -33,12 +35,18 @@ public class HIParamBIDHardcode {
     }};
 
     public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
-    public static String ORGPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();
 
+
+    public static List orglist = new Select().from(OrganisationUnit.class).queryList();
+    public static List orglistnew = new Select().from(OrganisationUnit.class).queryTableList();
+    public static List orglistnesw = new Select().from(OrganisationUnit.class).queryList();
+
+    public static String ORPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();
+    public static String ORGPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();
     public static int ORGUNITI = new Select().from(OrganisationUnit.class).querySingle().getLevel();
     public static String ORGUN = new Select().from(OrganisationUnit.class).querySingle().getLabel();
-
     public static String ORGUNITId = "GUhbn1R8q6w";
+
 
     /*
     <organisationUnit id="DQjaNvP9ulw">
@@ -63,10 +71,12 @@ public class HIParamBIDHardcode {
 
     public static String ORGUNITID1 ="DQjaNvP9ulw";
     public static String ORGUNITID2 = "ozvn5V1CkYM";
+    public static String ORGPROVINCE = "MClooR8Tjs6";
 
     public static String ORGUNITID3 = "LWjoKmGc00n";
     public static String ORGUNITID4 = "WxEt7wHRNeW";
     public static String ORGUNITID5 = "WxEt7wHRNeW";
+    public static String ORGUNITID6 = "onQXFD1z01A";
 
     public static String PROGRAMID = "SSLpOM0r1U7";
     public static String PROGRAMSTAGEID = "s53RFfXA75f";
@@ -80,7 +90,6 @@ public class HIParamBIDHardcode {
         private String id;
         private String groupby;
         private String name;
-
         public DataElement(String id, String groupby, String name) {
             this.id = id;
             this.groupby = groupby;

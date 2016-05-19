@@ -50,7 +50,7 @@ public class HIPresenterStockReport implements HIIPresenterBase<HIIViewStockRepo
                     e.printStackTrace();
                 });
     }
-
+//
 //    public void getStockInHandReport2(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
 //        onStop();
 //

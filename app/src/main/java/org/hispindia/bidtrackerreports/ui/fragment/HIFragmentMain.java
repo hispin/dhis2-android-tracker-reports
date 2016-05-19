@@ -119,6 +119,7 @@ Button btnstockdistrict;
     @OnClick(R.id.buttonswitch)
     @SuppressWarnings("unused")
     public void buttonswitch() {
+
         Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                startActivity(intent);
 

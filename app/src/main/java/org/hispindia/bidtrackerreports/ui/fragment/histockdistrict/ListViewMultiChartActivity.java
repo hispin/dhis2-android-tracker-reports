@@ -53,7 +53,6 @@ public class ListViewMultiChartActivity extends DemoBase  {
         for (int i = 0; i < 5; i++) {
             list.add(new BarChartItem(generateDataBar(i + 1), getApplicationContext()));
         }
-
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lv.setAdapter(cda);
     }

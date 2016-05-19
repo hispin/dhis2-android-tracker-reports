@@ -2,8 +2,6 @@ package org.hispindia.bidtrackerreports.mvp.presenter;
 
 import org.hispindia.bidtrackerreports.mvp.model.HIStockModel;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewStockReport;
-import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
-import org.hispindia.bidtrackerreports.utils.HICUtilRxHelper;
 
 import rx.Subscription;
 
@@ -25,17 +23,18 @@ public class HIPresenterStockReport5 implements HIIPresenterBase<HIIViewStockRep
 
     }
 
-    public void getStockInHandReport5(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
-        onStop();
+//    public void getStockInHandReport5(HIViewStockInHandReport view, String orgUnitMode, String orgUnitId) {
+//        onStop();
+//
+//        subscription = model.getStockInHandReport5(orgUnitMode, orgUnitId)
+//            .compose(HICUtilRxHelper.applySchedulers())
+//            .subscribe((rows5) -> {
+//                view.updateRow5(rows5);
+//            }, e -> {
+//                e.printStackTrace();
+//            });
+//    }
 
-        subscription = model.getStockInHandReport5(orgUnitMode, orgUnitId)
-            .compose(HICUtilRxHelper.applySchedulers())
-            .subscribe((rows5) -> {
-                view.updateRow5(rows5);
-            }, e -> {
-                e.printStackTrace();
-            });
-    }
 
 
 

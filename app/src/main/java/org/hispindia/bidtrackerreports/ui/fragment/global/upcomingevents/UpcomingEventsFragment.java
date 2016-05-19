@@ -107,7 +107,6 @@ public class UpcomingEventsFragment extends SelectProgramFragment implements Ada
         }
         mQueryButton.setOnClickListener(this);
         mQueryButton.hide();
-
         startDate = new DataValue();
         startDate.setValue(DateUtils.getMediumDateString());
         endDate = new DataValue();

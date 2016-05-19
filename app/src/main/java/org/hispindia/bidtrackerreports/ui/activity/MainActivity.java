@@ -3,6 +3,7 @@ package org.hispindia.bidtrackerreports.ui.activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         tvname=(TextView)findViewById(R.id.tvdname);
        // buttonlogout=(Button)findViewById(R.id.buttonlogout);
 //        hifragmentbased= new HICFragmentBase(this);
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
 
         Button buttonlogout= (Button) findViewById(R.id.buttonlogout);
+
         buttonlogout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 UiUtils.showConfirmDialog(MainActivity.this, getString(org.hisp.dhis.android.sdk.R.string.logout_title), getString(org.hisp.dhis.android.sdk.R.string.logout_message),
@@ -116,7 +120,18 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    private boolean appInstalledOrNot(String uri) {
+        PackageManager pm = getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,19 +182,44 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_vaccine);
                 break;
             case 2:
-                Toast.makeText(getApplicationContext(), "Switching to Eventcapture", Toast.LENGTH_SHORT).show();
-                Intent intent2 = new Intent(Intent.ACTION_MAIN);
-                intent2.setComponent(new ComponentName("org.hisp.dhis.android.eventcapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
-                startActivity(intent2);
+                boolean installed = appInstalledOrNot("org.hisp.dhis.android.eventcapture");
+                if(installed) {
+                    //This intent will help you to launch if the package is already installed
+                    Intent LaunchIntent = getPackageManager()
+                            .getLaunchIntentForPackage("org.hisp.dhis.android.eventcapture");
+                    startActivity(LaunchIntent);
+                    Intent intent2 = new Intent(Intent.ACTION_MAIN);
+                    intent2.setComponent(new ComponentName("org.hisp.dhis.android.eventcapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+                    startActivity(intent2);
+                    Toast.makeText(getApplicationContext(), "Switching to EventCapture", Toast.LENGTH_SHORT).show();
+                    System.out.println("App is already installed on your phone");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Eventcapture is not currently installed on your phone", Toast.LENGTH_SHORT).show();
+                    System.out.println("App is not currently installed on your phone");
+                }
+
                 break;
 
             case 3:
-                Toast.makeText(getApplicationContext(), "Switching to Trackercapture", Toast.LENGTH_SHORT).show();
-                //mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
-                Intent intent3 = new Intent(Intent.ACTION_MAIN);
-                intent3.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
-                startActivity(intent3);
-                title = getString(R.string.title_demand);
+                boolean installed1 = appInstalledOrNot("org.hisp.dhis.android.trackercapture");
+                if(installed1) {
+                    //This intent will help you to launch if the package is already installed
+                    Intent LaunchIntent = getPackageManager()
+                            .getLaunchIntentForPackage("org.hisp.dhis.android.trackercapture");
+                    startActivity(LaunchIntent);
+                    Intent intent2 = new Intent(Intent.ACTION_MAIN);
+                    intent2.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+                    startActivity(intent2);
+                    Intent intent3 = new Intent(Intent.ACTION_MAIN);
+                    intent3.setComponent(new ComponentName("org.hisp.dhis.android.trackercapture","org.hisp.dhis.android.sdk.ui.activities.SplashActivity"));
+                    startActivity(intent3);
+                    Toast.makeText(getApplicationContext(), "Switching to Trackercapture", Toast.LENGTH_SHORT).show();
+                    System.out.println("App is already installed on your phone");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Trackercapture is not currently installed on your phone", Toast.LENGTH_SHORT).show();
+                    System.out.println("App is not currently installed on your phone");
+                }
+
                 break;
             case 4:
 //                Toast.makeText(getApplicationContext(), "Switching to Datacapture", Toast.LENGTH_SHORT).show();

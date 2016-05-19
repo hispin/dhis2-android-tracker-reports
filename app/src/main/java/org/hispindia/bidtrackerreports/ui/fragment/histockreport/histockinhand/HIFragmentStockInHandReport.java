@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
@@ -125,11 +126,13 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
         xAxis.setSpaceBetweenLabels(2);
 
         YAxis leftAxis = vChart.getAxisLeft();
+//        leftAxis.setValueFormatter(new MyYAxisValueFormatter());
         leftAxis.setLabelCount(8, false);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
 
         YAxis rightAxis = vChart.getAxisRight();
+//        rightAxis.setValueFormatter(new MyYAxisValueFormatter());
         rightAxis.setDrawGridLines(false);
         rightAxis.setLabelCount(8, false);
         rightAxis.setSpaceTop(15f);
@@ -269,5 +272,11 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
         vChart.setData(data);
         vChart.animateXY(500, 1000);
     }
+    public class MyYAxisValueFormatter implements YAxisValueFormatter {
 
+        @Override
+        public String getFormattedValue(float value, YAxis yAxis) {
+            return Integer.valueOf((int) value).toString();
+        }
+    }
 }
