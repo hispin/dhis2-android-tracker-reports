@@ -172,6 +172,7 @@ BarChart vChart2;
 
         Log.e(TAG,"ouid:"+ HIParamBIDHardcode.ORGUNITID);
         Log.e(TAG,"ORG LIST"+ HIParamBIDHardcode.orglist);
+        Log.e(TAG,"ORG LIST 11"+ HIParamBIDHardcode.orglist1);
         Log.e(TAG,"ORG LIST NEW"+ HIParamBIDHardcode.orglistnew);
         Log.e(TAG,"omodeuid:"+ HIParamBIDHardcode.OUMODEID);
         Log.e(TAG,"od1:"+ HIParamBIDHardcode.ORGUNITID1);

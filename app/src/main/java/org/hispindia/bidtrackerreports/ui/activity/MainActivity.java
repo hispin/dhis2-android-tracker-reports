@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 //                Toast.makeText(getBaseContext(), "Your answer is correct!" , Toast.LENGTH_SHORT ).show();
 //            }
 //        });
+
     }
 
 

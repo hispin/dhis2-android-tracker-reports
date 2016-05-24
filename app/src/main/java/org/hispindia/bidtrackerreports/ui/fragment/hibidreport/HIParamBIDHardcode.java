@@ -36,10 +36,11 @@ public class HIParamBIDHardcode {
 
     public static String ORGUNITID = new Select().from(OrganisationUnit.class).querySingle().getId();
 
-
-    public static List orglist = new Select().from(OrganisationUnit.class).queryList();
+    public static String orglist = new Select().from(OrganisationUnit.class).query().toString();
+    public static String orglist1 = new Select().from(OrganisationUnit.class).querySingle().toString();
     public static List orglistnew = new Select().from(OrganisationUnit.class).queryTableList();
     public static List orglistnesw = new Select().from(OrganisationUnit.class).queryList();
+
 
     public static String ORPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();
     public static String ORGPARENT = new Select().from(OrganisationUnit.class).querySingle().getParent();

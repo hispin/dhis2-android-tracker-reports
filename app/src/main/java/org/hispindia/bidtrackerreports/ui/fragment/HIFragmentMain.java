@@ -24,6 +24,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.H
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.HIFragmentStockSelectProgram;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand.HIFragmentStockDemandReport;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemanddistrict.HIFragmentStockDistrictDemandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
@@ -184,6 +185,15 @@ Button btnstockdistrict;
 
         mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
 
+
+    }
+
+    @OnClick(R.id.btnStockDistrictDemand)
+    @SuppressWarnings("unused")
+
+    public void btnStockDistrictDemand() {
+
+        mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
 
     }
 

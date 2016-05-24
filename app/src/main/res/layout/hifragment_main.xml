@@ -82,6 +82,26 @@
 
             </LinearLayout>
 
+            <LinearLayout style="@style/vFragmentMain">
+
+
+                <Button
+                    android:id="@+id/btnStockDistrictDemand"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_stockinhandvsdemand_report" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/vFragmentMain">
+
+
+                <Button
+                    android:id="@+id/btnStock"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_stockinhandvsdemand_report" />
+
+            </LinearLayout>
+
             <!--<LinearLayout style="@style/vFragmentMain">-->
             <!--<Button-->
             <!--android:id="@+id/btnstockdistrict"-->
