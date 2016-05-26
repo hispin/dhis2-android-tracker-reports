@@ -32,10 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
-            <Spinner
-                android:id="@+id/vReportOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<Spinner-->
+                <!--android:id="@+id/vReportOption"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <!--<EditText-->
                 <!--android:id="@+id/etStartDate"-->
@@ -64,11 +64,11 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="Filter" />-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/vReport"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:padding="5dp" />
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/vReport"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="500dp"-->
+                <!--android:padding="5dp" />-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

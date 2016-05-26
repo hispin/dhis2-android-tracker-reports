@@ -28,6 +28,7 @@ import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemanddi
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdistrict.HIFragmentDistrictStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhand.HIFragmentStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemand.HIFragmentStockInHandvsDemandReport;
+import org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemanddistrict.HIFragmentStockDistrictInHandvsDemandReport;
 
 import butterknife.OnClick;
 
@@ -174,28 +175,57 @@ Button btnstockdistrict;
     @OnClick(R.id.btnStockInHandvsDemandReport)
     @SuppressWarnings("unused")
     public void btnStockInHandvsDemandReport() {
-        mNavigationHandler.switchFragment(new HIFragmentStockInHandvsDemandReport(), HIFragmentStockInHandvsDemandReport.TAG, true);
-    }
+
+        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+        {
+            mNavigationHandler.switchFragment(new HIFragmentStockDistrictInHandvsDemandReport(), HIFragmentStockDistrictInHandvsDemandReport.TAG, true);
+            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+        }
+
+        else
+        {
+            mNavigationHandler.switchFragment(new HIFragmentStockInHandvsDemandReport(), HIFragmentStockInHandvsDemandReport.TAG, true);
+
+        }
+        }
 
 
     @OnClick(R.id.btnStockInDemandReport)
     @SuppressWarnings("unused")
 
     public void btnStockInDemandReport() {
+        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+        {
+            mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
+            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+        }
 
-        mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
+        else
+        {
+            mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
+
+        }
 
 
     }
 
-    @OnClick(R.id.btnStockDistrictDemand)
-    @SuppressWarnings("unused")
+//    @OnClick(R.id.btnStockDistrictDemand)
+//    @SuppressWarnings("unused")
+//
+//    public void btnStockDistrictDemand() {
+//
+//        mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
+//
+//    }
 
-    public void btnStockDistrictDemand() {
-
-        mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
-
-    }
+//    @OnClick(R.id.btnStockvsdemandDistrictDemand)
+//    @SuppressWarnings("unused")
+//
+//    public void btnStockvsdemandDistrictDemand() {
+//
+//        mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
+//
+//    }
 
 
 //         @OnClick(R.id.btnstockdistrict1)

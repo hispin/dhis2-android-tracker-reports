@@ -5,9 +5,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -56,8 +53,8 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
     protected INavigationHandler mNavigationHandler;
     private int mYear, mMonth, mDay;
 
-    @Bind(R.id.vReport)
-    RecyclerView vReport;
+//    @Bind(R.id.vReport)
+//    RecyclerView vReport;
     @Bind(R.id.vChart)
     BarChart vChart;
 
@@ -73,8 +70,8 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
 
     @Bind(R.id.vChart3)
     BarChart vChart3;
-    @Bind(R.id.vReportOption)
-    Spinner vReportOption;
+//    @Bind(R.id.vReportOption)
+//    Spinner vReportOption;
 
 //    @Bind(R.id.etStartDate)
 //    EditText etStartDate;
@@ -94,6 +91,24 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
     HIPresenterStockReport flow;
     @Inject
     HIPresenterBIDReport flowGetDemand;
+
+    @Inject
+    HIPresenterStockReport flow1;
+    @Inject
+    HIPresenterBIDReport flowGetDemand1;
+    @Inject
+    HIPresenterStockReport flow2;
+    @Inject
+    HIPresenterBIDReport flowGetDemand2;
+    @Inject
+    HIPresenterStockReport flow3;
+    @Inject
+    HIPresenterBIDReport flowGetDemand3;
+    @Inject
+    HIPresenterStockReport flow4;
+    @Inject
+    HIPresenterBIDReport flowGetDemand4;
+
 
     HIAdapterDemandOnlyReport adapter;
     HIAdapterDemandOnlyReport adapter1;
@@ -366,13 +381,17 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
         l4.setXEntrySpace(4f);
 
         vChart.setTouchEnabled(false);
-        vReport.setHasFixedSize(true);
-        vReport.setLayoutManager(llm);
-        vReport.setAdapter(adapter);
-
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport.setItemAnimator(new DefaultItemAnimator());
-        vReportOption.setOnItemSelectedListener(this);
+        vChart1.setTouchEnabled(false);
+        vChart2.setTouchEnabled(false);
+        vChart3.setTouchEnabled(false);
+        vChart4.setTouchEnabled(false);
+//        vReport.setHasFixedSize(true);
+//        vReport.setLayoutManager(llm);
+//        vReport.setAdapter(adapter);
+//
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.setItemAnimator(new DefaultItemAnimator());
+//        vReportOption.setOnItemSelectedListener(this);
 
         List<String> options = new ArrayList<>();
         options.add("1 Day");
@@ -382,14 +401,35 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
         options.add("2 Months");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, options);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        vReportOption.setAdapter(dataAdapter);
-        vReportOption.setSelection(0);
+//        vReportOption.setAdapter(dataAdapter);
+//        vReportOption.setSelection(0);
 
         if (flowGetDemand != null) {
             listTemp = new ArrayList<>();
             adapter.setLoadDone(false);
             flowGetDemand.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
         }
+
+        if (flowGetDemand1 != null) {
+            listTemp = new ArrayList<>();
+            adapter1.setLoadDone(false);
+            flowGetDemand1.getTodayScheduleEventReport(this, orgUnitIdC1, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }
+        if (flowGetDemand2 != null) {
+            listTemp = new ArrayList<>();
+            adapter2.setLoadDone(false);
+            flowGetDemand2.getTodayScheduleEventReport(this, orgUnitIdC2, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }   if (flowGetDemand3 != null) {
+            listTemp = new ArrayList<>();
+            adapter3.setLoadDone(false);
+            flowGetDemand3.getTodayScheduleEventReport(this, orgUnitIdC3, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }
+        if (flowGetDemand4 != null) {
+            listTemp = new ArrayList<>();
+            adapter4.setLoadDone(false);
+            flowGetDemand4.getTodayScheduleEventReport(this, orgUnitIdC4, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }
+
     }
 
     @Override
@@ -417,6 +457,10 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
         HIEvent.unregister(this);
         flow.onStop();
         flowGetDemand.onStop();
+        flowGetDemand1.onStop();
+        flowGetDemand2.onStop();
+        flowGetDemand3.onStop();
+        flowGetDemand4.onStop();
         super.onPause();
     }
 
@@ -432,11 +476,16 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
             listTemp.add(row);
         } else {
             adapter.setDemandList(filterDemand(1, 0));
+            adapter1.setDemandList(filterDemand(1, 0));
+            adapter2.setDemandList(filterDemand(1, 0));
+            adapter3.setDemandList(filterDemand(1, 0));
+            adapter4.setDemandList(filterDemand(1, 0));
 
             createChart(adapter.hiStockRowList, adapter.demand);
-            createChart1(adapter.hiStockRowList, adapter.demand);
-            createChart2(adapter.hiStockRowList, adapter.demand);
-            createChart3(adapter.hiStockRowList, adapter.demand);
+            createChart1(adapter1.hiStockRowList, adapter.demand);
+            createChart2(adapter2.hiStockRowList, adapter.demand);
+            createChart3(adapter3.hiStockRowList, adapter.demand);
+//            createChart4(adapter4.hiStockRowList, adapter.demand);
         }
     }
 

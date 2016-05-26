@@ -29,7 +29,6 @@ import org.hisp.dhis.android.sdk.ui.activities.LoginActivity;
 import org.hisp.dhis.android.sdk.utils.UiUtils;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
-
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
     private HICFragmentBase hifragmentbased;
 //    private static String TAG = MainActivity.class.getSimpleName();

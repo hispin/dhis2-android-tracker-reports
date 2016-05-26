@@ -1,22 +1,16 @@
 package org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockinhandvsdemanddistrict;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -37,29 +31,27 @@ import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock1;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock3;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock4;
-import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock5;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport1;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport2;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport3;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport4;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by Sourabh on 2/6/2016.
@@ -68,8 +60,8 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
 
     public final static String TAG = HIFragmentStockDistrictInHandvsDemandReport.class.getSimpleName();
     protected INavigationHandler mNavigationHandler;
-    @Bind(R.id.vReport)
-    RecyclerView vReport;
+//    @Bind(R.id.vReport)
+//    RecyclerView vReport;
     @Bind(R.id.vChart)
     BarChart vChart;
 
@@ -84,14 +76,14 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     BarChart vChart4;
 
 
-
-    @Bind(R.id.vReportOption)
-    Spinner vReportOption;
-
-    @Bind(R.id.etStartDate)
-    EditText etStartDate;
-    @Bind(R.id.etEndDate)
-    EditText etEndDate;
+//
+//    @Bind(R.id.vReportOption)
+//    Spinner vReportOption;
+//
+//    @Bind(R.id.etStartDate)
+//    EditText etStartDate;
+//    @Bind(R.id.etEndDate)
+//    EditText etEndDate;
 
 
 
@@ -100,20 +92,54 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     HIPresenterStockReport flow;
     @Inject
     HIPresenterBIDReport flowGetDemand;
+    @Inject
+    HIPresenterStockReport flow1;
+    @Inject
+    HIPresenterBIDReport flowGetDemand1;
+    @Inject
+    HIPresenterStockReport flow2;
+    @Inject
+    HIPresenterBIDReport flowGetDemand2;
+    @Inject
+    HIPresenterStockReport flow3;
+    @Inject
+    HIPresenterBIDReport flowGetDemand3;
+    @Inject
+    HIPresenterStockReport flow4;
+    @Inject
+    HIPresenterBIDReport flowGetDemand4;
+
 
     HIAdapterStockDemandReport adapter;
+    HIAdapterStockDemandReport1 adapter1;
+    HIAdapterStockDemandReport2 adapter2;
+    HIAdapterStockDemandReport3 adapter3;
+    HIAdapterStockDemandReport4 adapter4;
+
     List<HIDBbidrow> listTemp = new ArrayList<>();
     List<HIDBbidrow> listTempFilter = new ArrayList<>();
 
     private String orgUnitId;
     private String orgUnitMode;
+    private String orgUnitIdC1;
+    private String orgUnitIdC2;
+    private String orgUnitIdC3;
+    private String orgUnitIdC4;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.orgUnitId = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
+        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
+        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
+        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID4;
+        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID5;
         this.adapter = new HIAdapterStockDemandReport();
+        this.adapter1 = new HIAdapterStockDemandReport1();
+        this.adapter2 = new HIAdapterStockDemandReport2();
+        this.adapter3 = new HIAdapterStockDemandReport3();
+        this.adapter4 = new HIAdapterStockDemandReport4();
     }
 
     @Nullable
@@ -135,63 +161,63 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Calendar myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "yyyy-MM-dd"; //In which you need put here
-
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                etStartDate.setText(sdf.format(myCalendar.getTime()));
-
-            }
-
-        };
-        DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //String myFormat = "MM/dd/yy"; //In which you need put here
-                String myFormat = "yyyy-MM-dd";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                etEndDate.setText(sdf.format(myCalendar.getTime()));
-            }
-
-        };
-
-        etStartDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick: ");
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        etEndDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick: ");
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date2, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                String myFormat = "yyyy-MM-dd"; //In which you need put here
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//                etStartDate.setText(sdf.format(myCalendar.getTime()));
+//
+//            }
+//
+//        };
+//        DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                //String myFormat = "MM/dd/yy"; //In which you need put here
+//                String myFormat = "yyyy-MM-dd";
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                etEndDate.setText(sdf.format(myCalendar.getTime()));
+//            }
+//
+//        };
+//
+//        etStartDate.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(TAG, "onClick: ");
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(getActivity(), date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+//        etEndDate.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(TAG, "onClick: ");
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(getActivity(), date2, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
     }
 
     @Override
@@ -343,12 +369,12 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
         l4.setXEntrySpace(4f);
 
         vChart.setTouchEnabled(false);
-        vReport.setHasFixedSize(true);
-        vReport.setLayoutManager(llm);
-        vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
-        vReport.setItemAnimator(new DefaultItemAnimator());
-        vReportOption.setOnItemSelectedListener(this);
+//        vReport.setHasFixedSize(true);
+//        vReport.setLayoutManager(llm);
+//        vReport.setAdapter(adapter);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.setItemAnimator(new DefaultItemAnimator());
+//        vReportOption.setOnItemSelectedListener(this);
         List<String> options = new ArrayList<>();
         options.add("1 Day");
         options.add("3 Day");
@@ -357,8 +383,8 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
         options.add("2 Months");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, options);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        vReportOption.setAdapter(dataAdapter);
-        vReportOption.setSelection(0);
+//        vReportOption.setAdapter(dataAdapter);
+//        vReportOption.setSelection(0);
         if (flow != null) {
             adapter.setInHandList(new ArrayList<>());
             adapter.setLoadDone(false);
@@ -368,6 +394,42 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
             listTemp = new ArrayList<>();
             adapter.setLoadDone(false);
             flowGetDemand.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }        if (flow1 != null) {
+            adapter1.setInHandList(new ArrayList<>());
+            adapter1.setLoadDone(false);
+            flow1.getStockInHandReport(this, orgUnitMode, orgUnitIdC1);
+        }
+        if (flowGetDemand1 != null) {
+            listTemp = new ArrayList<>();
+            adapter1.setLoadDone(false);
+            flowGetDemand1.getTodayScheduleEventReport(this, orgUnitIdC1, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }        if (flow2 != null) {
+            adapter2.setInHandList(new ArrayList<>());
+            adapter2.setLoadDone(false);
+            flow2.getStockInHandReport(this, orgUnitMode, orgUnitIdC2);
+        }
+        if (flowGetDemand2 != null) {
+            listTemp = new ArrayList<>();
+            adapter2.setLoadDone(false);
+            flowGetDemand2.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }        if (flow3 != null) {
+            adapter3.setInHandList(new ArrayList<>());
+            adapter3.setLoadDone(false);
+            flow3.getStockInHandReport(this, orgUnitMode, orgUnitIdC3);
+        }
+        if (flowGetDemand3 != null) {
+            listTemp = new ArrayList<>();
+            adapter3.setLoadDone(false);
+            flowGetDemand3.getTodayScheduleEventReport(this, orgUnitIdC3, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
+        }        if (flow4 != null) {
+            adapter4.setInHandList(new ArrayList<>());
+            adapter4.setLoadDone(false);
+            flow4.getStockInHandReport(this, orgUnitMode, orgUnitIdC4);
+        }
+        if (flowGetDemand4 != null) {
+            listTemp = new ArrayList<>();
+            adapter4.setLoadDone(false);
+            flowGetDemand4.getTodayScheduleEventReport(this, orgUnitIdC4, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
         }
     }
 
@@ -395,7 +457,15 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     public void onPause() {
         HIEvent.unregister(this);
         flow.onStop();
+        flow1.onStop();
+        flow2.onStop();
+        flow3.onStop();
+        flow4.onStop();
         flowGetDemand.onStop();
+        flowGetDemand1.onStop();
+        flowGetDemand2.onStop();
+        flowGetDemand3.onStop();
+        flowGetDemand4.onStop();
         super.onPause();
     }
 
@@ -413,40 +483,40 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
         }
     }
 
-    public void updateRow1(HIResStock1 resStock) {
-        if (resStock != null) {
-            // adapter.setInHandList(resStock.rows);
-            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+    public void updateRow1(HIResStock1 resStock1) {
+        if (resStock1 != null) {
+             adapter1.setInHandList(resStock1.rows1);
+            createChart1(adapter1.hiStockRowList1, adapter1.inhand, adapter1.demand);
         }
     }
 
     public void updateRow2(HIResStock2 resStock2) {
         if (resStock2 != null) {
-            // adapter.setInHandList(resStock.rows);
-            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+             adapter2.setInHandList(resStock2.rows2);
+            createChart2(adapter2.hiStockRowList2, adapter2.inhand, adapter2.demand);
         }
     }
 
     public void updateRow3(HIResStock3 resStock3) {
         if (resStock3 != null) {
-            // adapter.setInHandList(resStock.rows);
-            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+             adapter3.setInHandList(resStock3.rows3);
+            createChart3(adapter3.hiStockRowList3, adapter3.inhand, adapter3.demand);
         }
     }
 
     public void updateRow4(HIResStock4 resStock4) {
         if (resStock4 != null) {
-            // adapter.setInHandList(resStock.rows);
-            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+             adapter4.setInHandList(resStock4.rows4);
+            createChart4(adapter4.hiStockRowList4, adapter4.inhand, adapter4.demand);
         }
     }
 
-    public void updateRow5(HIResStock5 resStock5) {
-        if (resStock5 != null) {
-            // adapter.setInHandList(resStock.rows);
-            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
-        }
-    }
+//    public void updateRow5(HIResStock5 resStock5) {
+//        if (resStock5 != null) {
+//            // adapter.setInHandList(resStock.rows);
+//            //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+//        }
+//    }
 
     public void createChart(List<String> xAxis, HashMap<String, Integer> inhand, HashMap<String, Integer> demand) {
         vChart.clear();
@@ -663,9 +733,10 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
                 break;
         }
         createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
-        createChart2(adapter.hiStockRowList, adapter.inhand, adapter.demand);
-        createChart3(adapter.hiStockRowList, adapter.inhand, adapter.demand);
-        createChart4(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        createChart1(adapter1.hiStockRowList1, adapter1.inhand, adapter1.demand);
+        createChart2(adapter2.hiStockRowList2, adapter2.inhand, adapter2.demand);
+        createChart3(adapter3.hiStockRowList3, adapter3.inhand, adapter3.demand);
+        createChart4(adapter4.hiStockRowList4, adapter4.inhand, adapter4.demand);
     }
 
     @Override
@@ -673,21 +744,23 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
 
     }
 
-    @OnClick(R.id.btnFilter)
-    public void btnFilterOnClick() {
-
-        adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
-        createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
-    }
+//    @OnClick(R.id.btnFilter)
+//    public void btnFilterOnClick() {
+//
+//        adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
+//        createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+//    }
 
     public List<HIDBbidrow> filterDemand(int dayNum, int monthNum) {
         List<HIDBbidrow> result = new ArrayList<>();
         for (HIDBbidrow item : listTemp) {
-            DateTime desDate = DateTime.now().plusDays(dayNum).plusMonths(monthNum);
-            DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
-            if (dueDate.isBefore(desDate)) {
-                result.add(item);
-            }
+//            DateTime desDate = DateTime.now().plusDays(dayNum).plusMonths(monthNum);
+//            DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+//            if (dueDate.isBefore(desDate)) {
+//                result.add(item);
+//            }
+
+            result.add(item);
         }
         return result;
     }
@@ -696,13 +769,14 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
         Log.e(TAG, "filterDemandbydate: " + startdate + " - " + enddate + " size = " + arrOrigin.size());
         List<HIDBbidrow> result = new ArrayList<>();
         for (HIDBbidrow item : arrOrigin) {
-            DateTime startD = DateTime.parse(startdate, DateTimeFormat.forPattern("yyyy-MM-dd"));
-            DateTime endD = DateTime.parse(enddate, DateTimeFormat.forPattern("yyyy-MM-dd"));
-            DateTime maxD = ((startD.isAfter(endD) ? startD : endD));
-            DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
-            if (dueDate.isBefore(maxD)) {
+//            DateTime startD = DateTime.parse(startdate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+//            DateTime endD = DateTime.parse(enddate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+//            DateTime maxD = ((startD.isAfter(endD) ? startD : endD));
+//            DateTime dueDate = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+//            if (dueDate.isBefore(maxD)) {
                 result.add(item);
-            }
+//            }
+            result.add(item);
         }
         return result;
     }
