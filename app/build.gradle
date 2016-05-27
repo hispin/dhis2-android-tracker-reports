@@ -19,9 +19,9 @@ android {
 
     defaultConfig {
         applicationId "org.hispindia.bidtrackerreports"
-        minSdkVersion 17
+        minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2016031819
+        versionCode 2016031822
         versionName "1.1"
         multiDexEnabled true
     }
@@ -60,6 +60,8 @@ dependencies {
 //    testCompile 'junit:junit:4.12'
 //    compile 'com.android.support:appcompat-v7:23.2.1'
     compile project(':..:dhis2-android-sdk:app')
+    compile project(':ui')
+    compile project(':utils')
     compile 'com.github.cvnhan:MPAndroidChart:v2.2.0'
     def dependency = rootProject.ext.dependency
     compile dependency.dagger

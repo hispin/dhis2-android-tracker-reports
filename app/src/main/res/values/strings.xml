@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BIDTrackerReports</string>
     <string name="action_settings">Settings</string>
-
+    <string name="enroll">BID Reports</string>
     <string name="register_new_event">Register new event</string>
     <string name="registered_events">Registered events</string>
     <string name="register_relationship">Register relationship</string>
@@ -87,6 +87,7 @@
     <string name="btn_tracker_report">Tracker report</string>
     <string name="btn_today_report">Facility to do </string>
     <string name="btn_vaccine_report">Vaccine status</string>
+    <string name="btn_birth_report">Birth Notifications</string>
     <string name="btn_bid_report">BID report</string>
     <string name="btn_stock_report">Stock report</string>
     <string name="btn_schedule_vaccine_report">Schedule Vaccine Report</string>
