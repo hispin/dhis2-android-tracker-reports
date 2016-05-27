@@ -3,6 +3,7 @@ package org.hispindia.bidtrackerreports.mvp.model.remote.api;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.hisp.dhis.android.sdk.controllers.ApiEndpointContainer;
+import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResBIDBirthEvents;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResBIDEvents;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResOverdue;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResSchvaccine;
@@ -16,6 +17,10 @@ import rx.Observable;
  * Created by nhancao on 1/20/16.
  */
 public interface HIIApiDhis2 {
+
+    //@GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true&status=SCHEDULE")
+    @GET("/" + ApiEndpointContainer.BIRTHEVENTS + "?skipPaging=true")
+    Observable<HIResBIDBirthEvents> getEventss(@Query("orgUnit") String orgUnitUid, @Query("ouMode") String ouModeUid, @Query("programStage") String programStageUid);
 
     @GET("/" + ApiEndpointContainer.EVENTS + "?skipPaging=true&status=SCHEDULE")
     Observable<HIResBIDEvents> getEvents(@Query("orgUnit") String orgUnitUid, @Query("ouMode") String ouModeUid, @Query("programStage") String programStageUid);

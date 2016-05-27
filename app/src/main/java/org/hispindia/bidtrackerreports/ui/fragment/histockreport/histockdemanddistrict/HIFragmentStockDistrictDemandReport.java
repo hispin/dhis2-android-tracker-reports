@@ -29,10 +29,22 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport4;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport1;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport2;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport3;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport4;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 import org.joda.time.DateTime;
@@ -70,21 +82,6 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
 
     @Bind(R.id.vChart3)
     BarChart vChart3;
-//    @Bind(R.id.vReportOption)
-//    Spinner vReportOption;
-
-//    @Bind(R.id.etStartDate)
-//    EditText etStartDate;
-//
-//    @Bind(R.id.etEndDate)
-//    EditText etEndDate;
-//
-//    EditText et;
-
-
-//
-//    @Bind(R.id.dpResult)
-//    DatePicker dpResult;
 
 
     @Inject
@@ -93,29 +90,29 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
     HIPresenterBIDReport flowGetDemand;
 
     @Inject
-    HIPresenterStockReport flow1;
+    HIPresenterStockReport1 flow1;
     @Inject
-    HIPresenterBIDReport flowGetDemand1;
+    HIPresenterBIDReport1 flowGetDemand1;
     @Inject
-    HIPresenterStockReport flow2;
+    HIPresenterStockReport2 flow2;
     @Inject
-    HIPresenterBIDReport flowGetDemand2;
+    HIPresenterBIDReport2 flowGetDemand2;
     @Inject
-    HIPresenterStockReport flow3;
+    HIPresenterStockReport3 flow3;
     @Inject
-    HIPresenterBIDReport flowGetDemand3;
+    HIPresenterBIDReport3 flowGetDemand3;
     @Inject
-    HIPresenterStockReport flow4;
+    HIPresenterStockReport4 flow4;
     @Inject
-    HIPresenterBIDReport flowGetDemand4;
+    HIPresenterBIDReport4 flowGetDemand4;
 
 
     HIAdapterDemandOnlyReport adapter;
-    HIAdapterDemandOnlyReport adapter1;
-    HIAdapterDemandOnlyReport adapter2;
-    HIAdapterDemandOnlyReport adapter3;
-    HIAdapterDemandOnlyReport adapter4;
-    HIAdapterDemandOnlyReport adapter5;
+    HIAdapterDemandOnlyReport1 adapter1;
+    HIAdapterDemandOnlyReport2 adapter2;
+    HIAdapterDemandOnlyReport3 adapter3;
+    HIAdapterDemandOnlyReport4 adapter4;
+
 
     List<HIDBbidrow> listTemp = new ArrayList<>();
     List<HIDBbidrow> listTempFilter = new ArrayList<>();
@@ -132,17 +129,17 @@ public class HIFragmentStockDistrictDemandReport extends HICFragmentBase impleme
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
-        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
-        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID4;
-        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID5;
+        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID1;
+        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID2;
+        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID3;
+        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID4;
         this.orgUnitId = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
         this.adapter = new HIAdapterDemandOnlyReport();
-        this.adapter1 = new HIAdapterDemandOnlyReport();
-        this.adapter2 = new HIAdapterDemandOnlyReport();
-        this.adapter3 = new HIAdapterDemandOnlyReport();
-        this.adapter4 = new HIAdapterDemandOnlyReport();
+        this.adapter1 = new HIAdapterDemandOnlyReport1();
+        this.adapter2 = new HIAdapterDemandOnlyReport2();
+        this.adapter3 = new HIAdapterDemandOnlyReport3();
+        this.adapter4 = new HIAdapterDemandOnlyReport4();
 
 
     }

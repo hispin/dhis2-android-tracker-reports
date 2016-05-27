@@ -10,6 +10,7 @@ import org.hisp.dhis.android.sdk.network.APIException;
 import org.hisp.dhis.android.sdk.network.Credentials;
 import org.hisp.dhis.android.sdk.network.RepoManager;
 import org.hisp.dhis.android.sdk.utils.StringConverter;
+import org.hispindia.bidtrackerreports.mvp.model.HIBIDBIRTHModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIOverdueModel;
 import org.hispindia.bidtrackerreports.mvp.model.HISchvaccineModel;
@@ -43,6 +44,14 @@ public class HIModuleModel {
     @Singleton
     public HIBIDModel provideHIBIDModel(Application application) {
         return new HIBIDModel(application, provideHIIApiDhis2());
+    }
+
+
+
+    @Provides
+    @Singleton
+    public HIBIDBIRTHModel provideHIBIDBIRTHModel(Application application) {
+        return new HIBIDBIRTHModel(application, provideHIIApiDhis2());
     }
 
     @Provides

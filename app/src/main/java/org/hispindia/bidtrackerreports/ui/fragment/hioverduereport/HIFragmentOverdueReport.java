@@ -107,7 +107,7 @@ public class HIFragmentOverdueReport extends HICFragmentBase implements HIIViewO
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
 
         if (flow != null) {

@@ -76,16 +76,26 @@ public class HIParamBIDHardcode {
 
     public static String ORGUNITID3 = "LWjoKmGc00n";
     public static String ORGUNITID4 = "WxEt7wHRNeW";
-    public static String ORGUNITID5 = "WxEt7wHRNeW";
+//    public static String ORGUNITID5 = "WxEt7wHRNeW";
     public static String ORGUNITID6 = "onQXFD1z01A";
 
     public static String PROGRAMID = "SSLpOM0r1U7";
+    public static String PROGRAMBIRTHID = "MHtghktOKBF";
+    public static String PROGRAMBIRTHSTAGEID = "B1Ha5psjfRJ";
     public static String PROGRAMSTAGEID = "s53RFfXA75f";
     public static String OUMODE = "SELECTED";
     public static String OUMODEID = "lTqNF1rWha3";
     public static String FIRSTNAMEID = "sB1IHYu2xQT";
+    public static String BNMOTHERFIRSTNAME = "tgOliIchxda";
+    public static String BNMOTHERLASTNAME = "PsfSI5MK181";
+    public static String BNCHILDDOB = "o4rl8WVfTKX";
+    public static String BNCHILDGENDER = "q9voDSX20k6";
+    public static String BNVILLAGE = "Bq9p5j2e7gL";
+    public static String BNZONE = "YqBeXCABhhk";
+
     public static String CHILDNAMEID = "wbtl3uN0spv";
     public static String DATEOFBIRTH = "rKtHjgcO2Bn";
+
 
     public static class DataElement {
         private String id;

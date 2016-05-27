@@ -216,7 +216,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         vReportOption.setOnItemSelectedListener(this);
         List<String> options = new ArrayList<>();

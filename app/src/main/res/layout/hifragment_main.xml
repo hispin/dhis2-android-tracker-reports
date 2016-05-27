@@ -81,6 +81,15 @@
                     android:text="@string/btn_stockinhandvsdemand_report" />
 
             </LinearLayout>
+            <LinearLayout style="@style/vFragmentMain">
+
+
+                <Button
+                    android:id="@+id/btnBirthNotificationsReport"
+                    style="@style/btnFragmentMain"
+                    android:text="Birth Notifications" />
+
+            </LinearLayout>
 
             <!--<LinearLayout style="@style/vFragmentMain">-->
 

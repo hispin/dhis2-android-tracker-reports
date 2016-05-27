@@ -195,7 +195,7 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         vReport.setLayoutManager(llm);
 
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setLoadDone(false);

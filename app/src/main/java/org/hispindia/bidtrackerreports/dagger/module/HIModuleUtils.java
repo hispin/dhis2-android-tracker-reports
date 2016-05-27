@@ -1,5 +1,11 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBirthNotificationReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport1;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport2;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport3;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport4;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterOverdueReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
@@ -24,6 +30,32 @@ public class HIModuleUtils {
     @Singleton
     public HIAdapterStockReport provideHIAdapterStockReport() {
         return new HIAdapterStockReport();
+    }
+    @Provides
+    @Singleton
+    public HIAdapterDemandOnlyReport provideHIAdapterDemandOnlyReport() {
+        return new HIAdapterDemandOnlyReport();
+    }
+
+    @Provides
+    @Singleton
+    public HIAdapterDemandOnlyReport1 provideHIAdapterDemandOnlyReport1() {
+        return new HIAdapterDemandOnlyReport1();
+    }
+    @Provides
+    @Singleton
+    public HIAdapterDemandOnlyReport2 provideHIAdapterDemandOnlyReport2() {
+        return new HIAdapterDemandOnlyReport2();
+    }
+    @Provides
+    @Singleton
+    public HIAdapterDemandOnlyReport3 provideHIAdapterDemandOnlyReport3() {
+        return new HIAdapterDemandOnlyReport3();
+    }
+    @Provides
+    @Singleton
+    public HIAdapterDemandOnlyReport4 provideHIAdapterDemandOnlyReport4() {
+        return new HIAdapterDemandOnlyReport4();
     }
 
 
@@ -61,6 +93,12 @@ public class HIModuleUtils {
     @Singleton
     public HIAdapterSchvaccineReport provideHIAdapterSchvaccineReport() {
         return new HIAdapterSchvaccineReport();
+    }
+
+    @Provides
+    @Singleton
+    public HIAdapterBirthNotificationReport provideHIAdapterBirthNotificationReport() {
+        return new HIAdapterBirthNotificationReport();
     }
 
     @Provides

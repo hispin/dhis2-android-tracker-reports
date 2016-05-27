@@ -19,6 +19,7 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.activity.MainActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectProgramFragment;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.birthnotifications.HIFragmentBirthNotificationsReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  */
 public class HIFragmentMain extends HICFragmentBase {
 
-Button btnstockdistrict;
+    Button btnstockdistrict;
     public final static String TAG = HIFragmentMain.class.getSimpleName();
     protected INavigationHandler mNavigationHandler;
 
@@ -110,6 +111,12 @@ Button btnstockdistrict;
     @SuppressWarnings("unused")
     public void btnBidReport() {
         mNavigationHandler.switchFragment(new HIFragmentTodayScheduleReport(), HIFragmentTodayScheduleReport.TAG, true);
+    }
+
+    @OnClick(R.id.btnBirthNotificationsReport)
+    @SuppressWarnings("unused")
+    public void btnBirthNotificationsReport() {
+        mNavigationHandler.switchFragment(new HIFragmentBirthNotificationsReport(), HIFragmentBirthNotificationsReport.TAG, true);
     }
 
     @OnClick(R.id.btnVaccineStatus)

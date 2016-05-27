@@ -54,7 +54,7 @@ public class HIAdapterStockDemandReport3 extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public void setInHandList(List<HIStockRow3> inHandList) {
+    public void setInHandList3(List<HIStockRow3> inHandList) {
         for (HIStockRow3 item : inHandList) {
             inhand.put(item.getName().substring(0, item.getName().indexOf(" ")), Integer.parseInt(item.getValue()));
             Log.e(TAG, "inhand item value  " + item.getValue());

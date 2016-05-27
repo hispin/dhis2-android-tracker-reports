@@ -32,7 +32,15 @@ import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock2;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock3;
 import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport4;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
@@ -76,16 +84,6 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     BarChart vChart4;
 
 
-//
-//    @Bind(R.id.vReportOption)
-//    Spinner vReportOption;
-//
-//    @Bind(R.id.etStartDate)
-//    EditText etStartDate;
-//    @Bind(R.id.etEndDate)
-//    EditText etEndDate;
-
-
 
 
     @Inject
@@ -93,21 +91,21 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
     @Inject
     HIPresenterBIDReport flowGetDemand;
     @Inject
-    HIPresenterStockReport flow1;
+    HIPresenterStockReport1 flow1;
     @Inject
-    HIPresenterBIDReport flowGetDemand1;
+    HIPresenterBIDReport1 flowGetDemand1;
     @Inject
-    HIPresenterStockReport flow2;
+    HIPresenterStockReport2 flow2;
     @Inject
-    HIPresenterBIDReport flowGetDemand2;
+    HIPresenterBIDReport2 flowGetDemand2;
     @Inject
-    HIPresenterStockReport flow3;
+    HIPresenterStockReport3 flow3;
     @Inject
-    HIPresenterBIDReport flowGetDemand3;
+    HIPresenterBIDReport3 flowGetDemand3;
     @Inject
-    HIPresenterStockReport flow4;
+    HIPresenterStockReport4 flow4;
     @Inject
-    HIPresenterBIDReport flowGetDemand4;
+    HIPresenterBIDReport4 flowGetDemand4;
 
 
     HIAdapterStockDemandReport adapter;
@@ -131,10 +129,10 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
         super.onCreate(savedInstanceState);
         this.orgUnitId = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
-        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
-        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
-        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID4;
-        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID5;
+        this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID1;
+        this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID2;
+        this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID3;
+       this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID4;
         this.adapter = new HIAdapterStockDemandReport();
         this.adapter1 = new HIAdapterStockDemandReport1();
         this.adapter2 = new HIAdapterStockDemandReport2();
@@ -394,37 +392,42 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
             listTemp = new ArrayList<>();
             adapter.setLoadDone(false);
             flowGetDemand.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
-        }        if (flow1 != null) {
-            adapter1.setInHandList(new ArrayList<>());
-            adapter1.setLoadDone(false);
-            flow1.getStockInHandReport(this, orgUnitMode, orgUnitIdC1);
         }
+
+        if (flow1 != null) {
+            adapter1.setInHandList1(new ArrayList<>());
+            adapter1.setLoadDone(false);
+            flow1.getStockInHandReport1(this, orgUnitMode, orgUnitIdC1);
+        }
+
         if (flowGetDemand1 != null) {
             listTemp = new ArrayList<>();
             adapter1.setLoadDone(false);
             flowGetDemand1.getTodayScheduleEventReport(this, orgUnitIdC1, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
-        }        if (flow2 != null) {
-            adapter2.setInHandList(new ArrayList<>());
+        }
+        if (flow2 != null) {
+            adapter2.setInHandList2(new ArrayList<>());
             adapter2.setLoadDone(false);
-            flow2.getStockInHandReport(this, orgUnitMode, orgUnitIdC2);
+            flow2.getStockInHandReport2(this, orgUnitMode, orgUnitIdC2);
         }
         if (flowGetDemand2 != null) {
             listTemp = new ArrayList<>();
             adapter2.setLoadDone(false);
             flowGetDemand2.getTodayScheduleEventReport(this, orgUnitId, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
-        }        if (flow3 != null) {
-            adapter3.setInHandList(new ArrayList<>());
+        }
+        if (flow3 != null) {
+            adapter3.setInHandList3(new ArrayList<>());
             adapter3.setLoadDone(false);
-            flow3.getStockInHandReport(this, orgUnitMode, orgUnitIdC3);
+            flow3.getStockInHandReport3(this, orgUnitMode, orgUnitIdC3);
         }
         if (flowGetDemand3 != null) {
             listTemp = new ArrayList<>();
             adapter3.setLoadDone(false);
             flowGetDemand3.getTodayScheduleEventReport(this, orgUnitIdC3, HIParamBIDHardcode.OUMODE, HIParamBIDHardcode.PROGRAMID, HIParamBIDHardcode.PROGRAMSTAGEID, true);
         }        if (flow4 != null) {
-            adapter4.setInHandList(new ArrayList<>());
+            adapter4.setInHandList4(new ArrayList<>());
             adapter4.setLoadDone(false);
-            flow4.getStockInHandReport(this, orgUnitMode, orgUnitIdC4);
+            flow4.getStockInHandReport4(this, orgUnitMode, orgUnitIdC4);
         }
         if (flowGetDemand4 != null) {
             listTemp = new ArrayList<>();
@@ -485,28 +488,28 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
 
     public void updateRow1(HIResStock1 resStock1) {
         if (resStock1 != null) {
-             adapter1.setInHandList(resStock1.rows1);
+             adapter1.setInHandList1(resStock1.rows1);
             createChart1(adapter1.hiStockRowList1, adapter1.inhand, adapter1.demand);
         }
     }
 
     public void updateRow2(HIResStock2 resStock2) {
         if (resStock2 != null) {
-             adapter2.setInHandList(resStock2.rows2);
+             adapter2.setInHandList2(resStock2.rows2);
             createChart2(adapter2.hiStockRowList2, adapter2.inhand, adapter2.demand);
         }
     }
 
     public void updateRow3(HIResStock3 resStock3) {
         if (resStock3 != null) {
-             adapter3.setInHandList(resStock3.rows3);
+             adapter3.setInHandList3(resStock3.rows3);
             createChart3(adapter3.hiStockRowList3, adapter3.inhand, adapter3.demand);
         }
     }
 
     public void updateRow4(HIResStock4 resStock4) {
         if (resStock4 != null) {
-             adapter4.setInHandList(resStock4.rows4);
+             adapter4.setInHandList4(resStock4.rows4);
             createChart4(adapter4.hiStockRowList4, adapter4.inhand, adapter4.demand);
         }
     }
@@ -704,7 +707,15 @@ public class HIFragmentStockDistrictInHandvsDemandReport extends HICFragmentBase
             listTemp.add(row);
         } else {
             adapter.setDemandList(filterDemand(1, 0));
+            adapter1.setDemandList(filterDemand(1, 0));
+            adapter2.setDemandList(filterDemand(1, 0));
+            adapter3.setDemandList(filterDemand(1, 0));
+            adapter4.setDemandList(filterDemand(1, 0));
             createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+            createChart1(adapter1.hiStockRowList1, adapter1.inhand, adapter1.demand);
+            createChart2(adapter2.hiStockRowList2, adapter2.inhand, adapter2.demand);
+            createChart3(adapter3.hiStockRowList3, adapter3.inhand, adapter3.demand);
+            createChart4(adapter4.hiStockRowList4, adapter4.inhand, adapter4.demand);
         }
     }
 

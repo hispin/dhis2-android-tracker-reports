@@ -1,10 +1,11 @@
 package org.hispindia.bidtrackerreports.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -12,22 +13,31 @@ import com.squareup.otto.Subscribe;
 import org.hisp.dhis.android.sdk.controllers.DhisService;
 import org.hisp.dhis.android.sdk.controllers.LoadingController;
 import org.hisp.dhis.android.sdk.controllers.PeriodicSynchronizerController;
+import org.hisp.dhis.android.sdk.controllers.metadata.MetaDataController;
 import org.hisp.dhis.android.sdk.events.UiEvent;
 import org.hisp.dhis.android.sdk.persistence.Dhis2Application;
+import org.hisp.dhis.android.sdk.persistence.models.UserAccount;
 import org.hisp.dhis.android.sdk.persistence.preferences.ResourceType;
 import org.hisp.dhis.android.sdk.ui.activities.INavigationHandler;
 import org.hisp.dhis.android.sdk.ui.activities.OnBackPressedListener;
+import org.hisp.dhis.android.sdk.ui.fragments.settings.SettingsFragment;
 import org.hisp.dhis.android.sdk.utils.UiUtils;
+import org.hisp.dhis.client.sdk.ui.activities.AbsHomeActivity;
+import org.hisp.dhis.client.sdk.ui.fragments.WrapperFragment;
 import org.hispindia.bidtrackerreports.HIApplication;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.DaggerHIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.dagger.module.HICModuleActivity;
+import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.HIFragmentMain;
 import org.hispindia.bidtrackerreports.utils.HIUtils;
 
-public class HIActivityMain extends AppCompatActivity implements INavigationHandler {
+import static org.hisp.dhis.client.sdk.utils.StringUtils.isEmpty;
 
+public class HIActivityMain extends AbsHomeActivity implements INavigationHandler {
+    public final static String TAG = MainActivity.class.getSimpleName();
+    private HICFragmentBase hifragmentbased;
     public Toolbar toolbar;
     private OnBackPressedListener mBackPressedListener;
     private HIIComponentUi uiComponent;
@@ -58,8 +68,59 @@ public class HIActivityMain extends AppCompatActivity implements INavigationHand
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
         loadInitialData();
         showMainFragment();
+
+
+        PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
+        setUpNavigationView(savedInstanceState);
+    }
+    private void setUpNavigationView(Bundle savedInstanceState) {
+        getNavigationView().getMenu().removeItem(R.id.drawer_item_profile);
+        addMenuItem(11, R.drawable.ic_add, R.string.enroll);
+        if (savedInstanceState == null) {
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.setComponent(new ComponentName("org.hispindia.bidtrackerreports","org.hispindia.bidtrackerreports.ui.activity.HIActivitySplash"));
+//                startActivity(intent);
+        }
+
+        UserAccount userAccount = MetaDataController.getUserAccount();
+        String name = "";
+        if (!isEmpty(userAccount.getFirstName()) &&
+                !isEmpty(userAccount.getSurname())) {
+            name = String.valueOf(userAccount.getFirstName().charAt(0)) +
+                    String.valueOf(userAccount.getSurname().charAt(0));
+        } else if (userAccount.getDisplayName() != null &&
+                userAccount.getDisplayName().length() > 1) {
+            name = String.valueOf(userAccount.getDisplayName().charAt(0)) +
+                    String.valueOf(userAccount.getDisplayName().charAt(1));
+        }
+
+        getUsernameTextView().setText(userAccount.getDisplayName());
+        getUserInfoTextView().setText(userAccount.getEmail());
+        getUsernameLetterTextView().setText(name);
+
+    }
+    @NonNull
+    @Override
+    protected Fragment getProfileFragment() {
+        return new Fragment();
+//        return WrapperFragment.newInstance(ProfileFragment.class,
+//                getString(R.string.drawer_item_profile));
+    }
+    @NonNull
+    @Override
+    protected Fragment getSettingsFragment() {
+        return WrapperFragment.newInstance(SettingsFragment.class,
+                getString(R.string.drawer_item_settings));
     }
 
+    @Override
+    protected boolean onItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == 11) {
+          //  attachFragment(WrapperFragment.newInstance(SelectProgramFragment.class, getString(R.string.app_name)));
+            return true;
+        }
+        return false;
+    }
     @Override
     protected void onResume() {
         super.onResume();

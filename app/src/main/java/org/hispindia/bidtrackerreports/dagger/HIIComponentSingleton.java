@@ -6,7 +6,12 @@ import org.hispindia.bidtrackerreports.dagger.module.HICModuleApplication;
 import org.hispindia.bidtrackerreports.dagger.module.HIModuleModel;
 import org.hispindia.bidtrackerreports.dagger.module.HIModulePresenter;
 import org.hispindia.bidtrackerreports.dagger.module.HIModuleUtils;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDBirthReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterOverdueReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterSchvaccineReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
@@ -15,6 +20,12 @@ import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport2;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport3;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport5;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBirthNotificationReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport1;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport2;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport3;
+import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport4;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterOverdueReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterSchvaccineReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockReport;
@@ -37,6 +48,10 @@ public interface HIIComponentSingleton {
     Application application();
 
     HIPresenterBIDReport hiPresenterBIDReport();
+    HIPresenterBIDReport1 hiPresenterBIDReport1();
+    HIPresenterBIDReport2 hiPresenterBIDReport2();
+    HIPresenterBIDReport3 hiPresenterBIDReport3();
+    HIPresenterBIDReport4 hiPresenterBIDReport4();
 
     HIPresenterStockReport hiPresenterStockReport();
 
@@ -64,10 +79,19 @@ public interface HIIComponentSingleton {
 
     HIPresenterSchvaccineReport hiHIPresenterSchvaccineReport();
 
+    HIPresenterBIDBirthReport hiHIPresenterBIDBirthReport();
+
     HIAdapterSchvaccineReport hiHIAdapterSchvaccineReport();
+
+    HIAdapterBirthNotificationReport hiHIAdapterBirthNotificationReport();
 
     HIPresenterOverdueReport hiHIPresenterOverdueReport();
 
     HIAdapterOverdueReport hiHIAdapterOverdueReport();
 
+    HIAdapterDemandOnlyReport hiHIAdapterDemandOnlyReport();
+    HIAdapterDemandOnlyReport1 hiHIAdapterDemandOnlyReport1();
+    HIAdapterDemandOnlyReport2 hiHIAdapterDemandOnlyReport2();
+    HIAdapterDemandOnlyReport3 hiHIAdapterDemandOnlyReport3();
+    HIAdapterDemandOnlyReport4 hiHIAdapterDemandOnlyReport4();
 }

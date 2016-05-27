@@ -1,10 +1,16 @@
 package org.hispindia.bidtrackerreports.dagger.module;
 
+import org.hispindia.bidtrackerreports.mvp.model.HIBIDBIRTHModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIOverdueModel;
 import org.hispindia.bidtrackerreports.mvp.model.HISchvaccineModel;
 import org.hispindia.bidtrackerreports.mvp.model.HIStockModel;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDBirthReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport1;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport2;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport3;
+import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport4;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterOverdueReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterSchvaccineReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
@@ -31,11 +37,37 @@ public class HIModulePresenter {
         return new HIPresenterBIDReport(model);
     }
 
+   @Provides
+    @Singleton
+    public HIPresenterBIDReport2 provideHIPresenterBIDReport2(HIBIDModel model) {
+        return new HIPresenterBIDReport2(model);
+    }@Provides
+    @Singleton
+    public HIPresenterBIDReport3 provideHIPresenterBIDReport3(HIBIDModel model) {
+        return new HIPresenterBIDReport3(model);
+    }@Provides
+    @Singleton
+    public HIPresenterBIDReport4 provideHIPresenterBIDReport4(HIBIDModel model) {
+        return new HIPresenterBIDReport4(model);
+    }@Provides
+    @Singleton
+    public HIPresenterBIDReport1 provideHIPresenterBIDReport1(HIBIDModel model) {
+        return new HIPresenterBIDReport1(model);
+    }
+
+    @Provides
+    @Singleton
+    public HIPresenterBIDBirthReport provideHIPresenterBIDBirthReport(HIBIDBIRTHModel model) {
+        return new HIPresenterBIDBirthReport(model);
+    }
+
     @Provides
     @Singleton
     public HIPresenterStockReport provideHIPresenterStockReport(HIStockModel model) {
         return new HIPresenterStockReport(model);
     }
+
+
 
     @Provides
     @Singleton

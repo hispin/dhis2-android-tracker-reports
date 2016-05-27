@@ -166,7 +166,7 @@ BarChart vChart2;
         this.orgUnitIdC1 = HIParamBIDHardcode.ORGUNITID2;
         this.orgUnitIdC2 = HIParamBIDHardcode.ORGUNITID3;
         this.orgUnitIdC3 = HIParamBIDHardcode.ORGUNITID4;
-        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID5;
+        this.orgUnitIdC4 = HIParamBIDHardcode.ORGUNITID4;
         //  this.orgUnitIdC5 = HIParamBIDHardcode.ORGUNITID;
         this.orgUnitMode = HIParamBIDHardcode.OUMODEID;
 

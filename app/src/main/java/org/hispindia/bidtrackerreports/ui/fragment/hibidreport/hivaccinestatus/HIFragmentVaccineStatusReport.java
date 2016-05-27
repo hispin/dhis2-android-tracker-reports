@@ -195,12 +195,13 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setHibidRowList(new ArrayList<>());
             adapter.setLoadDone(false);
             flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, false);
+            Log.e(TAG," THIS: "+ this);
         }
     }
 

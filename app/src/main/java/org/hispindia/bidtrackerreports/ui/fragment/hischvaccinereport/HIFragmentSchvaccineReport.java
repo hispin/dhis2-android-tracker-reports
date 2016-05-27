@@ -111,7 +111,7 @@ public class HIFragmentSchvaccineReport extends HICFragmentBase implements HIIVi
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
 
         if (flow != null) {

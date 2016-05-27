@@ -1,6 +1,7 @@
 package org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,19 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.app.DatePickerDialog;
-
-import android.app.Dialog;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.provider.CalendarContract;
-import android.content.DialogInterface;
-import android.widget.Spinner;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -38,31 +33,21 @@ import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
-import org.hispindia.bidtrackerreports.mvp.model.remote.response.HIResStock;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDReport;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterStockReport;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
-import org.hispindia.bidtrackerreports.mvp.view.HIViewStockInHandReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
-import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterStockDemandReport;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterDemandOnlyReport;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcode;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import android.app.DatePickerDialog;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import android.widget.DatePicker.OnDateChangedListener;
-
-import java.util.Calendar;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -241,7 +226,7 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
         vReport.setItemAnimator(new DefaultItemAnimator());
         vReportOption.setOnItemSelectedListener(this);
         List<String> options = new ArrayList<>();
