@@ -39,7 +39,7 @@ public class MainActivity extends AbsHomeActivity implements INavigationHandler 
     protected INavigationHandler mNavigationHandler;
     Button buttonlogout;
     TextView tvname;
-    //
+
 //     @Bind(R.id.tvdname)
 //    TextView tvdname;
 
@@ -61,8 +61,6 @@ public class MainActivity extends AbsHomeActivity implements INavigationHandler 
 
         PeriodicSynchronizerController.activatePeriodicSynchronizer(this);
         setUpNavigationView(savedInstanceState);
-
-
 
     }
     private void setUpNavigationView(Bundle savedInstanceState) {
@@ -106,6 +104,7 @@ public class MainActivity extends AbsHomeActivity implements INavigationHandler 
         return WrapperFragment.newInstance(SettingsFragment.class,
                 getString(R.string.drawer_item_settings));
     }
+
 
     @Override
     protected boolean onItemSelected(@NonNull MenuItem item) {

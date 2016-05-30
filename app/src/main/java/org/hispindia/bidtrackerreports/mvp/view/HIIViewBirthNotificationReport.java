@@ -7,5 +7,6 @@ import org.hispindia.bidtrackerreports.mvp.model.local.db.HIbidbirthrow;
  */
 public interface HIIViewBirthNotificationReport {
 
+    //void updateHeaderRow(HIbidbirthrow headerRow);
     void updateRow(HIbidbirthrow row);
 }

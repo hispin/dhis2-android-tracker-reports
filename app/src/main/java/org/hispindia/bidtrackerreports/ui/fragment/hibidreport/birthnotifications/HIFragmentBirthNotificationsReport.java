@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.event.HIEvent;
-import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
+import org.hispindia.bidtrackerreports.mvp.model.local.db.HIbidbirthrow;
 import org.hispindia.bidtrackerreports.mvp.presenter.HIPresenterBIDBirthReport;
-import org.hispindia.bidtrackerreports.mvp.view.HIIViewTodayScheduleReport;
+import org.hispindia.bidtrackerreports.mvp.view.HIIViewBirthNotificationReport;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.adapter.HIAdapterBirthNotificationReport;
 import org.hispindia.bidtrackerreports.ui.fragment.HICFragmentBase;
@@ -30,7 +30,7 @@ import butterknife.Bind;
 /**
  * Created by nhancao on 1/20/16.
  */
-public class HIFragmentBirthNotificationsReport extends HICFragmentBase implements HIIViewTodayScheduleReport {
+public class HIFragmentBirthNotificationsReport extends HICFragmentBase implements HIIViewBirthNotificationReport {
     public final static String TAG = HIFragmentBirthNotificationsReport.class.getSimpleName();
 
     @Bind(R.id.vReport)
@@ -111,6 +111,7 @@ public class HIFragmentBirthNotificationsReport extends HICFragmentBase implemen
 //        //adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
 //
 //    }
+
     @Override
     protected void onInjected() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -124,12 +125,13 @@ public class HIFragmentBirthNotificationsReport extends HICFragmentBase implemen
         if (flow != null) {
             adapter.setHibidbirthRowList(new ArrayList<>());
             adapter.setLoadDone(false);
-           //flow.getBirthNotificationReport(this, orgUnitId, orgUnitMode, programBirthId, programStageBirthId);
+            flow.getBirthNotificationReport(this, orgUnitId, orgUnitMode, programBirthId, programStageBirthId);
+
         }
     }
 
     @Override
-    public void updateRow(HIDBbidrow row) {
+    public void updateRow(HIbidbirthrow row) {
         if (row == null) {
             adapter.setLoadDone(true);
         } else {

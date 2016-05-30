@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.hispindia.bidtrackerreports.R;
-import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIbidbirthrow;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -60,7 +59,7 @@ public class HIAdapterBirthNotificationReport extends RecyclerView.Adapter<Recyc
         }
     }
 
-    public void updateRow(HIDBbidrow hibidRow) {
+    public void updateRow(HIbidbirthrow hibidRow) {
         if (originList == null) {
             originList = new ArrayList<>();
         }

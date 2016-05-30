@@ -50,11 +50,15 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
         onStop();
         subscription = Observable.create(subscriber -> {
             List<Event> eventList = new ArrayList<>();
+
             for (Event event : TrackerController.getEvents(orgUnitUid, programId)) {
+                Log.e(TAG,"event.getStatus() "+ event.getStatus());
                 if (event.getStatus().equals(Event.STATUS_FUTURE_VISIT)) {
                     eventList.add(event);
+                    Log.e(TAG,"Event List Size "+ eventList.size());
                 }
             }
+
             Collections.sort(eventList, (lhs, rhs) -> {
                 DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
                 DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));

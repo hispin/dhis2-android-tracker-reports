@@ -2,21 +2,16 @@ package org.hispindia.bidtrackerreports.mvp.presenter;
 
 import android.util.Log;
 
-import org.hisp.dhis.android.sdk.controllers.DhisController;
 import org.hisp.dhis.android.sdk.controllers.tracker.TrackerController;
 import org.hisp.dhis.android.sdk.persistence.models.Event;
-import org.hisp.dhis.android.sdk.persistence.models.TrackedEntityInstance;
 import org.hispindia.bidtrackerreports.mvp.model.HIBIDBIRTHModel;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDBIRTHRow;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIDBIRTHRowItem;
 import org.hispindia.bidtrackerreports.mvp.model.local.HIBIRTHMapping;
 import org.hispindia.bidtrackerreports.mvp.view.HIIViewBirthNotificationReport;
 import org.hispindia.bidtrackerreports.utils.HICUtilRxHelper;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -24,9 +19,7 @@ import rx.Subscription;
 
 import static org.hispindia.bidtrackerreports.utils.HICUtilRxHelper.onNext;
 
-/**
- * Created by nhancao on 1/24/16.
- */
+
 public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthNotificationReport> {
     public final static String TAG = HIPresenterBIDBirthReport.class.getSimpleName();
 
@@ -47,19 +40,25 @@ public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthN
         onStop();
         subscription = Observable.create(subscriber -> {
             List<Event> eventList = new ArrayList<>();
-            for (Event event : TrackerController.getEvents(orgUnitUid, programId)) {
 
+            for (Event event : TrackerController.getEvents(orgUnitUid, programId)) {
+                Log.e(TAG,"Success Birth");
+                if (event.getStatus().equals(Event.STATUS_ACTIVE)) {
                     eventList.add(event);
+                    Log.e(TAG,"Event List Size "+ eventList.size());
+                }
             }
-            Collections.sort(eventList, (lhs, rhs) -> {
-                DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
-                DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
-                if (left.isAfter(right)) return 1;
-                if (left.isEqual(right)) return 0;
-                return -1;
-            });
+
+//            Collections.sort(eventList, (lhs, rhs) -> {
+//                DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+//                DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+//                if (left.isAfter(right)) return 1;
+//                if (left.isEqual(right)) return 0;
+//                return -1;
+//            });
 
             for (int i = 0; i < eventList.size(); i++) {
+                Log.e(TAG,"Event List:"+eventList );
                 Event event = eventList.get(i);
                 ApplyRuleHelper applyRuleHelper = new ApplyRuleHelper(orgUnitUid, programId, programStageUid, event.getLocalId(), event.getLocalEnrollmentId());
 
@@ -77,6 +76,7 @@ public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthN
                 if (subscriber != null && subscriber.isUnsubscribed()) {
                     break;
                 }
+                Log.e(TAG,"Event List:"+eventList );
             }
             onNext(subscriber, null);
         }).compose(HICUtilRxHelper.applySchedulers()).subscribe(hidRow -> {
@@ -87,19 +87,20 @@ public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthN
                         .compose(HICUtilRxHelper.applySchedulers())
                         .subscribe(
                                 bidEvents -> {
-                                    List<TrackedEntityInstance> trackedEntityInstances = new ArrayList<>();
+
+                                    //List<TrackedEntityInstance> trackedEntityInstances = new ArrayList<>();
                                     for (int count = 0; count < bidEvents.getEventList().size(); count++) {
                                         Event eventItem = bidEvents.getEventList().get(count);
 
-                                            TrackedEntityInstance tei = new TrackedEntityInstance();
-                                            tei.setTrackedEntityInstance(eventItem.getTrackedEntityInstance());
-                                            tei.setOrgUnit(eventItem.getOrganisationUnitId());
-                                            trackedEntityInstances.add(tei);
+//                                            TrackedEntityInstance tei = new TrackedEntityInstance();
+//                                            tei.setTrackedEntityInstance(eventItem.getTrackedEntityInstance());
+//                                            tei.setOrgUnit(eventItem.getOrganisationUnitId());
+                                           // trackedEntityInstances.add(tei);
 
                                     }
 
                                     subscriptionUpdated = Observable.create(subscription -> {
-                                        TrackerController.getTrackedEntityInstancesDataFromServer(DhisController.getInstance().getDhisApi(), trackedEntityInstances, true);
+                                       // TrackerController.getTrackedEntityInstancesDataFromServer(DhisController.getInstance().getDhisApi(), trackedEntityInstances, true);
                                         subscriptionUpdated.unsubscribe();
                                     }).compose(HICUtilRxHelper.applySchedulers()).subscribe();
                                 }, e -> {
