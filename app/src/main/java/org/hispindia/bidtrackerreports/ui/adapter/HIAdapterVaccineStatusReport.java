@@ -96,9 +96,9 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
 
 
         for (HIDBbidrow item : originList) {
-            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
+            if (TextUtils.isEmpty(item.getDueDate()) || item.getDueDate().equals("0")) continue;
             try {
-                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+                DateTime item_dob = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
                 Log.e("LOG", "item_dob" + item_dob);
                 Log.e("LOG", "item_get_dob" + item.getDob());
@@ -164,20 +164,23 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             HIAdapterReportHolder viewHolder = (HIAdapterReportHolder) holder;
             viewHolder.tvOrder.setText("#" + row.getOrder());
             viewHolder.tvDueDate.setText(row.getDueDate());
+
             if (row.getIsOverdue()) {
                 viewHolder.tvOrder.setTextColor(Color.RED);
                 viewHolder.tvDueDate.setTextColor(Color.RED);
-            } else {
-                viewHolder.tvOrder.setTextColor(Color.WHITE);
-                viewHolder.tvDueDate.setTextColor(Color.WHITE);
+            }
+            else {
+                viewHolder.tvOrder.setTextColor(Color.GREEN);
+                viewHolder.tvDueDate.setTextColor(Color.GREEN);
             }
             setAttr(row.getFirstName(), viewHolder.tvFirstName);
             setAttr(row.getChilName(), viewHolder.tvChildName);
             setAttr(row.getDob(), viewHolder.tvdob);
+            setAttr(row.getbirthweight(), viewHolder.tvbirthweight);
 
             //data element
             setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
-            setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
+           // setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
             setDe(row.getBcgRepeatDose(), viewHolder.tvBCGRepeatDose, viewHolder.imgBCGRepeatDose, viewHolder.vBCGRepeatDose);
             setDe(row.getOpv0(), viewHolder.tvOPV0, viewHolder.imgOPV0, viewHolder.vOPV0);
             setDe(row.getOpv1(), viewHolder.tvOPV1, viewHolder.imgOPV1, viewHolder.vOPV1);
@@ -193,6 +196,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             setDe(row.getOpv4(), viewHolder.tvOPV4, viewHolder.imgOPV4, viewHolder.vOPV4);
             setDe(row.getMeasles1(), viewHolder.tvMeasles1, viewHolder.imgMeasles1, viewHolder.vMeasles1);
             setDe(row.getMeasles2(), viewHolder.tvMeasles2, viewHolder.imgMeasles2, viewHolder.vMeasles2);
+
         }
     }
 
@@ -225,14 +229,14 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
             if (item.trim().toLowerCase().equals("true")) {
                 img.setBackgroundResource(R.drawable.ic_checkmark_holo_light);
                 img.setVisibility(View.VISIBLE);
-                tv.setVisibility(View.GONE);
+              // tv.setVisibility(View.GONE);
             } else {
-                img.setVisibility(View.GONE);
+               // img.setVisibility(View.GONE);
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(item);
             }
         } else {
-            view.setVisibility(View.GONE);
+            //view.setVisibility(View.GONE);
         }
     }
 
@@ -250,6 +254,8 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
 
         @Bind(R.id.tvdob)
         TextView tvdob;
+        @Bind(R.id.tvbirthweight)
+        TextView tvbirthweight;
 
         @Bind(R.id.vBCG)
         View vBCG;

@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -79,9 +80,6 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     EditText etStartDate;
     @Bind(R.id.etEndDate)
     EditText etEndDate;
-
-
-
 
     @Inject
     HIPresenterStockReport flow;
@@ -328,18 +326,24 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
         ArrayList<BarEntry> yVals2 = new ArrayList<>();
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+
         if (inhand != null && inhand.size() > 0) {
-//            for (int i = 0; i < xAxis.size(); i++) {
-//                yVals1.add(new BarEntry(inhand.get(xAxis.get(i)), i));
-//            }
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < xAxis.size(); i++) {
                 yVals1.add(new BarEntry(inhand.get(xAxis.get(i)), i));
             }
+//            Log.e(TAG,"Inhand Size"+ inhand.size());
+//            for (int i = 0; i < 6; i++) {
+//                Log.e(TAG,"X Axis inhand"+xAxis.get(i));
+//                yVals1.add(new BarEntry(inhand.get(xAxis.get(i)), i));
+//            }
+
             BarDataSet set1 = new BarDataSet(yVals1, "Inhand");
             set1.setBarSpacePercent(35f);
+            set1.setColor(Color.BLUE);
             dataSets.add(set1);
         }
         if (demand != null && demand.size() > 0) {
+            Log.e(TAG,"Demand Size+"+ demand.size());
             for (int i = 0; i < xAxis.size(); i++) {
                 yVals2.add(new BarEntry(demand.get(xAxis.get(i)), i));
             }
@@ -348,6 +352,7 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
             set2.setColor(Color.DKGRAY);
             dataSets.add(set2);
         }
+
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);
         vChart.setData(data);
@@ -358,9 +363,11 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     public void updateRow(HIDBbidrow row) {
         if (row != null) {
             listTemp.add(row);
+           //createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
         } else {
-            adapter.setDemandList(filterDemand(1, 0));
+          adapter.setDemandList(filterDemand(1, 0));
             createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+            Log.e(TAG,"adapter.hiStockRowList"+adapter.hiStockRowList +"adapter.inhand"+ adapter.inhand+"adapter.demand"+adapter.demand);
         }
     }
 
@@ -399,8 +406,20 @@ public class HIFragmentStockInHandvsDemandReport extends HICFragmentBase impleme
     @OnClick(R.id.btnFilter)
     public void btnFilterOnClick() {
 
-        adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
-        createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+        if(etStartDate.getText().toString().equals("null")||etStartDate.getText().toString().equals("")||etEndDate.getText().toString().equals("")||etEndDate.getText().toString().equals("null")) {
+
+
+            Toast.makeText(getActivity().getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+
+        }
+
+        else {
+
+            adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
+            createChart(adapter.hiStockRowList, adapter.inhand, adapter.demand);
+
+        }
+
     }
 
     public List<HIDBbidrow> filterDemand(int dayNum, int monthNum) {

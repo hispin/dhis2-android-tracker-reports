@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -35,7 +37,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * Created by nhancao on 1/20/16.
+ * Created by Sourabh on 1/20/16.
  */
 public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HIIViewTodayScheduleReport {
 
@@ -43,6 +45,9 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
 
     @Bind(R.id.vReport)
     RecyclerView vReport;
+
+    @Bind(R.id.textView4)
+    TextView textView4;
 
     @Bind(R.id.etStartDate)
     EditText etStartDate;
@@ -130,7 +135,8 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
 
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 etStartDate.setText(sdf.format(myCalendar.getTime()));
-
+                Log.e(TAG,"Start Date"+ etStartDate);
+                btnFilter.setVisibility(View.VISIBLE);
             }
 
         };
@@ -149,7 +155,7 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
 
                 etEndDate.setText(sdf.format(myCalendar.getTime()));
 
-                btnFilter.setVisibility(View.VISIBLE);
+
             }
 
         };
@@ -181,7 +187,16 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
 
     @OnClick(R.id.btnFilter)
     public void btnFilterOnClick() {
-        adapter.filter(etStartDate.getText().toString(), etEndDate.getText().toString());
+
+        if(etStartDate.getText().toString().equals("null")||etStartDate.getText().toString().equals("")||etEndDate.getText().toString().equals("")||etEndDate.getText().toString().equals("null")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+        }
+
+        else {
+
+            adapter.filter(etStartDate.getText().toString(), etEndDate.getText().toString());
+        }
+
         //adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
 
     }
@@ -195,20 +210,26 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         vReport.setLayoutManager(llm);
 
         vReport.setAdapter(adapter);
-//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+
+        //vReport.getItemAnimator().setSupportsChangeAnimations(true);
+
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setLoadDone(false);
             flow.getTodayScheduleEventReport(this, orgUnitId, orgUnitMode, programId, programStageId, true);
         }
+
     }
 
     @Override
     public void updateRow(HIDBbidrow row) {
+        Log.e(TAG,"ROW: "+ row);
         if (row == null) {
             adapter.setLoadDone(true);
-        } else {
+        }
+        else {
             adapter.updateRow(row);
+            Log.e(TAG,"ROW: after"+ row);
         }
     }
 

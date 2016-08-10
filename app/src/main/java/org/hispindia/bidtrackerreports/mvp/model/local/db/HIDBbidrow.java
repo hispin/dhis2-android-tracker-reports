@@ -1,17 +1,19 @@
 package org.hispindia.bidtrackerreports.mvp.model.local.db;
 
 /**
- * Created by nhancao on 2/5/16.
+ * Created by sourabh on 2/5/16.
  */
 
 public class HIDBbidrow {
 
     public int order;
     public String dueDate;
+    public String incidentDate;
     //attr
     public String firstName;
     public String chilName;
     public String dob;
+    public String birthweight;
     //de
     public String bcg;
     public String bcgScar;
@@ -35,13 +37,14 @@ public class HIDBbidrow {
     public HIDBbidrow() {
     }
 
-    public HIDBbidrow(int order, String dueDate, String firstName, String chilName,String dob, String bcg, String bcgScar, String bcgRepeatDose, String opv0, String opv1, String dptHepBHib1, String pcv1, String rv1, String opv2, String pcv2, String rv2, String opv3, String dptHepBHib3, String pcv3, String opv4, String measles1, String measles2, Boolean isOverdue) {
+    public HIDBbidrow(int order, String dueDate, String firstName, String chilName,String dob,String birthweight, String bcg, String bcgScar, String bcgRepeatDose, String opv0, String opv1, String dptHepBHib1, String pcv1, String rv1, String opv2, String pcv2, String rv2, String opv3, String dptHepBHib3, String pcv3, String opv4, String measles1, String measles2, Boolean isOverdue) {
         this.order = order;
         this.dueDate = dueDate;
         this.firstName = firstName;
         this.chilName = chilName;
 
         this.dob = dob;
+        this.birthweight = birthweight;
         this.bcg = bcg;
         this.bcgScar = bcgScar;
         this.bcgRepeatDose = bcgRepeatDose;
@@ -80,6 +83,9 @@ public class HIDBbidrow {
 
     public String getDob() {
         return dob;
+    }
+    public String getbirthweight() {
+        return birthweight;
     }
 
     public String getBcg() {
@@ -156,7 +162,7 @@ public class HIDBbidrow {
 
 
     public int getBCGCount() {
-        int count = 0;
+        int count = 1;
         if (getBcg() != null && getBcg().trim().equals("")) count++;
         if (getBcgScar() != null && getBcgScar().trim().equals("")) count++;
         if (getBcgRepeatDose() != null && getBcgRepeatDose().trim().equals("")) count++;
@@ -164,14 +170,14 @@ public class HIDBbidrow {
     }
 
     public int getDPTCount() {
-        int count = 0;
+        int count = 1;
         if (getDptHepBHib1() != null && getDptHepBHib1().trim().equals("")) count++;
         if (getDptHepBHib3() != null && getDptHepBHib3().trim().equals("")) count++;
         return count;
     }
 
     public int getOPVCount() {
-        int count = 0;
+        int count = 1;
         if (getOpv0() != null && getOpv0().trim().equals("")) count++;
         if (getOpv1() != null && getOpv1().trim().equals("")) count++;
         if (getOpv2() != null && getOpv2().trim().equals("")) count++;
@@ -181,7 +187,7 @@ public class HIDBbidrow {
     }
 
     public int getPCVCount() {
-        int count = 0;
+        int count = 1;
         if (getPcv1() != null && getPcv1().trim().equals("")) count++;
         if (getPcv2() != null && getPcv2().trim().equals("")) count++;
         if (getPcv3() != null && getPcv3().trim().equals("")) count++;
@@ -189,21 +195,21 @@ public class HIDBbidrow {
     }
 
     public int getRVCount() {
-        int count = 0;
+        int count = 1;
         if (getRv1() != null && getRv1().trim().equals("")) count++;
         if (getRv2() != null && getRv2().trim().equals("")) count++;
         return count;
     }
 
     public int getMeaslesCount() {
-        int count = 0;
+        int count = 1;
         if (getMeasles1() != null && getMeasles1().trim().equals("")) count++;
         if (getMeasles2() != null && getMeasles2().trim().equals("")) count++;
         return count;
     }
 
     public int getVaccineCount() {
-        int count = 0;
+        int count =1;
         if (getBcg() != null && getBcg().trim().equals("")) count++;
         if (getBcgScar() != null && getBcgScar().trim().equals("")) count++;
         if (getBcgRepeatDose() != null && getBcgRepeatDose().trim().equals("")) count++;

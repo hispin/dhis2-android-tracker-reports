@@ -28,6 +28,7 @@ public class HIDBHelper extends SQLiteOpenHelper {
                         " (_order integer primary key, " +
                         "dueDate text," +
                         "firstName text," +
+                        "birthweight number," +
                         "chilName text, " +
                         "bcg text," +
                         "bcgScar text," +
@@ -63,6 +64,7 @@ public class HIDBHelper extends SQLiteOpenHelper {
         contentValues.put("_order", row.order);
         contentValues.put("dueDate", row.dueDate);
         contentValues.put("firstName", row.firstName);
+        contentValues.put("birthweight", row.birthweight);
         contentValues.put("chilName", row.chilName);
         contentValues.put("bcg", row.bcg);
         contentValues.put("bcgScar", row.bcgScar);
@@ -107,6 +109,7 @@ public class HIDBHelper extends SQLiteOpenHelper {
                     res.getString(res.getColumnIndex("firstName")),
                     res.getString(res.getColumnIndex("chilName")),
                     res.getString(res.getColumnIndex("dob")),
+                    res.getString(res.getColumnIndex("birthweight")),
                     res.getString(res.getColumnIndex("bcg")),
                     res.getString(res.getColumnIndex("bcgScar")),
                     res.getString(res.getColumnIndex("bcgRepeatDose")),

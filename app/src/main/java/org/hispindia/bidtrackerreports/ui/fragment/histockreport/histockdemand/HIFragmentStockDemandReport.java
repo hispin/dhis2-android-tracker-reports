@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.ui.fragment.histockreport.histockdemand;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -43,17 +40,13 @@ import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.HIParamBIDHardcod
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIViewTodayScheduleReport, AdapterView.OnItemSelectedListener {
 
@@ -68,18 +61,13 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
     @Bind(R.id.vReportOption)
     Spinner vReportOption;
 
-    @Bind(R.id.etStartDate)
-    EditText etStartDate;
-
-    @Bind(R.id.etEndDate)
-    EditText etEndDate;
+//    @Bind(R.id.etStartDate)
+//    EditText etStartDate;
+//
+//    @Bind(R.id.etEndDate)
+//    EditText etEndDate;
 
     EditText et;
-
-
-//
-//    @Bind(R.id.dpResult)
-//    DatePicker dpResult;
 
 
     @Inject
@@ -131,64 +119,64 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Calendar myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//        Calendar myCalendar = Calendar.getInstance();
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                String myFormat = "yyyy-MM-dd"; //In which you need put here
+//
+//                  SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//                etStartDate.setText(sdf.format(myCalendar.getTime()));
+//
+//            }
+//
+//        };
+//        DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                String myFormat = "yyyy-MM-dd"; //In which you need put here
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                etEndDate.setText(sdf.format(myCalendar.getTime()));
+//            }
+//
+//        };
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "yyyy-MM-dd"; //In which you need put here
-
-                  SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                etStartDate.setText(sdf.format(myCalendar.getTime()));
-
-            }
-
-        };
-        DatePickerDialog.OnDateSetListener date2 = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "yyyy-MM-dd"; //In which you need put here
-
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                etEndDate.setText(sdf.format(myCalendar.getTime()));
-            }
-
-        };
-
-        etStartDate.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick: ");
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        etEndDate.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick: ");
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date2, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+//        etStartDate.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(TAG, "onClick: ");
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(getActivity(), date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+//        etEndDate.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(TAG, "onClick: ");
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(getActivity(), date2, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
     }
 
     @Override
@@ -238,6 +226,7 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, options);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vReportOption.setAdapter(dataAdapter);
+
         vReportOption.setSelection(0);
 
         if (flowGetDemand != null) {
@@ -309,7 +298,7 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
             }
             BarDataSet set2 = new BarDataSet(yVals2, "Demand");
             set2.setBarSpacePercent(35f);
-            set2.setColor(Color.DKGRAY);
+            set2.setColor(Color.GRAY);
             dataSets.add(set2);
         }
         BarData data = new BarData(xVals, dataSets);
@@ -325,24 +314,30 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
             case 0:
                 listTempFilter = filterDemand(1, 0);
                 adapter.setDemandList(listTempFilter);
+//                createChart(adapter.hiStockRowList, adapter.demand);
                 break;
             case 1:
                 listTempFilter = filterDemand(3, 0);
                 adapter.setDemandList(listTempFilter);
+//                createChart(adapter.hiStockRowList, adapter.demand);
                 break;
             case 2:
                 listTempFilter = filterDemand(7, 0);
                 adapter.setDemandList(listTempFilter);
+//                createChart(adapter.hiStockRowList, adapter.demand);
                 break;
             case 3:
                 listTempFilter = filterDemand(14, 0);
                 adapter.setDemandList(listTempFilter);
+//                createChart(adapter.hiStockRowList, adapter.demand);
                 break;
             case 4:
                 listTempFilter = filterDemand(0, 1);
                 adapter.setDemandList(listTempFilter);
+//                createChart(adapter.hiStockRowList, adapter.demand);
                 break;
         }
+        createChart(adapter.hiStockRowList, adapter.demand);
 
     }
 
@@ -350,12 +345,32 @@ public class HIFragmentStockDemandReport extends HICFragmentBase implements HIIV
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    @OnClick(R.id.btnFilter)
-    public void btnFilterOnClick() {
-        adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
-
-    }
+//
+//    @OnClick(R.id.btnFilter)
+//    public void btnFilterOnClick() {
+////        String string1 = etStartDate.toString();
+////        String string2 = etEndDate.getText().toString();
+////
+////        SimpleDateFormat Date1 = new SimpleDateFormat("MMM d, yyyy h:mm:ss a", Locale.ENGLISH);
+////
+////        Date date1 = Date1.parse(string1);
+////        Date date2 = sdf.parse(string2);
+//
+//Log.e(TAG,"Star Date"+etStartDate.getText().toString() );
+//Log.e(TAG,"etEndDate Date"+etEndDate.getText().toString() );
+//        if(etStartDate.getText().toString().equals("null")||etStartDate.getText().toString().equals("")||etEndDate.getText().toString().equals("")||etEndDate.getText().toString().equals("null")) {
+//
+//
+//            Toast.makeText(getActivity().getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+//
+//        }
+//
+//        else {
+//
+//            adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
+//            createChart(adapter.hiStockRowList, adapter.demand);
+//        }
+//    }
 
     public List<HIDBbidrow> filterDemand(int dayNum, int monthNum) {
         List<HIDBbidrow> result = new ArrayList<>();

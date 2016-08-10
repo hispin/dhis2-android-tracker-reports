@@ -7,11 +7,13 @@ public class HIStockRow {
     private int order;
     private String name;
     private String value;
+    private String date;
 
-    public HIStockRow(int order, String name, String value) {
+    public HIStockRow(int order, String name, String value, String date) {
         this.order = order;
         this.name = name;
         this.value = value;
+        this.date = date;
     }
 
     public int getOrder() {
@@ -36,6 +38,13 @@ public class HIStockRow {
 
     public void setValue(String value) {
         this.value = value;
+    }
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 }

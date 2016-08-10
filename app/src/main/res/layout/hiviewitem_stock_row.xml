@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tvOrder"
-            android:layout_width="50dp"
+            android:layout_width="37dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical" />
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/tvValue"
-            android:layout_width="150dp"
+            android:layout_width="79dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical" />
@@ -53,6 +53,17 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/Gray" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvDate"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:gravity="center_vertical" />-->
+
+        <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/Gray" />-->
     </LinearLayout>
 
     <View

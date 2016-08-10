@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by nhancao on 1/25/16.
  */
-public class HIAdapterStockReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HIAdapterStockReport extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public final static String TAG = HIAdapterStockReport.class.getSimpleName();
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
@@ -86,6 +86,8 @@ public class HIAdapterStockReport extends RecyclerView.Adapter<RecyclerView.View
             viewHolder.tvOrder.setText(String.valueOf(currentItem.getOrder()));
             viewHolder.tvName.setText(currentItem.getName());
             viewHolder.tvValue.setText(currentItem.getValue());
+//            viewHolder.tvDate.setText(currentItem.getDate());
+//            Log.e(TAG,"TVDATE"+ viewHolder.tvDate);
         }
     }
 
@@ -123,6 +125,8 @@ public class HIAdapterStockReport extends RecyclerView.Adapter<RecyclerView.View
         TextView tvName;
         @Bind(R.id.tvValue)
         TextView tvValue;
+//        @Bind(R.id.tvDate)
+//        TextView tvDate;
         Context context;
 
         public HIAdapterStockReportHolder(View itemView, Context context) {

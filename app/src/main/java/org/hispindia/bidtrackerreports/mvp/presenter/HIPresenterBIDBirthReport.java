@@ -36,19 +36,22 @@ public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthN
 
     }
 
-    public void getBirthNotificationReport(HIIViewBirthNotificationReport view, String orgUnitUid, String ouModeUid, String programId, String programStageUid) {
+    public void getBirthNotificationReport(HIIViewBirthNotificationReport view, String orgUnitUid, String ouModeUid, String programBirthId, String programStageUid) {
         onStop();
+
         subscription = Observable.create(subscriber -> {
             List<Event> eventList = new ArrayList<>();
 
-            for (Event event : TrackerController.getEvents(orgUnitUid, programId)) {
+            for (Event event : TrackerController.getEvents(orgUnitUid, programBirthId)) {
+                Log.e(TAG,"Between"+ programBirthId);
                 Log.e(TAG,"Success Birth");
                 if (event.getStatus().equals(Event.STATUS_ACTIVE)) {
                     eventList.add(event);
                     Log.e(TAG,"Event List Size "+ eventList.size());
                 }
             }
-
+            Log.e(TAG,"Before1"+ programBirthId);
+            Log.e(TAG,"Before programStageUid1"+ programStageUid);
 //            Collections.sort(eventList, (lhs, rhs) -> {
 //                DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
 //                DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
@@ -58,9 +61,11 @@ public class HIPresenterBIDBirthReport implements HIIPresenterBase<HIIViewBirthN
 //            });
 
             for (int i = 0; i < eventList.size(); i++) {
+                Log.e(TAG,"Before"+ programBirthId);
+                Log.e(TAG,"Before programStageUid"+ programStageUid);
                 Log.e(TAG,"Event List:"+eventList );
                 Event event = eventList.get(i);
-                ApplyRuleHelper applyRuleHelper = new ApplyRuleHelper(orgUnitUid, programId, programStageUid, event.getLocalId(), event.getLocalEnrollmentId());
+                ApplyRuleHelper applyRuleHelper = new ApplyRuleHelper(orgUnitUid, programBirthId, programStageUid, event.getLocalId(), event.getLocalEnrollmentId());
 
                 applyRuleHelper.initiateEvaluateProgramRules();
 

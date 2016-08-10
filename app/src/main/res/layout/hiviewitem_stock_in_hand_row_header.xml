@@ -61,6 +61,18 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/Gray" />
+        <!--<TextView-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="Incident Date:"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/Gray" />-->
     </LinearLayout>
 
     <View

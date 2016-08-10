@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:focusable="false"
-        android:hint="From DOB:" />
+        android:hint="From Start Date:" />
 
     <!--<DatePicker-->
     <!--android:id="@+id/dpResult"-->
@@ -23,8 +23,14 @@
         android:layout_height="60dp"
         android:focusable="false"
         android:layout_gravity="center_horizontal"
-        android:hint="To DOB:" />
+        android:hint="To End Date:" />
 
+
+    <!--<SearchView-->
+        <!--android:layout_width="334dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/searchview"-->
+        <!--android:layout_gravity="right" />-->
 
     <Button
         android:id="@+id/btnFilter"
@@ -33,6 +39,14 @@
         android:text="View"
         android:visibility="gone"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:visibility="gone"
+        android:id="@+id/textView4"
+        android:layout_gravity="center_horizontal" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vReport"
@@ -40,6 +54,13 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
+    <!--<LinearLayout-->
+        <!--android:id="@+id/vmain2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
 
+
+<!--</LinearLayout>-->
 
 </LinearLayout>

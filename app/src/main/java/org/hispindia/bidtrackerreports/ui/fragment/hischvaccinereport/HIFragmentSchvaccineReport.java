@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,12 @@ public class HIFragmentSchvaccineReport extends HICFragmentBase implements HIIVi
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
 //        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+
+        RecyclerView.ItemAnimator animator = vReport.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(true);
+        }
+
         vReport.setItemAnimator(new DefaultItemAnimator());
 
         if (flow != null) {

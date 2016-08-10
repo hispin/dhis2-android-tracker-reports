@@ -184,6 +184,7 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
     }
     @Override
     public void onDetach() {
+
         super.onDetach();
         mNavigationHandler = null;
     }
@@ -238,10 +239,8 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
     }
 
     public void createChart(List<HIStockRow> rows) {
-
-        Log.e(TAG, "HIStockRow" + rows);
-        Log.e(TAG, "HIStockRow size" + rows.size());
         ArrayList<String> xVals = new ArrayList<>();
+        Log.e(TAG,"Row Size"+ rows.size());
         for (int i = 0; i < rows.size(); i++) {
             String name = rows.get(i).getName();
             try {
@@ -255,6 +254,7 @@ public class HIFragmentStockInHandReport extends HICFragmentBase implements HIVi
         for (int i = 0; i < rows.size(); i++) {
             try {
                 yVals1.add(new BarEntry(Integer.parseInt(rows.get(i).getValue()), i));
+                Log.e(TAG,"YVAL "+ yVals1);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

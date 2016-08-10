@@ -1,7 +1,6 @@
 package org.hispindia.bidtrackerreports.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.hispindia.bidtrackerreports.R;
-import org.hispindia.bidtrackerreports.mvp.model.local.HIStockRow;
 import org.hispindia.bidtrackerreports.mvp.model.local.db.HIDBbidrow;
 
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class HIAdapterDemandOnlyReport extends RecyclerView.Adapter<RecyclerView
         hiStockRowList.add("BCG");
         hiStockRowList.add("OPV");
         // hiStockRowList.add("Total");
-        loadDone = false;
+        setLoadDone(false);
     }
 
 
@@ -84,6 +82,12 @@ public class HIAdapterDemandOnlyReport extends RecyclerView.Adapter<RecyclerView
         Log.e(TAG, "demand after " + demand);
 
         notifyDataSetChanged();
+
+
+//        if (demand.size() > 0) {
+//
+//            setLoadDone(true);
+//        }
 
     }
 

@@ -27,14 +27,14 @@ task clean(type: Delete) {
 ext {
     // Dhis2 sdk config version ------------
     // SDK version.
-    versionCode = 2016031821
-    versionName = "1.1"
+    versionCode = 2016031829
+    versionName = "1.1.05"
 
     // Compilation configuration.
     minSdkVersion = 14
     compileSdkVersion = 23
     targetSdkVersion = 23
-    buildToolsVersion = "23.0.2"
+    buildToolsVersion = "23.0.3"
 
     // -------------------------------------
     // App config version ------------------

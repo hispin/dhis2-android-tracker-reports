@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -42,6 +44,16 @@ public class MainActivity extends AbsHomeActivity implements INavigationHandler 
 
 //     @Bind(R.id.tvdname)
 //    TextView tvdname;
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.hifragment_main, container, false);
+//        btnstockdistrict = (Button) view.findViewById(R.id.btnstockdistrict1);
+
+    super.onCreate(savedInstanceState);
+//        btnstockdistrict=(Button)getView().findViewById(R.id.btnstockdistrict1);
+//        View view = inflater.inflate(R.layout.hifragment_main, container, false);
+//
+    return view;
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +75,8 @@ public class MainActivity extends AbsHomeActivity implements INavigationHandler 
         setUpNavigationView(savedInstanceState);
 
     }
+
+
     private void setUpNavigationView(Bundle savedInstanceState) {
         getNavigationView().getMenu().removeItem(R.id.drawer_item_profile);
         addMenuItem(11, R.drawable.ic_add, R.string.enroll);

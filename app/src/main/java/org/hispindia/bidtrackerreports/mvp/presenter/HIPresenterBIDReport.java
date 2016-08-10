@@ -62,7 +62,9 @@ public class HIPresenterBIDReport implements HIIPresenterBase<HIIViewBIDReport> 
             Collections.sort(eventList, (lhs, rhs) -> {
                 DateTime left = DateTime.parse(lhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
                 DateTime right = DateTime.parse(rhs.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
-                if (left.isAfter(right)) return 1;
+                Log.e(TAG,"left"+left);
+                Log.e(TAG,"right"+right);
+                if (left.isBefore(right)) return 1;
                 if (left.isEqual(right)) return 0;
                 return -1;
             });

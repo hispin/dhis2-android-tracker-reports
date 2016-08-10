@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.hispindia.bidtrackerreports.R;
 import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
@@ -132,6 +134,7 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 etStartDate.setText(sdf.format(myCalendar.getTime()));
 
+
             }
 
         };
@@ -151,7 +154,6 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                 etEndDate.setText(sdf.format(myCalendar.getTime()));
-
                 btnFilter.setVisibility(View.VISIBLE);
             }
 
@@ -183,7 +185,19 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
 
     @OnClick(R.id.btnFilter)
     public void btnFilterOnClick() {
-        adapter.filter(etStartDate.getText().toString(), etEndDate.getText().toString());
+
+        if(etStartDate.getText().toString().equals("null")||etStartDate.getText().toString().equals("")||etEndDate.getText().toString().equals("")||etEndDate.getText().toString().equals("null")) {
+
+
+            Toast.makeText(getActivity().getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+
+        }
+
+        else {
+            adapter.filter(etStartDate.getText().toString(), etEndDate.getText().toString());
+        }
+
+
         //adapter.setDemandList(filterDemandbydate(listTemp, etStartDate.getText().toString(), etEndDate.getText().toString()));
 
     }
@@ -195,7 +209,14 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
         vReport.setHasFixedSize(true);
         vReport.setLayoutManager(llm);
         vReport.setAdapter(adapter);
-//        vReport.getItemAnimator().setSupportsChangeAnimations(true);
+
+   // vReport.getItemAnimator().setSupportsChangeAnimations(true);
+
+        RecyclerView.ItemAnimator animator = vReport.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(true);
+        }
+
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setHibidRowList(new ArrayList<>());
@@ -209,7 +230,9 @@ public class HIFragmentVaccineStatusReport extends HICFragmentBase implements HI
     public void updateRow(HIDBbidrow row) {
         if (row == null) {
             adapter.setLoadDone(true);
-        } else {
+        }
+
+        else {
             adapter.updateRow(row);
         }
     }

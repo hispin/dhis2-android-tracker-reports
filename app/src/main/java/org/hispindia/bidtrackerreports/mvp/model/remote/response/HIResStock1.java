@@ -22,7 +22,7 @@ public class HIResStock1 {
             if (arrNode.isArray()) {
                 for (int i = 0; i < arrNode.size(); i++) {
                     final JsonNode objNode = arrNode.get(i);
-                    HIStockRow1 row1 = new HIStockRow1(i, objNode.get(0).asText(), objNode.get(1).asText());
+                    HIStockRow1 row1 = new HIStockRow1(i, objNode.get(0).asText(), objNode.get(2).asText());
 
                     rows1.add(row1);
                 }

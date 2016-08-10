@@ -20,6 +20,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
+            <!--<TextView-->
+                <!--android:layout_width="317dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:text="Incident Date:"-->
+                <!--android:id="@+id/tvincidentdate" />-->
+
             <Spinner
                 android:id="@+id/vReportOption"
                 android:layout_width="match_parent"

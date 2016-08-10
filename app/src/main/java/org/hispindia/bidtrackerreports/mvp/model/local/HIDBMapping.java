@@ -22,6 +22,9 @@ public class HIDBMapping {
             else if (item.getId().equals(HIParamBIDHardcode.DATEOFBIRTH)) {
                 local.dob = item.getValue();
             }
+ else if (item.getId().equals(HIParamBIDHardcode.BIRTHWEIGHT)) {
+                local.birthweight = item.getValue();
+            }
 
         }
         for (HIBIDRowItem item : remote.getDataElementList()) {

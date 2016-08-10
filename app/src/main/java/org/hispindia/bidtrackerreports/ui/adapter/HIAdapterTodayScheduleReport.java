@@ -1,5 +1,6 @@
 package org.hispindia.bidtrackerreports.ui.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -27,21 +28,26 @@ import butterknife.ButterKnife;
 /**
  * Created by nhancao on 1/25/16.
  */
-public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_PROGRESS = 1;
+
+    @Bind(R.id.textView4)
+    TextView textView4;
 
     private boolean loadDone;
     private boolean filter;
     private List<HIDBbidrow> hibidRowList;
     private List<HIDBbidrow> originList;
 
+    //private Context context = this;
     public HIAdapterTodayScheduleReport() {
         hibidRowList = new ArrayList<>();
         originList = new ArrayList<>();
         loadDone = false;
         filter = false;
+
     }
 
     public void setLoadDone(boolean loadDone) {
@@ -60,12 +66,19 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         if (originList == null) {
             originList = new ArrayList<>();
         }
+        Log.e(TAG,"originList"+ originList);
+        Log.e(TAG,"originList hibidRowList "+ hibidRowList);
+
         boolean flag = false;
         for (int i = 0; i < originList.size(); i++) {
             HIDBbidrow item = originList.get(i);
+            Log.e(TAG,"item:"+i+item);
+            Log.e(TAG,"Sizl"+ originList.size());
             if (item.getOrder() == hibidRow.getOrder()) {
+                Log.e(TAG,"hibidrow: "+ hibidRow.getOrder());
                 originList.set(i, hibidRow);
                 flag = true;
+
                 break;
             }
         }
@@ -74,8 +87,11 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         }
         notifyDataSetChanged();
     }
+
     public final static String TAG = HIAdapterTodayScheduleReport.class.getSimpleName();
     public void filter(String etStartDate, String etEndDate) {
+
+
         filter = true;
         hibidRowList.clear();
 
@@ -83,16 +99,30 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
 
         for (HIDBbidrow item : originList) {
-            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
-            try {
-                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
+            if (TextUtils.isEmpty(item.getDueDate()) || item.getDueDate().equals("0")) continue;
+            try {
+
+                DateTime item_dob = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+                Log.e(TAG,"Item Dob"+ item_dob);
                 Log.e("LOG", "item_dob" + item_dob);
                 Log.e("LOG", "item_get_dob" + item.getDob());
+                Log.e("LOG", "item_birth_weight" + item.getbirthweight());
                 if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
+                    textView4.setVisibility(View.VISIBLE);
                     hibidRowList.add(item);
-                    Log.e("LOG ", " success hibidRowList " + hibidRowList);
+                    Log.e("LOG ", " success DOB " + item.getDob());
+                    Log.e("LOG ", " success birthweight " + item.getbirthweight());
+                    Log.e("LOG ", " success Due " + item.getDueDate());
 
+                }
+                else
+                {
+                     textView4.setVisibility(View.VISIBLE);
+                     Log.e(TAG,"No Results matched");
+
+                   //  Toast.makeText(HIAdapterTodayScheduleReport.this.getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+                     //openDialog();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,8 +133,15 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged();
     }
 
+    public void openDialog() {
+        final Dialog dialog = new Dialog(null); // Context, this, etc.
+        dialog.setContentView(R.layout.dialog_demo);
+        dialog.setTitle("Alert Test");
+        dialog.show();
+    }
 
     @Override
+
     public int getItemViewType(int position) {
         if (isPositionFooter(position)) {
             return TYPE_PROGRESS;
@@ -140,12 +177,13 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
                 viewHolder.tvOrder.setTextColor(Color.RED);
                 viewHolder.tvDueDate.setTextColor(Color.RED);
             } else {
-                viewHolder.tvOrder.setTextColor(Color.WHITE);
-                viewHolder.tvDueDate.setTextColor(Color.WHITE);
+                viewHolder.tvOrder.setTextColor(Color.GREEN);
+                viewHolder.tvDueDate.setTextColor(Color.GREEN);
             }
             setAttr(row.getFirstName(), viewHolder.tvFirstName);
             setAttr(row.getChilName(), viewHolder.tvChildName);
             setAttr(row.getDob(), viewHolder.tvdob);
+            setAttr(row.getbirthweight(), viewHolder.tvbirthweight);
 
             Log.e("DOB", "DOB" + row.getDob());
 
@@ -195,12 +233,17 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
         if (item != null && item.trim().equals("")) {
+//            Log.e(TAG,"itemsetde"+item.toString());
+//            Log.e(TAG,"itemsetde length"+item.length());
+//            Log.e(TAG,"itemsetde trim"+item.trim());
             view.setVisibility(View.VISIBLE);
+            //view.setVisibility(View.GONE);
             img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
             img.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.GONE);
-        } else {
-            view.setVisibility(View.GONE);
+            //tv.setVisibility(View.GONE);
+        }
+        else {
+           view.setVisibility(View.GONE);
         }
     }
 
@@ -208,6 +251,8 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
 
         @Bind(R.id.tvOrder)
         TextView tvOrder;
+//        @Bind(R.id.searchView)
+//        SearchView searchView;
         @Bind(R.id.tvDueDate)
         TextView tvDueDate;
         @Bind(R.id.tvFirstName)
@@ -216,6 +261,8 @@ public class HIAdapterTodayScheduleReport extends RecyclerView.Adapter<RecyclerV
         TextView tvChildName;
         @Bind(R.id.tvdob)
         TextView tvdob;
+        @Bind(R.id.tvbirthweight)
+        TextView tvbirthweight;
         @Bind(R.id.vAttribute)
         LinearLayout vAttribute;
         @Bind(R.id.vDataElement)

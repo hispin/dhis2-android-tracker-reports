@@ -81,11 +81,14 @@ public class HIParamBIDHardcode {
 
     public static String PROGRAMID = "SSLpOM0r1U7";
     public static String PROGRAMBIRTHID = "MHtghktOKBF";
+
     public static String PROGRAMBIRTHSTAGEID = "B1Ha5psjfRJ";
     public static String PROGRAMSTAGEID = "s53RFfXA75f";
     public static String OUMODE = "SELECTED";
-    public static String OUMODEID = "lTqNF1rWha3";
+    public static String OUMODEID = "Y52YnK869WO";
+
     public static String FIRSTNAMEID = "sB1IHYu2xQT";
+    public static String BIRTHWEIGHT = "QwATZkGIPed";
     public static String BNMOTHERFIRSTNAME = "tgOliIchxda";
     public static String BNMOTHERLASTNAME = "PsfSI5MK181";
     public static String BNCHILDDOB = "o4rl8WVfTKX";
