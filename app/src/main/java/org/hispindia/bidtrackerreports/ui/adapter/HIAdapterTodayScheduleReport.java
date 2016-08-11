@@ -233,17 +233,12 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
         if (item != null && item.trim().equals("")) {
-//            Log.e(TAG,"itemsetde"+item.toString());
-//            Log.e(TAG,"itemsetde length"+item.length());
-//            Log.e(TAG,"itemsetde trim"+item.trim());
             view.setVisibility(View.VISIBLE);
-            //view.setVisibility(View.GONE);
             img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
             img.setVisibility(View.VISIBLE);
             //tv.setVisibility(View.GONE);
-        }
-        else {
-           view.setVisibility(View.GONE);
+        } else {
+           // view.setVisibility(View.GONE);
         }
     }
 

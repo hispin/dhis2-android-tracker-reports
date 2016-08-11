@@ -55,23 +55,29 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
 
 
     public void setInHandList(List<HIStockRow> inHandList) {
-
+        String key = "RV";
+        inhand.put(key,0);
+        String key1 = "Measles";
+        inhand.put(key1,0);
+        String key2 = "DPT";
+        inhand.put(key2,0);
+        String key3 = "BCG";
+        inhand.put(key3,0);
+        String key4 = "OPV";
+        inhand.put(key4,0);
+        String key5 = "PCV";
+        inhand.put(key5,0);
         for (HIStockRow item : inHandList) {
-            String key = "RV";
-            inhand.put(key,0);
-            String key1 = "Measles";
-            inhand.put(key1,0);
-            String key2 = "DPT";
-            inhand.put(key2,0);
-            String key3 = "BCG";
-            inhand.put(key3,0);
-            String key4 = "OPV";
-            inhand.put(key4,0);
-            String key5 = "PCV";
-            inhand.put(key5,0);
+
             if(Integer.parseInt(item.getValue())>0)
             {
                 inhand.put(item.getName().substring(0, item.getName().indexOf(" ")), Integer.parseInt(item.getValue()));
+
+
+                Log.e(TAG, "inha " + item.getName());
+                Log.e(TAG, "inha " + item.getValue());
+                Log.e(TAG, "inhand during " + inhand);
+
             }
           else
             {
@@ -125,6 +131,10 @@ public class HIAdapterStockDemandReport extends RecyclerView.Adapter<RecyclerVie
     void updateDifference() {
         for (String key : inhand.keySet()) {
             if (demand.keySet().contains(key)) {
+                Log.e(TAG,"inhand.keySet()"+inhand.keySet());
+                Log.e(TAG,"demand.keySet()"+demand.keySet());
+                Log.e(TAG,"inhand.get(key)"+inhand.get(key));
+
                 if(inhand.get(key)==null||inhand.get(key)==0)
                 {
                     difference.put(key, 0 - demand.get(key));
