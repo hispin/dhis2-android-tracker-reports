@@ -89,9 +89,70 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
     }
 
     public final static String TAG = HIAdapterTodayScheduleReport.class.getSimpleName();
+//    public void filter(String etStartDate, String etEndDate) {
+//
+//
+//        filter = true;
+//        hibidRowList.clear();
+//
+//        DateTime startD = DateTime.parse(etStartDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+//        DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
+//
+//
+//
+//        for (HIDBbidrow item : originList) {
+//
+//            if (TextUtils.isEmpty(item.getDueDate()) || item.getDueDate().equals("0")) continue;
+//            try {
+//
+//                DateTime item_dob = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+//                Log.e(TAG,"Item Dob"+ item_dob);
+//                Log.e("LOG", "item_dob" + item_dob);
+//                Log.e("LOG", "item_get_dob" + item.getDob());
+//                Log.e("LOG", "item_birth_weight" + item.getbirthweight());
+//                Log.e(TAG,"starddate:"+ startD);
+//                Log.e(TAG,"enddate:"+ endD);
+//
+//                if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
+//                    textView4.setVisibility(View.VISIBLE);
+//                    hibidRowList.add(item);
+//                    Log.e("LOG ", " hibidsize" + hibidRowList.size());
+//                    Log.e("LOG ", " success DOB " + item.getDob());
+//                    Log.e("LOG ", " success birthweight " + item.getbirthweight());
+//                    Log.e("LOG ", " success Due " + item.getDueDate());
+//
+////                    Log.e(TAG,"starddate1:"+ startD);
+////                    Log.e(TAG,"enddate1:"+ endD);
+////                    Log.e("LOG ", " hibidsize1" + hibidRowList.size());
+////                    Log.e("LOG ", " success DOB1 " + item.getDob());
+////                    Log.e("LOG ", " success birthweight1 " + item.getbirthweight());
+////                    Log.e("LOG ", " success Due1 " + item.getDueDate());
+////                    textView4.setVisibility(View.VISIBLE);
+////                    hibidRowList.add(item);
+////                    Log.e("LOG ", " hibidsize" + hibidRowList.size());
+////                    Log.e("LOG ", " success DOB " + item.getDob());
+////                    Log.e("LOG ", " success birthweight " + item.getbirthweight());
+////                    Log.e("LOG ", " success Due " + item.getDueDate());
+//
+//                }
+//                else
+//                {
+//                     textView4.setVisibility(View.INVISIBLE);
+//                     Log.e(TAG,"No Results matched");
+//
+////                     Toast.makeText(HIAdapterTodayScheduleReport.this.getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
+////                     openDialog();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Log.e(TAG, "filter: " + e.toString());
+//            }
+//        }
+//        Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size()+" Size list: " + hibidRowList.size());
+//        notifyDataSetChanged();
+//    }
+
     public void filter(String etStartDate, String etEndDate) {
-
-
         filter = true;
         hibidRowList.clear();
 
@@ -99,30 +160,16 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
         DateTime endD = DateTime.parse(etEndDate, DateTimeFormat.forPattern("yyyy-MM-dd"));
 
         for (HIDBbidrow item : originList) {
-
-            if (TextUtils.isEmpty(item.getDueDate()) || item.getDueDate().equals("0")) continue;
+            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
             try {
+                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
-                DateTime item_dob = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
-                Log.e(TAG,"Item Dob"+ item_dob);
                 Log.e("LOG", "item_dob" + item_dob);
                 Log.e("LOG", "item_get_dob" + item.getDob());
-                Log.e("LOG", "item_birth_weight" + item.getbirthweight());
                 if (item_dob.isBefore(endD) && item_dob.isAfter(startD)) {
-                    textView4.setVisibility(View.VISIBLE);
                     hibidRowList.add(item);
-                    Log.e("LOG ", " success DOB " + item.getDob());
-                    Log.e("LOG ", " success birthweight " + item.getbirthweight());
-                    Log.e("LOG ", " success Due " + item.getDueDate());
+                    Log.e("LOG ", " success hibidRowList " + hibidRowList);
 
-                }
-                else
-                {
-                     textView4.setVisibility(View.VISIBLE);
-                     Log.e(TAG,"No Results matched");
-
-                   //  Toast.makeText(HIAdapterTodayScheduleReport.this.getApplicationContext(), "Please Choose Date First", Toast.LENGTH_SHORT);
-                     //openDialog();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -132,7 +179,6 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
         Log.e("LOG ", "filterDemandbydate: " + startD + " - " + endD + " Size root list: " + originList.size()+" Size list: " + hibidRowList.size());
         notifyDataSetChanged();
     }
-
     public void openDialog() {
         final Dialog dialog = new Dialog(null); // Context, this, etc.
         dialog.setContentView(R.layout.dialog_demo);
@@ -232,13 +278,15 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
     }
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
+
         if (item != null && item.trim().equals("")) {
             view.setVisibility(View.VISIBLE);
             img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
             img.setVisibility(View.VISIBLE);
-            //tv.setVisibility(View.GONE);
-        } else {
-           // view.setVisibility(View.GONE);
+            tv.setVisibility(View.GONE);
+        }
+        else {
+           view.setVisibility(View.GONE);
         }
     }
 

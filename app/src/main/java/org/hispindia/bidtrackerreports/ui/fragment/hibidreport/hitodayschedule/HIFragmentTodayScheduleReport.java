@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -206,13 +207,15 @@ public class HIFragmentTodayScheduleReport extends HICFragmentBase implements HI
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        vReport.setHasFixedSize(true);
+        vReport.setHasFixedSize(false);
         vReport.setLayoutManager(llm);
 
         vReport.setAdapter(adapter);
 
-        //vReport.getItemAnimator().setSupportsChangeAnimations(true);
+       // vReport.getItemAnimator().setSupportsChangeAnimations(true);
 
+       // ((SimpleItemAnimator) RecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) vReport.getItemAnimator()).setSupportsChangeAnimations(false);
         vReport.setItemAnimator(new DefaultItemAnimator());
         if (flow != null) {
             adapter.setLoadDone(false);

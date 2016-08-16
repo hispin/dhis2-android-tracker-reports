@@ -96,9 +96,9 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
 
 
         for (HIDBbidrow item : originList) {
-            if (TextUtils.isEmpty(item.getDueDate()) || item.getDueDate().equals("0")) continue;
+            if (TextUtils.isEmpty(item.getDob()) || item.getDob().equals("0")) continue;
             try {
-                DateTime item_dob = DateTime.parse(item.getDueDate(), DateTimeFormat.forPattern("yyyy-MM-dd"));
+                DateTime item_dob = DateTime.parse(item.getDob(), DateTimeFormat.forPattern("yyyy-MM-dd"));
 
                 Log.e("LOG", "item_dob" + item_dob);
                 Log.e("LOG", "item_get_dob" + item.getDob());
@@ -180,7 +180,7 @@ public class HIAdapterVaccineStatusReport extends RecyclerView.Adapter<RecyclerV
 
             //data element
             setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
-           // setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
+            setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
             setDe(row.getBcgRepeatDose(), viewHolder.tvBCGRepeatDose, viewHolder.imgBCGRepeatDose, viewHolder.vBCGRepeatDose);
             setDe(row.getOpv0(), viewHolder.tvOPV0, viewHolder.imgOPV0, viewHolder.vOPV0);
             setDe(row.getOpv1(), viewHolder.tvOPV1, viewHolder.imgOPV1, viewHolder.vOPV1);
