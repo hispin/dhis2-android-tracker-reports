@@ -19,6 +19,8 @@ import org.hispindia.bidtrackerreports.dagger.HIIComponentUi;
 import org.hispindia.bidtrackerreports.ui.activity.HIActivityMain;
 import org.hispindia.bidtrackerreports.ui.activity.MainActivity;
 import org.hispindia.bidtrackerreports.ui.fragment.global.selectprogram.SelectProgramFragment;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hidefaulterlist.HIFragmentDefaulterListReport;
+import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hidropout.HIFragmentDropoutReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hitodayschedule.HIFragmentTodayScheduleReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hibidreport.hivaccinestatus.HIFragmentVaccineStatusReport;
 import org.hispindia.bidtrackerreports.ui.fragment.hischvaccinereport.HIFragmentSchvaccineSelectProgram;
@@ -211,6 +213,42 @@ public class HIFragmentMain extends HICFragmentBase {
             mNavigationHandler.switchFragment(new HIFragmentStockDemandReport(), HIFragmentStockDemandReport.TAG, true);
 
         }
+
+
+    }
+
+    @OnClick(R.id.btnDefaulterListReport)
+    @SuppressWarnings("unused")
+
+    public void btnDefaulterListReport() {
+//        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+//        {
+//            mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
+//            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+//        }
+//
+//        else
+//        {
+            mNavigationHandler.switchFragment(new HIFragmentDefaulterListReport(), HIFragmentDefaulterListReport.TAG, true);
+//
+//        }
+
+
+    }    @OnClick(R.id.btnDropoutReport)
+    @SuppressWarnings("unused")
+
+    public void btnDropoutReport() {
+//        if(new Select().from(OrganisationUnit.class).querySingle().getId().equalsIgnoreCase("GUhbn1R8q6w") )
+//        {
+//            mNavigationHandler.switchFragment(new HIFragmentStockDistrictDemandReport(), HIFragmentStockDistrictDemandReport.TAG, true);
+//            Log.e(TAG,"ID Success "+new Select().from(OrganisationUnit.class).querySingle().getId() );
+//        }
+//
+//        else
+//        {
+            mNavigationHandler.switchFragment(new HIFragmentDropoutReport(), HIFragmentDropoutReport.TAG, true);
+//
+//        }
 
 
     }

@@ -87,11 +87,11 @@
         android:background="@color/dark_navy_blue" />
 
     <org.hisp.dhis.android.sdk.ui.views.CardTextViewButton
-        android:id="@+id/relationshiptypebutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        app:hint="@string/select_relationship_type" />
+    android:id="@+id/relationshiptypebutton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    app:hint="@string/select_relationship_type" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -86,6 +86,8 @@
     <!-- DHIS2 -->
     <string name="btn_tracker_report">Tracker report</string>
     <string name="btn_today_report">Facility to do </string>
+    <string name="btn_defaulter_list">Defaulter List </string>
+    <string name="btn_dropout_list">Dropout List </string>
     <string name="btn_vaccine_report">Vaccine status</string>
     <string name="btn_birth_report">Birth Notifications</string>
     <string name="btn_bid_report">BID report</string>
@@ -94,6 +96,7 @@
     <string name="btn_overdue_report">Dropout/Skipped Report</string>
     <string name="btn_stockinhand_report">Stock In Hand Report</string>
     <string name="btn_stockinhandvsdemand_report">Stock In Hand vs Demand Report</string>
+    <string name="btn_defaulterlist_report">Defaulter List Report</string>
     <string name="btn_stockdemand_report">Stock Demand Report</string>
 
     <string name="hi_stock_report_no">S No</string>

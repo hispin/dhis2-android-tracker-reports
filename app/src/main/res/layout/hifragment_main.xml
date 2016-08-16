@@ -81,6 +81,26 @@
                     android:text="@string/btn_stockinhandvsdemand_report" />
 
             </LinearLayout>
+
+            <LinearLayout style="@style/vFragmentMain">
+
+
+                <Button
+                    android:id="@+id/btnDefaulterListReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_defaulterlist_report" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/vFragmentMain">
+
+
+                <Button
+                    android:id="@+id/btnDropoutReport"
+                    style="@style/btnFragmentMain"
+                    android:text="@string/btn_dropout_list" />
+
+            </LinearLayout>
             <!--<LinearLayout style="@style/vFragmentMain">-->
 
 
