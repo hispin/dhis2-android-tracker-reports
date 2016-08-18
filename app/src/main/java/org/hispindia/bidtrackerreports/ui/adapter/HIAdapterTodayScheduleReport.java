@@ -26,7 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by nhancao on 1/25/16.
+ * Created by hisp-11 on 8/18/16.
  */
 public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -234,8 +234,9 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
             Log.e("DOB", "DOB" + row.getDob());
 
             //data element
-            setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
             setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
+            setDe(row.getBcg(), viewHolder.tvBCG, viewHolder.imgBCG, viewHolder.vBCG);
+//            setDe(row.getBcgScar(), viewHolder.tvBCGScar, viewHolder.imgBCGScar, viewHolder.vBCGScar);
             setDe(row.getBcgRepeatDose(), viewHolder.tvBCGRepeatDose, viewHolder.imgBCGRepeatDose, viewHolder.vBCGRepeatDose);
             setDe(row.getOpv0(), viewHolder.tvOPV0, viewHolder.imgOPV0, viewHolder.vOPV0);
             setDe(row.getOpv1(), viewHolder.tvOPV1, viewHolder.imgOPV1, viewHolder.vOPV1);
@@ -273,20 +274,22 @@ public class HIAdapterTodayScheduleReport extends  RecyclerView.Adapter<Recycler
     }
 
     public void setAttr(String item, TextView tv) {
+        Log.e(TAG,"setattr"+item);
         if (item != null) tv.setText(item);
         else tv.setText("");
+        Log.e(TAG,"tv"+tv);
     }
 
     public void setDe(String item, TextView tv, ImageView img, View view) {
 
-        if (item != null && item.trim().equals("")) {
+        if (item != null && !item.trim().equals("")) {
+
             view.setVisibility(View.VISIBLE);
             img.setBackgroundResource(R.drawable.ic_menu_my_calendar);
             img.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.GONE);
-        }
-        else {
-           view.setVisibility(View.GONE);
+            //tv.setVisibility(View.GONE);
+        } else {
+            // tv.setVisibility(View.GONE);
         }
     }
 
